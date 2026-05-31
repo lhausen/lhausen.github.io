@@ -33,8 +33,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div id="map"></div>
 <div class="controls">
   <span class="ctrl-lbl">Month:</span>
-  <input type="range" id="mandate-slider" min="0" max="95" value="47" step="1">
-  <span id="month-lbl">2022-12</span>
+  <input type="range" id="mandate-slider" min="0" max="95" value="48" step="1">
+  <span id="month-lbl">2023-01</span>
   <button class="play-btn" id="play-btn">▶ Play</button>
 </div>
 <div class="legend">
@@ -52,7 +52,7 @@ const MANDATE_TS = {"Baden-Württemberg":{"months":["2019-01","2019-02","2019-03
 const MONTHS=[];
 for(let y=2019;y<=2026;y++) for(let m=1;m<=12;m++) MONTHS.push(`${y}-${String(m).padStart(2,'0')}`);
 
-let monthIdx=47; // 2022-12
+let monthIdx=48; // 2023-01
 let geojsonLayer=null;
 let playing=false,playTimer=null;
 
