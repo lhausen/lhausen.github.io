@@ -86,9 +86,17 @@ canvas{max-height:260px}
   </div>
   <!-- Chart 1: full width absolute -->
   <div class="g-full card" style="margin-bottom:var(--gap)">
-    <h3>Annual Solar Commissionings 2015–2025 — All States</h3>
-    <p class="csub">Hamburg <span style="color:#2563eb;font-weight:700">——</span> · Germany total <span style="color:#334155;font-weight:700">——</span> · Individual states <span style="color:#cbd5e1;font-weight:700">——</span> · Dashed = Jan 2023 mandate</p>
+    <h3>Monthly Solar Commissionings 2019–2025</h3>
+    <p class="csub">Hamburg <span style="color:#2563eb;font-weight:700">——</span> · Germany avg (÷16) <span style="color:#334155;font-weight:700">——</span> · Hover for values · ▼ = Jan 2023 mandate</p>
     <canvas id="c-ov-abs" style="max-height:300px"></canvas>
+  </div>
+  <!-- Charts 2 & 3 side by side + map -->
+  <div class="g2" style="margin-bottom:var(--gap)">
+    <div class="card">
+      <h3>📋 Solar Mandate Index — Germany</h3>
+      <p class="csub">Scroll slider or press Play · Hover states for details · Source: BSW-Solar June 2024</p>
+      <iframe src="mandate-map-widget.html" style="width:100%;height:430px;border:none;border-radius:6px;display:block;margin-top:4px" scrolling="no" title="Mandate map"></iframe>
+    </div>
   </div>
   <!-- Charts 2 & 3 side by side -->
   <div class="g2">
@@ -804,12 +812,7 @@ ch('c-post23-size',{type:'bar',data:{
   });
 
   // ── Chart 1: absolute monthly commissionings (2019–2025) ───────────────
-  const grayLines=monStates.filter(b=>b!=='Hamburg').map(b=>({
-    label:b,data:STATE_MON[b].slice(S),
-    borderColor:SLATE,borderWidth:1,pointRadius:0,fill:false,tension:0.3
-  }));
   ch('c-ov-abs',{type:'line',data:{labels:MON_LBL,datasets:[
-    ...grayLines,
     {label:'Germany avg',data:NAT_AVG_MON.slice(S),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
     {label:'Hamburg',data:HH_MON.slice(S),borderColor:HH,borderWidth:3,pointRadius:0,fill:false,tension:0.3},
   ]},options:{...sharedOpts,
