@@ -790,22 +790,32 @@ ch('c-post23-size',{type:'bar',data:{
 (function(){
   const SLATE='#cbd5e1', DARK='#334155';
   const monStates=Object.keys(STATE_MON).sort();
-  // x-axis tick: show year for Jan months, '▼ 2023' for mandate year
-  const monTick=(v,i)=>MONTHS_ALL[i]==='2023-01'?'▼ 2023':MONTHS_ALL[i]&&MONTHS_ALL[i].endsWith('-01')?MONTHS_ALL[i].slice(0,4):'';
+  // slice everything from 2019-01 (index 48 in the full 2015-2025 array)
+  const S=48;
+  const MON_LBL=MONTHS_ALL.slice(S);
+  const monTick=(v,i)=>MON_LBL[i]==='2023-01'?'▼ 2023':MON_LBL[i]&&MON_LBL[i].endsWith('-01')?MON_LBL[i].slice(0,4):'';
+  // shared tooltip: nearest line, show state + value
+  const nearTip=(fmt2)=>({
+    mode:'nearest',intersect:false,
+    callbacks:{
+      title:ctx=>ctx[0]?ctx[0].label:'',
+      label:ctx=>`${ctx.dataset.label}: ${fmt2(ctx.parsed.y)}`
+    }
+  });
 
-  // ── Chart 1: absolute monthly commissionings ────────────────────────────
+  // ── Chart 1: absolute monthly commissionings (2019–2025) ───────────────
   const grayLines=monStates.filter(b=>b!=='Hamburg').map(b=>({
-    label:b,data:STATE_MON[b],
+    label:b,data:STATE_MON[b].slice(S),
     borderColor:SLATE,borderWidth:1,pointRadius:0,fill:false,tension:0.3
   }));
-  ch('c-ov-abs',{type:'line',data:{labels:MONTHS_ALL,datasets:[
+  ch('c-ov-abs',{type:'line',data:{labels:MON_LBL,datasets:[
     ...grayLines,
-    {label:'Germany avg',data:NAT_AVG_MON,borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
-    {label:'Hamburg',data:HH_MON,borderColor:HH,borderWidth:3,pointRadius:0,fill:false,tension:0.3},
+    {label:'Germany avg',data:NAT_AVG_MON.slice(S),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
+    {label:'Hamburg',data:HH_MON.slice(S),borderColor:HH,borderWidth:3,pointRadius:0,fill:false,tension:0.3},
   ]},options:{...sharedOpts,
     plugins:{
       legend:{display:false},
-      tooltip:{mode:'index',intersect:false,filter:item=>item.dataset.label==='Hamburg'||item.dataset.label==='Germany avg',callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}`}}
+      tooltip:nearTip(v=>Math.round(v).toLocaleString())
     },
     scales:{
       x:{grid:{display:false},ticks:{maxRotation:0,callback:monTick}},
@@ -813,18 +823,19 @@ ch('c-post23-size',{type:'bar',data:{
     }
   }});
 
-  // ── Chart 2: growth index Jan 2015 = 100 (monthly) ─────────────────────
+  // ── Chart 2: growth index Jan 2019 = 100 (monthly) ─────────────────────
   const idxArr=(arr,base)=>arr.map(v=>base>0?Math.round(v/base*100):0);
+  // base = value at 2019-01 (index S in full arrays)
   const grayIdx=monStates.filter(b=>b!=='Hamburg').map(b=>({
-    label:b,data:idxArr(STATE_MON[b],STATE_MON[b][0]),
+    label:b,data:idxArr(STATE_MON[b].slice(S),STATE_MON[b][S]),
     borderColor:SLATE,borderWidth:1,pointRadius:0,fill:false,tension:0.3
   }));
-  ch('c-ov-idx',{type:'line',data:{labels:MONTHS_ALL,datasets:[
+  ch('c-ov-idx',{type:'line',data:{labels:MON_LBL,datasets:[
     ...grayIdx,
-    {label:'Germany avg',data:idxArr(NAT_AVG_MON,NAT_AVG_MON[0]),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
-    {label:'Hamburg',data:idxArr(HH_MON,HH_MON[0]),borderColor:HH,borderWidth:3,pointRadius:0,fill:false,tension:0.3},
+    {label:'Germany avg',data:idxArr(NAT_AVG_MON.slice(S),NAT_AVG_MON[S]),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
+    {label:'Hamburg',data:idxArr(HH_MON.slice(S),HH_MON[S]),borderColor:HH,borderWidth:3,pointRadius:0,fill:false,tension:0.3},
   ]},options:{...sharedOpts,
-    plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,filter:item=>item.dataset.label==='Hamburg'||item.dataset.label==='Germany avg'}},
+    plugins:{legend:{display:false},tooltip:nearTip(v=>v+'%')},
     scales:{
       x:{grid:{display:false},ticks:{maxRotation:0,callback:monTick}},
       y:{beginAtZero:false,ticks:{callback:v=>v+'%'}}
