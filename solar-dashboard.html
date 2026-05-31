@@ -802,7 +802,7 @@ ch('c-post23-size',{type:'bar',data:{
   }));
   ch('c-ov-abs',{type:'line',data:{labels:yrs,datasets:[
     ...grayLines,
-    {label:'Germany total',data:yrs.map(y=>natAnn[y]),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
+    {label:'Germany avg',data:yrs.map(y=>Math.round(natAnn[y]/16)),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
     {label:'Hamburg',data:FLOW_PANEL['Hamburg'].solar,borderColor:HH,borderWidth:3,pointRadius:3,pointBackgroundColor:HH,fill:false,tension:0.3},
   ]},options:{...sharedOpts,
     plugins:{
@@ -825,7 +825,7 @@ ch('c-post23-size',{type:'bar',data:{
   }));
   ch('c-ov-idx',{type:'line',data:{labels:yrs,datasets:[
     ...grayIdx,
-    {label:'Germany',data:idx(yrs.map(y=>natAnn[y]),nat2015),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
+    {label:'Germany avg',data:idx(yrs.map(y=>Math.round(natAnn[y]/16)),Math.round(nat2015/16)),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
     {label:'Hamburg',data:idx(FLOW_PANEL['Hamburg'].solar,hh2015),borderColor:HH,borderWidth:3,pointRadius:3,pointBackgroundColor:HH,fill:false,tension:0.3},
   ]},options:{...sharedOpts,
     plugins:{legend:{display:false},tooltip:{filter:item=>item.dataset.label==='Hamburg'||item.dataset.label==='Germany'}},
@@ -840,11 +840,13 @@ ch('c-post23-size',{type:'bar',data:{
     label:b,data:FLOW_PANEL[b].per1k,
     borderColor:SLATE,borderWidth:1,pointRadius:0,fill:false,tension:0.3
   }));
+  const avgFlow=yrs.map((_,i)=>Math.round(states.reduce((s,b)=>s+FLOW_PANEL[b].per1k[i],0)/states.length));
   ch('c-ov-flow',{type:'line',data:{labels:yrs,datasets:[
     ...grayFlow,
+    {label:'Germany avg',data:avgFlow,borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
     {label:'Hamburg',data:FLOW_PANEL['Hamburg'].per1k,borderColor:HH,borderWidth:3,pointRadius:3,pointBackgroundColor:HH,fill:false,tension:0.3},
   ]},options:{...sharedOpts,
-    plugins:{legend:{display:false},tooltip:{filter:item=>item.dataset.label==='Hamburg'}},
+    plugins:{legend:{display:false},tooltip:{filter:item=>item.dataset.label==='Hamburg'||item.dataset.label==='Germany avg'}},
     scales:{
       x:{grid:{display:false},ticks:{callback:(v,i)=>yrs[i]===2023?'▼ 2023':yrs[i]}},
       y:{beginAtZero:true,ticks:{callback:v=>v.toLocaleString()}}
