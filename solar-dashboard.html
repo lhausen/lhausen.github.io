@@ -59,17 +59,54 @@ canvas{max-height:260px}
 </header>
 
 <nav class="section-nav">
-  <button class="snav-btn active" onclick="showSec(0)">① Absolute Trends</button>
-  <button class="snav-btn" onclick="showSec(1)">② Per Capita</button>
-  <button class="snav-btn" onclick="showSec(2)">③ Per km² &amp; Buildings</button>
-  <button class="snav-btn" onclick="showSec(3)">④ Growth Index</button>
-  <button class="snav-btn" onclick="showSec(4)">⑤ System Types</button>
-  <button class="snav-btn" onclick="showSec(5)">⑥ Post-2023 Dive</button>
-  <button class="snav-btn" onclick="showSec(6)">⑦ Annual Flow Rates</button>
+  <button class="snav-btn active" onclick="showSec(0)">★ Overview</button>
+  <button class="snav-btn" onclick="showSec(1)">① Absolute Trends</button>
+  <button class="snav-btn" onclick="showSec(2)">② Per Capita</button>
+  <button class="snav-btn" onclick="showSec(3)">③ Per km² &amp; Buildings</button>
+  <button class="snav-btn" onclick="showSec(4)">④ Growth Index</button>
+  <button class="snav-btn" onclick="showSec(5)">⑤ System Types</button>
+  <button class="snav-btn" onclick="showSec(6)">⑥ Post-2023 Dive</button>
+  <button class="snav-btn" onclick="showSec(7)">⑦ Annual Flow Rates</button>
 </nav>
 
+<!-- ★ OVERVIEW -->
+<div class="section active" id="sec-ov">
+  <div class="sec-hdr" style="border-left-color:var(--grn)">
+    <h2>★ Overview — Solar Adoption in Germany &amp; Hamburg 2015–2025</h2>
+    <p>Descriptive introduction · Key statistics and trends across all 16 Bundesländer · Mandate line: Jan 2023</p>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi de"><div class="kpi-lbl">Germany · cumulative stock</div><div class="kpi-val">4.5 M</div><div class="kpi-sub">solar installations (2015–2025)</div></div>
+    <div class="kpi de"><div class="kpi-lbl">National penetration</div><div class="kpi-val">22.5%</div><div class="kpi-sub">of residential buildings have solar</div></div>
+    <div class="kpi hh"><div class="kpi-lbl">Hamburg penetration</div><div class="kpi-val">6.8%</div><div class="kpi-sub">vs 22.5% national avg — 3.3× gap</div></div>
+    <div class="kpi hh"><div class="kpi-lbl">HH share of national</div><div class="kpi-val">0.85%</div><div class="kpi-sub">up from 0.39% pre-mandate · pop share: 2.2%</div></div>
+  </div>
+  <div class="insight">
+    💡 Hamburg has 2.2% of Germany's population but only 0.39% of its solar installations pre-mandate — <strong>5.6× underrepresented</strong>. The mandate (Jan 2023) coincides with a step-change in Hamburg's share of national commissionings, but a simultaneous national EEG shock (VAT removal) makes causal attribution non-trivial. All three charts below tell that story.
+  </div>
+  <!-- Chart 1: full width absolute -->
+  <div class="g-full card" style="margin-bottom:var(--gap)">
+    <h3>Annual Solar Commissionings 2015–2025 — All States</h3>
+    <p class="csub">Hamburg <span style="color:#2563eb;font-weight:700">——</span> · Germany total <span style="color:#334155;font-weight:700">——</span> · Individual states <span style="color:#cbd5e1;font-weight:700">——</span> · Dashed = Jan 2023 mandate</p>
+    <canvas id="c-ov-abs" style="max-height:300px"></canvas>
+  </div>
+  <!-- Charts 2 & 3 side by side -->
+  <div class="g2">
+    <div class="card">
+      <h3>Growth Index (2015 = 100)</h3>
+      <p class="csub">Hamburg <span style="color:#2563eb;font-weight:700">——</span> · Germany <span style="color:#334155;font-weight:700">——</span> · States <span style="color:#cbd5e1">——</span></p>
+      <canvas id="c-ov-idx"></canvas>
+    </div>
+    <div class="card">
+      <h3>New Solar per 1,000 New Buildings</h3>
+      <p class="csub">Flow rate · Hamburg <span style="color:#2563eb;font-weight:700">——</span> · All states <span style="color:#cbd5e1">——</span> · Wohn- + Nichtwohngebäude</p>
+      <canvas id="c-ov-flow"></canvas>
+    </div>
+  </div>
+</div>
+
 <!-- ① ABSOLUTE -->
-<div class="section active" id="sec0">
+<div class="section" id="sec0">
   <div class="sec-hdr"><h2>① Absolute Numbers &amp; Trends: Hamburg vs. National</h2>
     <p>Raw count of new solar PV systems commissioned per month and year</p></div>
   <div class="kpi-row">
@@ -743,6 +780,76 @@ ch('c-post23-size',{type:'bar',data:{
     }
     render();
   })();
+})();
+
+// ── ★ OVERVIEW charts ────────────────────────────────────────────────────────
+(function(){
+  const yrs=FLOW_YEARS;
+  const states=Object.keys(FLOW_PANEL).sort();
+  const natAnn={2015:47744,2016:50804,2017:66108,2018:75484,2019:111249,2020:185181,2021:226484,2022:330870,2023:815703,2024:655396,2025:458439};
+  const SLATE='#cbd5e1', DARK='#334155';
+
+  // mandate annotation as invisible point dataset with null gap
+  const mandateLine={
+    label:'',data:yrs.map(y=>y===2023?null:null),
+    borderColor:'transparent',pointRadius:0,fill:false
+  };
+
+  // ── Chart 1: absolute annual commissionings ─────────────────────────────
+  const grayLines=states.filter(b=>b!=='Hamburg').map(b=>({
+    label:b,data:FLOW_PANEL[b].solar,
+    borderColor:SLATE,borderWidth:1,pointRadius:0,fill:false,tension:0.3
+  }));
+  ch('c-ov-abs',{type:'line',data:{labels:yrs,datasets:[
+    ...grayLines,
+    {label:'Germany total',data:yrs.map(y=>natAnn[y]),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
+    {label:'Hamburg',data:FLOW_PANEL['Hamburg'].solar,borderColor:HH,borderWidth:3,pointRadius:3,pointBackgroundColor:HH,fill:false,tension:0.3},
+  ]},options:{...sharedOpts,
+    plugins:{
+      legend:{display:false},
+      tooltip:{filter:item=>item.dataset.label==='Hamburg'||item.dataset.label==='Germany total',callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}`}}
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{callback:(v,i)=>yrs[i]===2023?'▼ 2023':yrs[i]}},
+      y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}
+    }
+  }});
+
+  // ── Chart 2: growth index 2015=100 ─────────────────────────────────────
+  const idx=(arr,base)=>arr.map(v=>Math.round(v/base*100));
+  const nat2015=natAnn[2015];
+  const hh2015=FLOW_PANEL['Hamburg'].solar[0];
+  const grayIdx=states.filter(b=>b!=='Hamburg').map(b=>({
+    label:b,data:idx(FLOW_PANEL[b].solar,FLOW_PANEL[b].solar[0]),
+    borderColor:SLATE,borderWidth:1,pointRadius:0,fill:false,tension:0.3
+  }));
+  ch('c-ov-idx',{type:'line',data:{labels:yrs,datasets:[
+    ...grayIdx,
+    {label:'Germany',data:idx(yrs.map(y=>natAnn[y]),nat2015),borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
+    {label:'Hamburg',data:idx(FLOW_PANEL['Hamburg'].solar,hh2015),borderColor:HH,borderWidth:3,pointRadius:3,pointBackgroundColor:HH,fill:false,tension:0.3},
+  ]},options:{...sharedOpts,
+    plugins:{legend:{display:false},tooltip:{filter:item=>item.dataset.label==='Hamburg'||item.dataset.label==='Germany'}},
+    scales:{
+      x:{grid:{display:false},ticks:{callback:(v,i)=>yrs[i]===2023?'▼ 2023':yrs[i]}},
+      y:{beginAtZero:false,ticks:{callback:v=>v+'×'}}
+    }
+  }});
+
+  // ── Chart 3: flow rate per 1k new buildings ─────────────────────────────
+  const grayFlow=states.filter(b=>b!=='Hamburg').map(b=>({
+    label:b,data:FLOW_PANEL[b].per1k,
+    borderColor:SLATE,borderWidth:1,pointRadius:0,fill:false,tension:0.3
+  }));
+  ch('c-ov-flow',{type:'line',data:{labels:yrs,datasets:[
+    ...grayFlow,
+    {label:'Hamburg',data:FLOW_PANEL['Hamburg'].per1k,borderColor:HH,borderWidth:3,pointRadius:3,pointBackgroundColor:HH,fill:false,tension:0.3},
+  ]},options:{...sharedOpts,
+    plugins:{legend:{display:false},tooltip:{filter:item=>item.dataset.label==='Hamburg'}},
+    scales:{
+      x:{grid:{display:false},ticks:{callback:(v,i)=>yrs[i]===2023?'▼ 2023':yrs[i]}},
+      y:{beginAtZero:true,ticks:{callback:v=>v.toLocaleString()}}
+    }
+  }});
 })();
 
 function showSec(i){
