@@ -34,8 +34,13 @@
     .map-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
 
     /* Slider */
-    .slider-wrap{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap}
+    .slider-wrap{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap;padding:.5rem 0}
     .slider-wrap label{font-size:.8rem;font-weight:600;color:var(--muted);white-space:nowrap}
+    #mandate-slider{flex:1;min-width:160px;accent-color:var(--accent)}
+    #mandate-month-label{font-size:.875rem;font-weight:700;color:var(--fg);min-width:5rem}
+    .play-btn{font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;border:1px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+    .play-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .play-btn.playing{background:var(--accent);border-color:var(--accent);color:#fff}
 
     /* Map */
     #map{width:100%;height:560px;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow-md);overflow:hidden}
@@ -116,20 +121,45 @@
     <p>Growth in solar PV adoption comparing pre-mandate (2019–2022 avg/yr) vs post-mandate (2023–2025 avg/yr) by Bundesland and Hamburg postal code. Hover for details.</p>
   </div>
 
-  <!-- View toggle -->
-  <div class="map-controls">
-    <button class="map-btn active" id="btn-germany">☀️ Germany</button>
+  <!-- View tabs -->
+  <div class="map-controls" style="margin-bottom:.5rem">
+    <button class="map-btn active" id="btn-germany">☀️ Germany — Growth</button>
+    <button class="map-btn" id="btn-mandate">📋 Mandate Index</button>
     <button class="map-btn" id="btn-hamburg">🗺️ Hamburg PLZ</button>
+  </div>
+
+  <!-- Hamburg sub-controls -->
+  <div id="hh-controls" class="map-controls" style="display:none">
+    <span style="font-size:.8rem;font-weight:600;color:var(--muted)">Period:</span>
+    <button class="map-btn active" id="hh-btn-pre">Pre-mandate (2019–2022)</button>
+    <button class="map-btn" id="hh-btn-post">Post-mandate (2023–2025)</button>
+  </div>
+
+  <!-- Mandate slider -->
+  <div id="mandate-controls" style="display:none">
+    <div class="slider-wrap">
+      <label for="mandate-slider">Month:</label>
+      <input type="range" id="mandate-slider" min="0" max="95" value="48" step="1"/>
+      <span id="mandate-month-label">2023-01</span>
+      <button class="play-btn" id="play-btn">▶ Play</button>
+    </div>
   </div>
 
   <div id="map"></div>
 
-  <!-- Legend -->
-  <div class="map-legend">
-    <span>Lower growth</span>
+  <!-- Legends -->
+  <div id="legend-blue" class="map-legend">
+    <span>Lower</span>
     <div class="legend-bar" style="background:linear-gradient(to right,#dbeafe,#2563eb,#0c2340)"></div>
-    <span>Higher growth</span>
-    <span style="margin-left:1rem;color:var(--muted-light)">2019–2022 → 2023–2025 · colour scale: blue</span>
+    <span>Higher</span>
+    <span id="legend-blue-label" style="margin-left:1rem;color:var(--muted-light)">growth 2019–22 → 2023–25</span>
+  </div>
+  <div id="legend-mandate" class="map-legend" style="display:none">
+    <div class="legend-swatches">
+      <div class="swatch"><div class="sw" style="background:#e2e8f0"></div>No mandate</div>
+      <div class="swatch"><div class="sw" style="background:#fde68a"></div>Commercial Neubau only</div>
+      <div class="swatch"><div class="sw" style="background:#dc2626"></div>Full mandate (incl. private)</div>
+    </div>
   </div>
 
   <div class="map-info" id="info-panel"></div>
@@ -168,10 +198,13 @@ if(navToggle){
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let mapMode = 'germany';  // 'germany' | 'hamburg'
+let mapMode = 'germany';   // 'germany' | 'mandate' | 'hamburg'
+let hhView = 'pre';        // 'pre' | 'post'
+let mandateMonthIdx = 48;  // 2023-01
 let geojsonLayer = null;
 let hamburgLayer = null;
 let hhSolarData = {};
+let playing = false, playTimer = null;
 
 // ── Map ───────────────────────────────────────────────────────────────────────
 const map = L.map('map',{center:[51.2,10.4],zoom:6,zoomControl:true,scrollWheelZoom:false});
@@ -212,9 +245,21 @@ function mandateColor(score){
 }
 
 // ── Feature styling ───────────────────────────────────────────────────────────
+function mandateColor(score){
+  if(score===0) return'#e2e8f0';
+  if(score===1) return'#fde68a';
+  return'#dc2626';
+}
 function styleFeature(feature){
   const bl = feature.properties.Bundesland;
-  const d = INSTALL[bl];
+  if(mapMode==='mandate'){
+    const month=MONTHS[mandateMonthIdx];
+    const ts=MANDATE_TS[bl];
+    const idx=ts?ts.months.indexOf(month):-1;
+    const score=idx>=0?ts.score[idx]:0;
+    return{fillColor:mandateColor(score),fillOpacity:.82,color:'#475569',weight:.8};
+  }
+  const d=INSTALL[bl];
   if(!d) return{fillColor:'#f1f5f9',fillOpacity:.5,color:'#94a3b8',weight:.8};
   return{fillColor:blueColor(d.growth_pct,GROWTH_MAX),fillOpacity:.82,color:'#475569',weight:.8};
 }
@@ -274,11 +319,11 @@ function onEachFeature(feature,layer){
 }
 
 // ── Hamburg PLZ helpers ───────────────────────────────────────────────────────
-let HH_GROWTH_MAX=1;
-function hhGrowthPct(d){return d&&d.pre_mandate>0?((d.post_mandate-d.pre_mandate)/d.pre_mandate*100):0;}
+let HH_MAX={pre:1,post:1};
+function hhVal(d){return d?(hhView==='pre'?d.pre_mandate:d.post_mandate):0;}
 function hhStyleFeature(feature){
   const d=hhSolarData[String(feature.properties.plz)];
-  return{fillColor:blueColor(hhGrowthPct(d),HH_GROWTH_MAX),fillOpacity:.85,color:'#64748b',weight:.8};
+  return{fillColor:blueColor(hhVal(d),HH_MAX[hhView]),fillOpacity:.85,color:'#64748b',weight:.8};
 }
 function hhOnEachFeature(feature,layer){
   layer.on({
@@ -298,27 +343,102 @@ Promise.all([
   fetch('solar_data.json').then(r=>r.json())
 ]).then(([geo,data])=>{
   hhSolarData=data;
-  HH_GROWTH_MAX=Math.max(...Object.values(data).map(d=>hhGrowthPct(d)))||1;
+  const vals=Object.values(data);
+  HH_MAX.pre=Math.max(...vals.map(d=>d.pre_mandate||0))||1;
+  HH_MAX.post=Math.max(...vals.map(d=>d.post_mandate||0))||1;
   hamburgLayer=L.geoJSON(geo,{style:hhStyleFeature,onEachFeature:hhOnEachFeature});
 }).catch(err=>console.error('Hamburg data load error:',err));
 
-// ── View toggle ───────────────────────────────────────────────────────────────
-function setView(mode){
-  mapMode=mode;
-  document.getElementById('btn-germany').classList.toggle('active',mode==='germany');
-  document.getElementById('btn-hamburg').classList.toggle('active',mode==='hamburg');
-  if(mode==='germany'){
-    if(hamburgLayer) map.removeLayer(hamburgLayer);
-    if(geojsonLayer) geojsonLayer.addTo(map);
-    map.flyTo([51.2,10.4],6,{duration:.9});
-  } else {
-    if(geojsonLayer) map.removeLayer(geojsonLayer);
-    if(hamburgLayer) hamburgLayer.addTo(map);
-    map.flyTo([53.55,10.00],11,{duration:.9});
-  }
+// ── View helpers ──────────────────────────────────────────────────────────────
+function showGermany(){
+  if(hamburgLayer) map.removeLayer(hamburgLayer);
+  if(geojsonLayer) geojsonLayer.addTo(map);
+  map.flyTo([51.2,10.4],6,{duration:.9});
 }
-document.getElementById('btn-germany').addEventListener('click',()=>setView('germany'));
-document.getElementById('btn-hamburg').addEventListener('click',()=>setView('hamburg'));
+function showHamburg(){
+  if(geojsonLayer) map.removeLayer(geojsonLayer);
+  if(hamburgLayer) hamburgLayer.addTo(map);
+  map.flyTo([53.55,10.00],11,{duration:.9});
+}
+function setActivBtn(id){
+  ['btn-germany','btn-mandate','btn-hamburg'].forEach(b=>
+    document.getElementById(b).classList.toggle('active',b===id));
+}
+function showLegend(id){
+  document.getElementById('legend-blue').style.display=id==='legend-blue'?'flex':'none';
+  document.getElementById('legend-mandate').style.display=id==='legend-mandate'?'flex':'none';
+}
+function stopPlay(){
+  playing=false; clearInterval(playTimer);
+  document.getElementById('play-btn').textContent='▶ Play';
+  document.getElementById('play-btn').classList.remove('playing');
+}
+
+// ── Tab buttons ───────────────────────────────────────────────────────────────
+document.getElementById('btn-germany').addEventListener('click',()=>{
+  stopPlay(); mapMode='germany';
+  setActivBtn('btn-germany');
+  document.getElementById('hh-controls').style.display='none';
+  document.getElementById('mandate-controls').style.display='none';
+  document.getElementById('legend-blue-label').textContent='growth 2019–22 → 2023–25';
+  showLegend('legend-blue');
+  showGermany(); geojsonLayer&&geojsonLayer.setStyle(styleFeature);
+});
+
+document.getElementById('btn-mandate').addEventListener('click',()=>{
+  mapMode='mandate';
+  setActivBtn('btn-mandate');
+  document.getElementById('hh-controls').style.display='none';
+  document.getElementById('mandate-controls').style.display='block';
+  showLegend('legend-mandate');
+  showGermany(); geojsonLayer&&geojsonLayer.setStyle(styleFeature);
+});
+
+document.getElementById('btn-hamburg').addEventListener('click',()=>{
+  stopPlay(); mapMode='hamburg';
+  setActivBtn('btn-hamburg');
+  document.getElementById('hh-controls').style.display='flex';
+  document.getElementById('mandate-controls').style.display='none';
+  document.getElementById('legend-blue-label').textContent=
+    hhView==='pre'?'installations 2019–2022':'installations 2023–2025';
+  showLegend('legend-blue');
+  showHamburg(); hamburgLayer&&hamburgLayer.setStyle(hhStyleFeature);
+});
+
+// ── Hamburg period buttons ────────────────────────────────────────────────────
+['pre','post'].forEach(v=>{
+  document.getElementById('hh-btn-'+v).addEventListener('click',()=>{
+    hhView=v;
+    document.getElementById('hh-btn-pre').classList.toggle('active',v==='pre');
+    document.getElementById('hh-btn-post').classList.toggle('active',v==='post');
+    document.getElementById('legend-blue-label').textContent=
+      v==='pre'?'installations 2019–2022':'installations 2023–2025';
+    hamburgLayer&&hamburgLayer.setStyle(hhStyleFeature);
+  });
+});
+
+// ── Mandate slider ────────────────────────────────────────────────────────────
+const slider=document.getElementById('mandate-slider');
+const monthLbl=document.getElementById('mandate-month-label');
+slider.addEventListener('input',()=>{
+  mandateMonthIdx=+slider.value;
+  monthLbl.textContent=MONTHS[mandateMonthIdx];
+  geojsonLayer&&geojsonLayer.setStyle(styleFeature);
+});
+document.getElementById('play-btn').addEventListener('click',()=>{
+  if(playing){stopPlay();return;}
+  playing=true;
+  document.getElementById('play-btn').textContent='⏸ Pause';
+  document.getElementById('play-btn').classList.add('playing');
+  if(mandateMonthIdx>=MONTHS.length-1) mandateMonthIdx=0;
+  playTimer=setInterval(()=>{
+    mandateMonthIdx++;
+    slider.value=mandateMonthIdx;
+    monthLbl.textContent=MONTHS[mandateMonthIdx];
+    geojsonLayer&&geojsonLayer.setStyle(styleFeature);
+    if(mandateMonthIdx>=MONTHS.length-1) stopPlay();
+  },150);
+});
 </script>
 </body>
 </html>
