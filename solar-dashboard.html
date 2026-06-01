@@ -86,7 +86,7 @@ canvas{max-height:260px}
   </div>
   <!-- Chart 1: full width absolute -->
   <div class="g-full card" style="margin-bottom:var(--gap)">
-    <h3>Hamburg — Quarterly New Solar Installations 2019–2025</h3>
+    <h3>Hamburg — Quarterly New Solar Installations 2015–2025</h3>
     <p class="csub">New PV systems commissioned per quarter · Red dashed line = Solardachpflicht Jan 2023 · Hover for values</p>
     <canvas id="c-ov-abs" style="max-height:300px"></canvas>
   </div>
@@ -816,12 +816,15 @@ ch('c-post23-size',{type:'bar',data:{
     }
   });
 
-  // ── Chart 1: Hamburg quarterly bar chart with mandate vertical line ─────
-  const hhQ=toQ(HH_MON.slice(S));
-  const mandateIdx=Q_LBL.indexOf('2023 Q1');
+  // ── Chart 1: Hamburg quarterly line chart 2015–2025 with mandate line ──
+  const Q_LBL_FULL=[];
+  for(let y=2015;y<=2025;y++) for(let q=1;q<=4;q++) Q_LBL_FULL.push(`${y} Q${q}`);
+  const hhQFull=toQ(HH_MON); // all 44 quarters (132 months / 3)
+  const mIdx=Q_LBL_FULL.indexOf('2023 Q1'); // = 32
+  const qTickFull=(v,i)=>Q_LBL_FULL[i]==='2023 Q1'?'2023':Q_LBL_FULL[i]&&Q_LBL_FULL[i].endsWith('Q1')?Q_LBL_FULL[i].slice(0,4):'';
   const vlinePl={id:'vl',afterDraw(chart){
-    if(mandateIdx<0) return;
-    const x=chart.scales.x.getPixelForValue(mandateIdx);
+    if(mIdx<0) return;
+    const x=chart.scales.x.getPixelForValue(mIdx);
     const c2=chart.ctx;
     c2.save();
     c2.beginPath();
@@ -833,18 +836,16 @@ ch('c-post23-size',{type:'bar',data:{
     c2.fillText('Solardachpflicht Jan 2023',x+5,chart.chartArea.top+14);
     c2.restore();
   }};
-  ch('c-ov-abs',{type:'bar',data:{labels:Q_LBL,datasets:[
-    {label:'Hamburg',data:hhQ,
-     backgroundColor:Q_LBL.map((_,i)=>i>=mandateIdx?HH+'cc':HH+'55'),
-     borderColor:Q_LBL.map((_,i)=>i>=mandateIdx?HH:'transparent'),
-     borderWidth:1,borderRadius:2},
+  ch('c-ov-abs',{type:'line',data:{labels:Q_LBL_FULL,datasets:[
+    {label:'Hamburg',data:hhQFull,borderColor:HH,borderWidth:2.5,
+     pointRadius:2,pointBackgroundColor:HH,fill:false,tension:0.3},
   ]},plugins:[vlinePl],options:{...sharedOpts,
     plugins:{
       legend:{display:false},
       tooltip:{callbacks:{title:ctx=>ctx[0].label,label:ctx=>`Hamburg: ${ctx.parsed.y.toLocaleString()} new installations`}}
     },
     scales:{
-      x:{grid:{display:false},ticks:{maxRotation:0,callback:qTick}},
+      x:{grid:{display:false},ticks:{maxRotation:0,callback:qTickFull}},
       y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}
     }
   }});
