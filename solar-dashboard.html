@@ -845,18 +845,33 @@ ch('c-post23-size',{type:'bar',data:{
 
   // ── Chart 2: growth index Q1 2019 = 100 (quarterly) ────────────────────
   const idxArr=(arr,base)=>arr.map(v=>base>0?Math.round(v/base*100):0);
-  // base = Q1 2019 sum (first 3 months from index S)
   const hhQ=toQ(HH_MON.slice(S)), natQ=toQ(NAT_AVG_MON.slice(S));
+  // tooltip: show both Hamburg + Germany avg together; single line for gray states
+  const dualTip=(fmtFn)=>({
+    mode:'nearest',intersect:false,
+    callbacks:{
+      title:ctx=>ctx[0]?ctx[0].label:'',
+      label:ctx=>{
+        const lbl=ctx.dataset.label, v=fmtFn(ctx.parsed.y);
+        if(lbl!=='Hamburg'&&lbl!=='Germany avg') return `${lbl}: ${v}`;
+        const result=[`${lbl}: ${v}`];
+        const other=ctx.chart.data.datasets.find(d=>(d.label==='Hamburg'||d.label==='Germany avg')&&d.label!==lbl);
+        if(other) result.push(`${other.label}: ${fmtFn(other.data[ctx.dataIndex])}`);
+        return result;
+      }
+    }
+  });
   const grayIdx=monStates.filter(b=>b!=='Hamburg').map(b=>{
     const q=toQ(STATE_MON[b].slice(S));
-    return{label:b,data:idxArr(q,q[0]),borderColor:SLATE,borderWidth:1,pointRadius:0,fill:false,tension:0.3};
+    return{label:b,data:idxArr(q,q[0]),borderColor:SLATE,borderWidth:1,pointRadius:0,pointHoverRadius:4,fill:false,tension:0.3};
   });
   ch('c-ov-idx',{type:'line',data:{labels:Q_LBL,datasets:[
     ...grayIdx,
-    {label:'Germany avg',data:idxArr(natQ,natQ[0]),borderColor:DARK,borderWidth:2.5,pointRadius:2,fill:false,tension:0.3},
-    {label:'Hamburg',data:idxArr(hhQ,hhQ[0]),borderColor:HH,borderWidth:3,pointRadius:2,pointBackgroundColor:HH,fill:false,tension:0.3},
+    {label:'Germany avg',data:idxArr(natQ,natQ[0]),borderColor:DARK,borderWidth:2.5,pointRadius:2,pointHoverRadius:5,fill:false,tension:0.3},
+    {label:'Hamburg',data:idxArr(hhQ,hhQ[0]),borderColor:HH,borderWidth:3,pointRadius:2,pointHoverRadius:5,pointBackgroundColor:HH,fill:false,tension:0.3},
   ]},options:{...sharedOpts,
-    plugins:{legend:{display:false},tooltip:nearTip(v=>v+'%')},
+    interaction:{mode:'nearest',intersect:false},
+    plugins:{legend:{display:false},tooltip:dualTip(v=>v+'%')},
     scales:{
       x:{grid:{display:false},ticks:{maxRotation:0,callback:qTick}},
       y:{beginAtZero:false,ticks:{callback:v=>v+'%'}}
@@ -868,15 +883,16 @@ ch('c-post23-size',{type:'bar',data:{
   const annStates=Object.keys(PER1K_WOHN).sort();
   const grayFlow=annStates.filter(b=>b!=='Hamburg').map(b=>({
     label:b,data:PER1K_WOHN[b],
-    borderColor:SLATE,borderWidth:1,pointRadius:0,fill:false,tension:0.3
+    borderColor:SLATE,borderWidth:1,pointRadius:0,pointHoverRadius:4,fill:false,tension:0.3
   }));
   const avgFlow=yrs.map((_,i)=>Math.round(annStates.reduce((s,b)=>s+PER1K_WOHN[b][i],0)/annStates.length));
   ch('c-ov-flow',{type:'line',data:{labels:yrs,datasets:[
     ...grayFlow,
-    {label:'Germany avg',data:avgFlow,borderColor:DARK,borderWidth:2.5,pointRadius:0,fill:false,tension:0.3},
-    {label:'Hamburg',data:PER1K_WOHN['Hamburg'],borderColor:HH,borderWidth:3,pointRadius:3,pointBackgroundColor:HH,fill:false,tension:0.3},
+    {label:'Germany avg',data:avgFlow,borderColor:DARK,borderWidth:2.5,pointRadius:2,pointHoverRadius:5,fill:false,tension:0.3},
+    {label:'Hamburg',data:PER1K_WOHN['Hamburg'],borderColor:HH,borderWidth:3,pointRadius:3,pointHoverRadius:5,pointBackgroundColor:HH,fill:false,tension:0.3},
   ]},options:{...sharedOpts,
-    plugins:{legend:{display:false},tooltip:{mode:'nearest',intersect:false,callbacks:{title:ctx=>ctx[0].label,label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}`}}},
+    interaction:{mode:'nearest',intersect:false},
+    plugins:{legend:{display:false},tooltip:dualTip(v=>v.toLocaleString())},
     scales:{
       x:{grid:{display:false},ticks:{callback:(v,i)=>yrs[i]===2023?'▼ 2023':yrs[i]}},
       y:{beginAtZero:true,ticks:{callback:v=>v.toLocaleString()}}
