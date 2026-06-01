@@ -295,13 +295,15 @@ function showInfo(bl){
 function showInfoHH(plz){
   const d=hhSolarData[String(plz)];
   if(!d){_tt.innerHTML=`<div class="info-bl">PLZ ${plz}</div><span style="color:var(--muted-light)">No data</span>`;_tt.style.display='block';return;}
-  const growth=d.pre_mandate>0?((d.post_mandate-d.pre_mandate)/d.pre_mandate*100):null;
-  const growthStr=growth!=null?`+${growth.toFixed(0)}%`:'—';
+  const preAvg=(d.pre_mandate/4).toFixed(1);
+  const postAvg=(d.post_mandate/3).toFixed(1);
+  const growth=d.pre_mandate>0?((d.post_mandate/3-d.pre_mandate/4)/(d.pre_mandate/4)*100):null;
+  const growthStr=growth!=null?`${growth>=0?'+':''}${growth.toFixed(0)}%`:'—';
   _tt.innerHTML=`
     <div class="info-bl">PLZ ${plz} · Hamburg</div>
-    <div class="info-row"><span>Pre-mandate (2019–2022)</span><span class="info-val">${d.pre_mandate} installations</span></div>
-    <div class="info-row"><span>Post-mandate (2023–2025)</span><span class="info-val">${d.post_mandate} installations</span></div>
-    <div class="info-row"><span>Growth</span><span class="info-val" style="color:#2563eb">${growthStr}</span></div>`;
+    <div class="info-row"><span>Pre-mandate avg/yr (2019–2022)</span><span class="info-val">${preAvg}</span></div>
+    <div class="info-row"><span>Post-mandate avg/yr (2023–2025)</span><span class="info-val">${postAvg}</span></div>
+    <div class="info-row"><span>Growth in annual avg</span><span class="info-val" style="color:#2563eb">${growthStr}</span></div>`;
   _tt.style.display='block';
 }
 
@@ -319,11 +321,15 @@ function onEachFeature(feature,layer){
 }
 
 // ── Hamburg PLZ helpers ───────────────────────────────────────────────────────
-let HH_MAX={pre:1,post:1};
-function hhVal(d){return d?(hhView==='pre'?d.pre_mandate:d.post_mandate):0;}
+// pre = 4 years (2019–2022), post = 3 years (2023–2025) → annual averages
+let HH_SHARED_MAX=1;
+function hhVal(d){
+  if(!d) return 0;
+  return hhView==='pre'?d.pre_mandate/4:d.post_mandate/3;
+}
 function hhStyleFeature(feature){
   const d=hhSolarData[String(feature.properties.plz)];
-  return{fillColor:blueColor(hhVal(d),HH_MAX[hhView]),fillOpacity:.85,color:'#64748b',weight:.8};
+  return{fillColor:blueColor(hhVal(d),HH_SHARED_MAX),fillOpacity:.85,color:'#64748b',weight:.8};
 }
 function hhOnEachFeature(feature,layer){
   layer.on({
@@ -344,8 +350,11 @@ Promise.all([
 ]).then(([geo,data])=>{
   hhSolarData=data;
   const vals=Object.values(data);
-  HH_MAX.pre=Math.max(...vals.map(d=>d.pre_mandate||0))||1;
-  HH_MAX.post=Math.max(...vals.map(d=>d.post_mandate||0))||1;
+  // shared scale: max annual average across both periods so toggle is directly comparable
+  HH_SHARED_MAX=Math.max(
+    ...vals.map(d=>(d.pre_mandate||0)/4),
+    ...vals.map(d=>(d.post_mandate||0)/3)
+  )||1;
   hamburgLayer=L.geoJSON(geo,{style:hhStyleFeature,onEachFeature:hhOnEachFeature});
 }).catch(err=>console.error('Hamburg data load error:',err));
 
