@@ -36,11 +36,6 @@
     /* Slider */
     .slider-wrap{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap}
     .slider-wrap label{font-size:.8rem;font-weight:600;color:var(--muted);white-space:nowrap}
-    #mandate-slider{flex:1;min-width:160px;accent-color:var(--accent)}
-    #mandate-month-label{font-size:.875rem;font-weight:700;color:var(--fg);min-width:6rem}
-    .play-btn{font-size:.75rem;font-weight:600;padding:.3rem .75rem;border-radius:999px;border:1px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
-    .play-btn:hover{border-color:var(--accent);color:var(--accent)}
-    .play-btn.playing{background:var(--accent);border-color:var(--accent);color:#fff}
 
     /* Map */
     #map{width:100%;height:560px;border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow-md);overflow:hidden}
@@ -117,69 +112,24 @@
 
   <div class="map-header">
     <p class="section-label">Thesis Data · Germany</p>
-    <h1>Solar Mandates &amp; Installations across Germany</h1>
-    <p>Two interactive views: solar PV adoption rates before and after 2023 by Bundesland, and the rollout of solar roof mandates over time. Hover over a state for details.</p>
+    <h1>Solar Installation Growth across Germany</h1>
+    <p>Growth in solar PV adoption comparing pre-mandate (2019–2022 avg/yr) vs post-mandate (2023–2025 avg/yr) by Bundesland and Hamburg postal code. Hover for details.</p>
   </div>
 
-  <!-- Tab switcher -->
-  <div class="map-tabs">
-    <button class="map-tab active" id="tab-install">☀️ Solar Installations</button>
-    <button class="map-tab" id="tab-mandate">📋 Mandate Index</button>
-    <button class="map-tab" id="tab-hamburg">🗺️ Hamburg PLZ</button>
-  </div>
-
-  <!-- Install controls -->
-  <div id="install-controls" class="map-controls">
-    <span>Period:</span>
-    <button class="map-btn" id="btn-pre">Pre-mandate (2019–2022 avg/yr)</button>
-    <button class="map-btn active" id="btn-post">Post-mandate (2023–2025 avg/yr)</button>
-    <button class="map-btn" id="btn-growth">Growth rate (%)</button>
-  </div>
-
-  <!-- Hamburg PLZ controls -->
-  <div id="hamburg-controls" class="map-controls" style="display:none">
-    <span>Period:</span>
-    <button class="map-btn" id="hh-btn-pre">Pre-mandate (2019–2022)</button>
-    <button class="map-btn active" id="hh-btn-post">Post-mandate (2023+)</button>
-  </div>
-
-  <!-- Mandate controls -->
-  <div id="mandate-controls" style="display:none">
-    <div class="slider-wrap">
-      <label for="mandate-slider">Month:</label>
-      <input type="range" id="mandate-slider" min="48" max="95" value="71" step="1" />
-      <span id="mandate-month-label">2024-12</span>
-      <button class="play-btn" id="play-btn">▶ Play</button>
-    </div>
+  <!-- View toggle -->
+  <div class="map-controls">
+    <button class="map-btn active" id="btn-germany">☀️ Germany</button>
+    <button class="map-btn" id="btn-hamburg">🗺️ Hamburg PLZ</button>
   </div>
 
   <div id="map"></div>
 
-  <!-- Legends -->
-  <div id="legend-install" class="map-legend">
-    <span>Fewer</span>
-    <div class="legend-bar" style="background:linear-gradient(to right,#dbeafe,#2563eb,#0c2340)"></div>
-    <span>More</span>
-    <span style="margin-left:1rem;color:var(--muted-light)">installations per 100k residents/yr</span>
-  </div>
-  <div id="legend-growth" class="map-legend" style="display:none">
+  <!-- Legend -->
+  <div class="map-legend">
     <span>Lower growth</span>
-    <div class="legend-bar" style="background:linear-gradient(to right,#f0fdf4,#4ade80,#16a34a)"></div>
-    <span>Higher growth</span>
-    <span style="margin-left:1rem;color:var(--muted-light)">2019–2022 → 2023–2025</span>
-  </div>
-  <div id="legend-hamburg" class="map-legend" style="display:none">
-    <span>Fewer</span>
     <div class="legend-bar" style="background:linear-gradient(to right,#dbeafe,#2563eb,#0c2340)"></div>
-    <span>More</span>
-    <span style="margin-left:1rem;color:var(--muted-light)">total installations by PLZ · shared scale pre/post</span>
-  </div>
-  <div id="legend-mandate" class="map-legend" style="display:none">
-    <div class="legend-swatches">
-      <div class="swatch"><div class="sw" style="background:#e2e8f0"></div>No mandate</div>
-      <div class="swatch"><div class="sw" style="background:#fde68a"></div>Commercial Neubau only</div>
-      <div class="swatch"><div class="sw" style="background:#dc2626"></div>Full mandate (incl. private)</div>
-    </div>
+    <span>Higher growth</span>
+    <span style="margin-left:1rem;color:var(--muted-light)">2019–2022 → 2023–2025 · colour scale: blue</span>
   </div>
 
   <div class="map-info" id="info-panel"></div>
@@ -218,15 +168,10 @@ if(navToggle){
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let mapMode = 'install';   // 'install' | 'mandate' | 'hamburg'
-let installView = 'post';  // 'pre' | 'post' | 'growth'
-let mandateMonthIdx = 71;  // index into MONTHS (0=2019-01 ... 71=2024-12 ... 95=2026-12)
-let hhView = 'post';       // 'pre' | 'post'
+let mapMode = 'germany';  // 'germany' | 'hamburg'
 let geojsonLayer = null;
 let hamburgLayer = null;
 let hhSolarData = {};
-let playing = false;
-let playTimer = null;
 
 // ── Map ───────────────────────────────────────────────────────────────────────
 const map = L.map('map',{center:[51.2,10.4],zoom:6,zoomControl:true,scrollWheelZoom:false});
@@ -269,22 +214,9 @@ function mandateColor(score){
 // ── Feature styling ───────────────────────────────────────────────────────────
 function styleFeature(feature){
   const bl = feature.properties.Bundesland;
-  let fill;
-  if(mapMode==='install'){
-    const d=INSTALL[bl];
-    if(!d) return{fillColor:'#f1f5f9',fillOpacity:.5,color:'#94a3b8',weight:.8};
-    if(installView==='pre')   fill=blueColor(d.pre_annual_100k,PRE_MAX);
-    else if(installView==='post') fill=blueColor(d.post_annual_100k,POST_MAX);
-    else fill=growthColor(d.growth_pct);
-  } else {
-    const month=MONTHS[mandateMonthIdx];
-    const ts=MANDATE_TS[bl];
-    const idx=ts?ts.months.indexOf(month):-1;
-    const score=idx>=0?ts.score[idx]:0;
-    const priv=idx>=0?ts.priv[idx]:0;
-    fill=mandateColor(score);
-  }
-  return{fillColor:fill,fillOpacity:.82,color:'#475569',weight:.8};
+  const d = INSTALL[bl];
+  if(!d) return{fillColor:'#f1f5f9',fillOpacity:.5,color:'#94a3b8',weight:.8};
+  return{fillColor:blueColor(d.growth_pct,GROWTH_MAX),fillOpacity:.82,color:'#475569',weight:.8};
 }
 
 // ── Floating tooltip ─────────────────────────────────────────────────────────
@@ -303,36 +235,28 @@ document.addEventListener('mousemove',_ttMove);
 
 // ── Info panel ────────────────────────────────────────────────────────────────
 function showInfo(bl){
-  const panel=_tt;
-  if(mapMode==='install'){
-    const d=INSTALL[bl];
-    if(!d){panel.innerHTML=`<div class="info-bl">${bl}</div><span style="color:var(--muted-light)">No data available</span>`;return;}
-    const isHH=bl==='Hamburg';
-    panel.innerHTML=`
-      <div class="info-bl">${bl}${isHH?'<span class="info-badge badge-hh">Treatment</span>':''}</div>
-      <div class="info-row"><span>Pre-2023 rate (avg/yr per 100k)</span><span class="info-val">${d.pre_annual_100k.toFixed(0)}</span></div>
-      <div class="info-row"><span>2023–2025 rate (avg/yr per 100k)</span><span class="info-val">${d.post_annual_100k.toFixed(0)}</span></div>
-      <div class="info-row"><span>Growth rate</span><span class="info-val" style="color:${d.growth_pct>220?'#16a34a':'#dc2626'}">${d.growth_pct>0?'+':''}${d.growth_pct.toFixed(0)}%</span></div>`;
-  } else {
-    const month=MONTHS[mandateMonthIdx];
-    const ts=MANDATE_TS[bl];
-    const idx=ts?ts.months.indexOf(month):-1;
-    const score=idx>=0?ts.score[idx]:0;
-    const priv=idx>=0?ts.priv[idx]:0;
-    const comm=idx>=0?ts.comm[idx]:0;
-    const scoreLabel=['No mandate','Commercial Neubau only','Full mandate (Comm + Private)'][score]||'—';
-    const badgeCls=score===0?'badge-none':score===2?'badge-full':'badge-partial';
-    const privNote=priv?'✓ Private Neubau':'✗ Private Neubau';
-    const commNote=comm?'✓ Commercial Neubau':'✗ Commercial Neubau';
-    const isHH=bl==='Hamburg';
-    panel.innerHTML=`
-      <div class="info-bl">${bl}${isHH?'<span class="info-badge badge-hh">Treatment state</span>':''}
-        <span class="info-badge ${badgeCls}">${scoreLabel}</span></div>
-      <div class="info-row" style="gap:.5rem;flex-wrap:wrap">
-        <span style="color:${comm?'#16a34a':'#94a3b8'}">${commNote}</span>
-        <span style="color:${priv?'#16a34a':'#94a3b8'}">${privNote}</span>
-      </div>`;
-  }
+  const d=INSTALL[bl];
+  if(!d){_tt.innerHTML=`<div class="info-bl">${bl}</div><span style="color:var(--muted-light)">No data</span>`;_tt.style.display='block';return;}
+  const isHH=bl==='Hamburg';
+  const growthCol=d.growth_pct>=300?'#1d4ed8':d.growth_pct>=200?'#2563eb':'#3b82f6';
+  _tt.innerHTML=`
+    <div class="info-bl">${bl}${isHH?'<span class="info-badge badge-hh">Treatment</span>':''}</div>
+    <div class="info-row"><span>Pre-mandate avg/yr (per 100k)</span><span class="info-val">${d.pre_annual_100k.toFixed(0)}</span></div>
+    <div class="info-row"><span>Post-mandate avg/yr (per 100k)</span><span class="info-val">${d.post_annual_100k.toFixed(0)}</span></div>
+    <div class="info-row"><span>Growth 2019–22 → 2023–25</span><span class="info-val" style="color:${growthCol}">+${d.growth_pct.toFixed(0)}%</span></div>`;
+  _tt.style.display='block';
+}
+
+function showInfoHH(plz){
+  const d=hhSolarData[String(plz)];
+  if(!d){_tt.innerHTML=`<div class="info-bl">PLZ ${plz}</div><span style="color:var(--muted-light)">No data</span>`;_tt.style.display='block';return;}
+  const growth=d.pre_mandate>0?((d.post_mandate-d.pre_mandate)/d.pre_mandate*100):null;
+  const growthStr=growth!=null?`+${growth.toFixed(0)}%`:'—';
+  _tt.innerHTML=`
+    <div class="info-bl">PLZ ${plz} · Hamburg</div>
+    <div class="info-row"><span>Pre-mandate (2019–2022)</span><span class="info-val">${d.pre_mandate} installations</span></div>
+    <div class="info-row"><span>Post-mandate (2023–2025)</span><span class="info-val">${d.post_mandate} installations</span></div>
+    <div class="info-row"><span>Growth</span><span class="info-val" style="color:#2563eb">${growthStr}</span></div>`;
   _tt.style.display='block';
 }
 
@@ -343,153 +267,58 @@ function resetInfo(){
 // ── GeoJSON layer ─────────────────────────────────────────────────────────────
 function onEachFeature(feature,layer){
   layer.on({
-    mouseover(e){
-      e.target.setStyle({weight:2.5,color:'#2563eb',fillOpacity:.95});
-      showInfo(feature.properties.Bundesland);
-    },
+    mouseover(e){e.target.setStyle({weight:2.5,color:'#2563eb',fillOpacity:.95});showInfo(feature.properties.Bundesland);},
     mousemove(e){_ttMove(e);},
-    mouseout(e){
-      geojsonLayer.resetStyle(e.target);
-      resetInfo();
-    }
+    mouseout(e){geojsonLayer.resetStyle(e.target);resetInfo();}
   });
 }
 
 // ── Hamburg PLZ helpers ───────────────────────────────────────────────────────
-const HH_MAX_POST = {val:null}; // computed after data loads
-function hhGetVal(plz){const d=hhSolarData[String(plz)];if(!d)return 0;return hhView==='pre'?d.pre_mandate:d.post_mandate;}
+let HH_GROWTH_MAX=1;
+function hhGrowthPct(d){return d&&d.pre_mandate>0?((d.post_mandate-d.pre_mandate)/d.pre_mandate*100):0;}
 function hhStyleFeature(feature){
-  if(!HH_MAX_POST.val) HH_MAX_POST.val=Math.max(...Object.values(hhSolarData).map(d=>d.post_mandate||0))||1;
-  return{fillColor:blueColor(hhGetVal(feature.properties.plz),HH_MAX_POST.val),fillOpacity:.85,color:'#64748b',weight:.8};
+  const d=hhSolarData[String(feature.properties.plz)];
+  return{fillColor:blueColor(hhGrowthPct(d),HH_GROWTH_MAX),fillOpacity:.85,color:'#64748b',weight:.8};
 }
 function hhOnEachFeature(feature,layer){
   layer.on({
-    mouseover(e){
-      e.target.setStyle({weight:2.5,color:'#2563eb',fillOpacity:.95});
-      const plz=String(feature.properties.plz);
-      const d=hhSolarData[plz]||{};
-      _tt.innerHTML=`
-        <div class="info-bl">PLZ ${plz} · Hamburg</div>
-        <div class="info-row"><span>Pre-mandate (2019–2022)</span><span class="info-val">${d.pre_mandate||0} installations</span></div>
-        <div class="info-row"><span>Post-mandate (2023+)</span><span class="info-val">${d.post_mandate||0} installations</span></div>`;
-      _tt.style.display='block';
-    },
+    mouseover(e){e.target.setStyle({weight:2.5,color:'#2563eb',fillOpacity:.95});showInfoHH(feature.properties.plz);},
     mousemove(e){_ttMove(e);},
     mouseout(e){hamburgLayer.resetStyle(e.target);resetInfo();}
   });
 }
 
-// ── Load all geodata ──────────────────────────────────────────────────────────
+// ── Load geodata ──────────────────────────────────────────────────────────────
 fetch('bundeslaender.geojson').then(r=>r.json()).then(geo=>{
   geojsonLayer=L.geoJSON(geo,{style:styleFeature,onEachFeature}).addTo(map);
 }).catch(err=>console.error('GeoJSON load error:',err));
 
-// Pre-fetch Hamburg data so it's ready when tab is clicked
 Promise.all([
   fetch('hamburg_plz.json').then(r=>r.json()),
   fetch('solar_data.json').then(r=>r.json())
 ]).then(([geo,data])=>{
   hhSolarData=data;
-  HH_MAX_POST.val=Math.max(...Object.values(data).map(d=>d.post_mandate||0))||1;
-  // Build layer but don't add to map yet
+  HH_GROWTH_MAX=Math.max(...Object.values(data).map(d=>hhGrowthPct(d)))||1;
   hamburgLayer=L.geoJSON(geo,{style:hhStyleFeature,onEachFeature:hhOnEachFeature});
 }).catch(err=>console.error('Hamburg data load error:',err));
 
-function updateMap(){
-  if(mapMode==='hamburg'){if(hamburgLayer) hamburgLayer.setStyle(hhStyleFeature);}
-  else{if(geojsonLayer) geojsonLayer.setStyle(styleFeature);}
+// ── View toggle ───────────────────────────────────────────────────────────────
+function setView(mode){
+  mapMode=mode;
+  document.getElementById('btn-germany').classList.toggle('active',mode==='germany');
+  document.getElementById('btn-hamburg').classList.toggle('active',mode==='hamburg');
+  if(mode==='germany'){
+    if(hamburgLayer) map.removeLayer(hamburgLayer);
+    if(geojsonLayer) geojsonLayer.addTo(map);
+    map.flyTo([51.2,10.4],6,{duration:.9});
+  } else {
+    if(geojsonLayer) map.removeLayer(geojsonLayer);
+    if(hamburgLayer) hamburgLayer.addTo(map);
+    map.flyTo([53.55,10.00],11,{duration:.9});
+  }
 }
-
-// ── Layer helpers ─────────────────────────────────────────────────────────────
-function showGermanyLayers(){
-  if(hamburgLayer) map.removeLayer(hamburgLayer);
-  if(geojsonLayer) geojsonLayer.addTo(map);
-  map.flyTo([51.2,10.4],6,{duration:.9});
-}
-function showHamburgLayer(){
-  if(geojsonLayer) map.removeLayer(geojsonLayer);
-  if(hamburgLayer){hamburgLayer.addTo(map);}
-  map.flyTo([53.55,10.00],11,{duration:.9});
-}
-
-const ALL_TABS=['tab-install','tab-mandate','tab-hamburg'];
-const ALL_LEGENDS=['legend-install','legend-growth','legend-mandate','legend-hamburg'];
-const ALL_CTRLS=['install-controls','mandate-controls','hamburg-controls'];
-function activateTab(id){ALL_TABS.forEach(t=>document.getElementById(t).classList.toggle('active',t===id));}
-function showLegend(id){ALL_LEGENDS.forEach(l=>document.getElementById(l).style.display=l===id?'flex':'none');}
-function showCtrl(id){ALL_CTRLS.forEach(c=>document.getElementById(c).style.display=c===id?c==='mandate-controls'?'block':'flex':'none');}
-
-// ── Tab switching ─────────────────────────────────────────────────────────────
-document.getElementById('tab-install').addEventListener('click',()=>{
-  mapMode='install'; activateTab('tab-install'); showCtrl('install-controls');
-  showLegend(installView==='growth'?'legend-growth':'legend-install');
-  stopPlay(); showGermanyLayers(); updateMap();
-});
-
-document.getElementById('tab-mandate').addEventListener('click',()=>{
-  mapMode='mandate'; activateTab('tab-mandate'); showCtrl('mandate-controls');
-  showLegend('legend-mandate');
-  showGermanyLayers(); updateMap();
-});
-
-document.getElementById('tab-hamburg').addEventListener('click',()=>{
-  mapMode='hamburg'; activateTab('tab-hamburg'); showCtrl('hamburg-controls');
-  showLegend('legend-hamburg');
-  stopPlay(); showHamburgLayer(); updateMap();
-});
-
-// ── Install period buttons ────────────────────────────────────────────────────
-['pre','post','growth'].forEach(v=>{
-  document.getElementById('btn-'+v).addEventListener('click',()=>{
-    installView=v;
-    ['pre','post','growth'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===v));
-    showLegend(v==='growth'?'legend-growth':'legend-install');
-    updateMap();
-  });
-});
-
-// ── Hamburg period buttons ────────────────────────────────────────────────────
-['pre','post'].forEach(v=>{
-  document.getElementById('hh-btn-'+v).addEventListener('click',()=>{
-    hhView=v;
-    ['pre','post'].forEach(x=>document.getElementById('hh-btn-'+x).classList.toggle('active',x===v));
-    updateMap();
-  });
-});
-
-// ── Mandate time slider ───────────────────────────────────────────────────────
-const slider=document.getElementById('mandate-slider');
-slider.max=MONTHS.length-1;
-slider.value=mandateMonthIdx;
-
-function updateSlider(){
-  mandateMonthIdx=+slider.value;
-  document.getElementById('mandate-month-label').textContent=MONTHS[mandateMonthIdx];
-  updateMap();
-}
-slider.addEventListener('input',updateSlider);
-
-function stopPlay(){
-  playing=false;
-  clearInterval(playTimer);
-  document.getElementById('play-btn').textContent='▶ Play';
-  document.getElementById('play-btn').classList.remove('playing');
-}
-
-document.getElementById('play-btn').addEventListener('click',()=>{
-  if(playing){stopPlay();return;}
-  playing=true;
-  document.getElementById('play-btn').textContent='⏸ Pause';
-  document.getElementById('play-btn').classList.add('playing');
-  // Start from first mandate month if at end
-  if(mandateMonthIdx>=MONTHS.length-1) mandateMonthIdx=48;
-  playTimer=setInterval(()=>{
-    mandateMonthIdx++;
-    slider.value=mandateMonthIdx;
-    updateSlider();
-    if(mandateMonthIdx>=MONTHS.length-1) stopPlay();
-  },120);
-});
+document.getElementById('btn-germany').addEventListener('click',()=>setView('germany'));
+document.getElementById('btn-hamburg').addEventListener('click',()=>setView('hamburg'));
 </script>
 </body>
 </html>
