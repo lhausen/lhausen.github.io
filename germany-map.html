@@ -128,13 +128,6 @@
     <button class="map-btn" id="btn-hamburg">🗺️ Hamburg PLZ</button>
   </div>
 
-  <!-- Germany sub-controls -->
-  <div id="de-controls" class="map-controls">
-    <span style="font-size:.8rem;font-weight:600;color:var(--muted)">Period:</span>
-    <button class="map-btn active" id="de-btn-pre">Pre-mandate (2019–2022)</button>
-    <button class="map-btn" id="de-btn-post">Post-mandate (2023–2025)</button>
-  </div>
-
   <!-- Hamburg sub-controls -->
   <div id="hh-controls" class="map-controls" style="display:none">
     <span style="font-size:.8rem;font-weight:600;color:var(--muted)">Period:</span>
@@ -159,7 +152,7 @@
     <span>Lower</span>
     <div class="legend-bar" style="background:linear-gradient(to right,#dbeafe,#2563eb,#0c2340)"></div>
     <span>Higher</span>
-    <span id="legend-blue-label" style="margin-left:1rem;color:var(--muted-light)">growth 2019–22 → 2023–25</span>
+    <span id="legend-blue-label" style="margin-left:1rem;color:var(--muted-light)">growth in avg/yr (2019–22 → 2023–25)</span>
   </div>
   <div id="legend-mandate" class="map-legend" style="display:none">
     <div class="legend-swatches">
@@ -205,11 +198,10 @@ if(navToggle){
 }
 
 const INST_AVG={"Baden-Württemberg":{"pre":34576.5,"post":98321.3},"Bayern":{"pre":48046.2,"post":127602.7},"Berlin":{"pre":1662.5,"post":6207.3},"Brandenburg":{"pre":7027.8,"post":20030.7},"Bremen":{"pre":314.8,"post":1975.7},"Hamburg":{"pre":763.5,"post":3822.0},"Hessen":{"pre":12996.2,"post":41575.3},"Mecklenburg-Vorpommern":{"pre":2828.2,"post":9645.3},"Niedersachsen":{"pre":21969.5,"post":78960.3},"Nordrhein-Westfalen":{"pre":39826.5,"post":125488.3},"Rheinland-Pfalz":{"pre":12118.5,"post":37356.0},"Saarland":{"pre":1868.2,"post":6893.3},"Sachsen":{"pre":7466.0,"post":21912.0},"Sachsen-Anhalt":{"pre":5014.2,"post":14976.7},"Schleswig-Holstein":{"pre":5788.0,"post":23104.3},"Thüringen":{"pre":4032.8,"post":14243.7}};
-const DE_SHARED_MAX=Math.max(...Object.values(INST_AVG).map(d=>d.post));
+const DE_GROWTH_MAX=Math.max(...Object.values(INST_AVG).map(d=>(d.post-d.pre)/d.pre*100));
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let mapMode = 'germany';   // 'germany' | 'mandate' | 'hamburg'
-let deView = 'pre';        // 'pre' | 'post'
 let hhView = 'pre';        // 'pre' | 'post'
 let mandateMonthIdx = 48;  // 2023-01
 let geojsonLayer = null;
@@ -272,7 +264,7 @@ function styleFeature(feature){
   }
   const d=INST_AVG[bl];
   if(!d) return{fillColor:'#f1f5f9',fillOpacity:.5,color:'#94a3b8',weight:.8};
-  return{fillColor:blueColor(d[deView],DE_SHARED_MAX),fillOpacity:.82,color:'#475569',weight:.8};
+  return{fillColor:blueColor((d.post-d.pre)/d.pre*100,DE_GROWTH_MAX),fillOpacity:.82,color:'#475569',weight:.8};
 }
 
 // ── Floating tooltip ─────────────────────────────────────────────────────────
@@ -398,31 +390,16 @@ function stopPlay(){
 document.getElementById('btn-germany').addEventListener('click',()=>{
   stopPlay(); mapMode='germany';
   setActivBtn('btn-germany');
-  document.getElementById('de-controls').style.display='flex';
   document.getElementById('hh-controls').style.display='none';
   document.getElementById('mandate-controls').style.display='none';
-  document.getElementById('legend-blue-label').textContent=
-    deView==='pre'?'avg/yr 2019–2022':' avg/yr 2023–2025';
+  document.getElementById('legend-blue-label').textContent='growth in avg/yr (2019–22 → 2023–25)';
   showLegend('legend-blue');
   showGermany(); geojsonLayer&&geojsonLayer.setStyle(styleFeature);
-});
-
-// ── Germany period buttons ────────────────────────────────────────────────────
-['pre','post'].forEach(v=>{
-  document.getElementById('de-btn-'+v).addEventListener('click',()=>{
-    deView=v;
-    document.getElementById('de-btn-pre').classList.toggle('active',v==='pre');
-    document.getElementById('de-btn-post').classList.toggle('active',v==='post');
-    document.getElementById('legend-blue-label').textContent=
-      v==='pre'?'avg/yr 2019–2022':'avg/yr 2023–2025';
-    geojsonLayer&&geojsonLayer.setStyle(styleFeature);
-  });
 });
 
 document.getElementById('btn-mandate').addEventListener('click',()=>{
   mapMode='mandate';
   setActivBtn('btn-mandate');
-  document.getElementById('de-controls').style.display='none';
   document.getElementById('hh-controls').style.display='none';
   document.getElementById('mandate-controls').style.display='block';
   showLegend('legend-mandate');
@@ -432,7 +409,6 @@ document.getElementById('btn-mandate').addEventListener('click',()=>{
 document.getElementById('btn-hamburg').addEventListener('click',()=>{
   stopPlay(); mapMode='hamburg';
   setActivBtn('btn-hamburg');
-  document.getElementById('de-controls').style.display='none';
   document.getElementById('hh-controls').style.display='flex';
   document.getElementById('mandate-controls').style.display='none';
   document.getElementById('legend-blue-label').textContent=
