@@ -817,7 +817,7 @@ ch('c-post23-size',{type:'bar',data:{
   const qTickFull=(v,i)=>Q_LBL_FULL[i]==='2023 Q1'?'2023':Q_LBL_FULL[i]&&Q_LBL_FULL[i].endsWith('Q1')?Q_LBL_FULL[i].slice(0,4):'';
   const vlinePl={id:'vl',afterDraw(chart){
     if(mIdx<0) return;
-    const x=chart.scales.x.getPixelForValue(mIdx);
+    const x=(chart.scales.x.getPixelForValue(mIdx-1)+chart.scales.x.getPixelForValue(mIdx))/2;
     const c2=chart.ctx;
     c2.save();
     c2.beginPath();
