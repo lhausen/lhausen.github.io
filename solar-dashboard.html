@@ -118,7 +118,7 @@ canvas{max-height:260px}
   </div>
   <div class="g-full card">
     <h3>Monthly New Installations — Absolute Count (dual axis)</h3>
-    <p class="csub">Hamburg (left axis, solid) vs Germany (right axis, dashed) · 2019–2025</p>
+    <p class="csub">Hamburg (left axis, solid) vs Germany avg per state ÷16 (right axis, dashed) · 2019–2025</p>
     <div class="legend"><span><span class="dot" style="background:var(--hh)"></span>Hamburg (left)</span><span><span class="dot" style="background:var(--de)"></span>Germany (right)</span></div>
     <canvas id="c-abs-monthly"></canvas>
     <p class="mandate">▲ Jan 2023: Hamburg private mandate &nbsp; ▲ Jan 2024: Roof renovation mandate</p>
@@ -337,11 +337,11 @@ const sharedOpts={responsive:true,maintainAspectRatio:false,animation:false,inte
 // ① ABS
 ch('c-abs-monthly',{type:'line',data:{labels:MONTHS,datasets:[
   {label:'Hamburg',data:HH_ABS,borderColor:HH,borderWidth:2.5,tension:.3,pointRadius:0,fill:false,yAxisID:'y'},
-  {label:'Germany',data:NAT_ABS,borderColor:DE,borderWidth:1.5,tension:.3,pointRadius:0,fill:false,yAxisID:'y2',borderDash:[4,3]}
+  {label:'Germany avg (÷16)',data:NAT_AVG_MON.slice(48),borderColor:DE,borderWidth:1.5,tension:.3,pointRadius:0,fill:false,yAxisID:'y2',borderDash:[4,3]}
 ]},options:{...sharedOpts,plugins:{legend:{display:false}},
   scales:{x:{grid:{display:false},ticks:{maxTicksLimit:18,maxRotation:45}},
     y:{beginAtZero:true,position:'left',title:{display:true,text:'Hamburg'},ticks:{callback:v=>fmt(v)}},
-    y2:{beginAtZero:true,position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'Germany'},ticks:{callback:v=>fmt(v)}}}}});
+    y2:{beginAtZero:true,position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'Germany avg (÷16)'},ticks:{callback:v=>fmt(v)}}}}});
 
 function barChart(id,data,labels,col){ch(id,{type:'bar',data:{labels:labels||data.map(r=>r.year),datasets:[{label:'Systems',data:data.map(r=>r.count),backgroundColor:col+'CC',borderRadius:3}]},options:{...sharedOpts,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}}});}
 barChart('c-ann-hh',ANN_HH.filter(r=>r.year>=2015),null,HH);
