@@ -1,4 +1,4 @@
-# Accessibility Audit: leonardfredershausen.github.io
+# Accessibility Audit: lhausen.github.io
 
 **Standard:** WCAG 2.1 AA | **Date:** May 23, 2026 | **Scope:** index.html, blog/index.html, blog/posts/*, style.css, post.css
 
