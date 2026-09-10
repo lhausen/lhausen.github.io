@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,539 +13,274 @@
   <meta name="twitter:title" content="Leonard Fredershausen — Economics Student" />
   <meta name="twitter:description" content="Economics student at the University of Hamburg focused on sustainability, inequality, and evidence-based policy." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <script>(function(){try{var d=document.documentElement,t=d.dataset.themeLock||localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.dataset.theme=t;}catch(e){}})();</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 
-<!-- ── NAVIGATION ── -->
-<nav>
-  <div class="nav-inner">
-    <a class="logo" href="#about">
-      <svg width="34" height="34" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Leonard Fredershausen">
-        <defs><clipPath id="nc"><circle cx="100" cy="100" r="95"/></clipPath></defs>
-        <circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/>
-        <g clip-path="url(#nc)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="74,13 44,118 104,118"/>
-          <line x1="118" y1="65" x2="85" y2="190"/>
-          <line x1="118" y1="65" x2="184" y2="65"/>
-          <line x1="104" y1="118" x2="148" y2="118"/>
-        </g>
-      </svg>
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a class="site-nav__logo" href="index.html" aria-label="Leonard Fredershausen — Home">
+      <svg width="26" height="26" viewBox="0 0 200 200" aria-hidden="true"><defs><clipPath id="lf-clip"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#lf-clip)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg>
     </a>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#research">Research</a></li>
-      
-      <li><a href="#cv">CV</a></li>
-      <li><a href="blog/index.html">Blog</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a class="nav-cv-btn" href="Leonard_Fredershausen_CV.pdf" download>Download CV</a></li>
-      <li><button class="lang-toggle" id="langToggle" aria-label="Switch language">EN</button></li>
-      <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-      <svg class="icon-ham" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="5" x2="18" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="15" x2="18" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <svg class="icon-x" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="3" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="3" x2="3" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
+    <nav class="site-nav__links" aria-label="Primary">
+      <a class="site-nav__link" href="#about" data-section="about" data-en="About" data-de="Über mich">About</a>
+      <a class="site-nav__link" href="#research" data-section="research" data-en="Research" data-de="Forschung">Research</a>
+      <a class="site-nav__link" href="#cv" data-section="cv" data-en="CV" data-de="Lebenslauf">CV</a>
+      <a class="site-nav__link" href="blog/index.html">Blog</a>
+      <a class="site-nav__link" href="#contact" data-section="contact" data-en="Contact" data-de="Kontakt">Contact</a>
+    </nav>
+    <div class="site-nav__actions">
+      <a class="btn-cv" href="Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf (PDF)">Download CV</a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-set="de" aria-pressed="false">DE</button>
+      </div>
+      <button type="button" class="theme-btn" data-theme-toggle aria-label="Toggle dark mode">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <div class="site-nav__mobile">
+      <button type="button" class="theme-btn theme-btn--flat" data-theme-toggle aria-label="Toggle dark mode">
+        <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg>
+      </button>
+      <button type="button" class="menu-btn" data-menu-toggle aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
   </div>
-</nav>
+  <div class="site-nav__menu" data-menu hidden>
+    <nav aria-label="Primary">
+      <a class="site-nav__menu-link" href="#about" data-en="About" data-de="Über mich">About</a>
+      <a class="site-nav__menu-link" href="#research" data-en="Research" data-de="Forschung">Research</a>
+      <a class="site-nav__menu-link" href="#cv" data-en="CV" data-de="Lebenslauf">CV</a>
+      <a class="site-nav__menu-link" href="blog/index.html">Blog</a>
+      <a class="site-nav__menu-link" href="#contact" data-en="Contact" data-de="Kontakt">Contact</a>
+    </nav>
+    <div class="site-nav__menu-row">
+      <div class="lang-switch lang-switch--lg" role="group" aria-label="Language">
+        <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-set="de" aria-pressed="false">DE</button>
+      </div>
+      <a class="btn-cv btn-cv--lg" href="Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf (PDF)">Download CV</a>
+    </div>
+  </div>
+</header>
 
-<!-- ── MAIN CONTENT ── -->
 <main id="main-content">
 
-<!-- ── HERO ── -->
-<section id="about">
-  <canvas id="hero-canvas"></canvas>
-  <div class="section-inner">
-    <p class="hero-eyebrow fade-up"><span id="typewriter-role" data-en="Economics Student" data-de="Wirtschaftsstudent">Economics Student</span> · Hamburg</p>
-    <h1 class="hero-name fade-up">Leonard<br><span>Fredershausen</span></h1>
-    <p class="hero-bio fade-up" data-en="8th-semester B.Sc. Economics student at the University of Hamburg, focused on sustainability, inequality, and public policy. Experienced in causal inference and data analysis — and trained at making findings accessible to non-technical audiences." data-de="Wirtschaftsstudent im 8. Semester (B.Sc.) an der Universität Hamburg mit Schwerpunkt Nachhaltigkeit, Ungleichheit und evidenzbasierter Politik. Erfahrung in kausaler Inferenz und Datenanalyse — und geübt darin, Ergebnisse für nicht-technische Zielgruppen verständlich zu machen.">
-      8th-semester B.Sc. Economics student at the University of Hamburg, focused on
-      sustainability, inequality, and public policy. Experienced in
-      causal inference and data analysis — and trained at making findings
-      accessible to non-technical audiences.
-    </p>
-    <div class="hero-links fade-up">
-      <a class="btn btn-primary" href="#research" data-en="Current Research" data-de="Aktuelle Forschung">Current Research</a>
-      <a class="btn btn-secondary" href="Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf herunterladen">Download CV</a>
-    </div>
-  </div>
-</section>
-
-<!-- ── RESEARCH & PUBLICATIONS ── -->
-<section id="research" class="subtle">
-  <div class="section-inner">
-    <p class="section-label" data-en="Research & Publications" data-de="Forschung & Publikationen">Research & Publications</p>
-    <h2 class="section-title" data-en="Academic Work" data-de="Akademische Arbeiten">Academic Work</h2>
-    <div class="pub-card fade-up">
-      <div class="pub-card-header">
-        <h3 data-en="How Effective is Hamburg's Solar Roof Mandate?" data-de="Wie wirksam ist Hamburgs Solardachpflicht?">How Effective is Hamburg's Solar Roof Mandate?</h3>
-        <span class="pub-status status-progress" data-en="In Progress" data-de="In Bearbeitung">In Progress</span>
-      </div>
-      <p class="pub-meta" data-en="Bachelor's Thesis · University of Hamburg · 2026 · Supervisor: Prof. Lange" data-de="Bachelorarbeit · Universität Hamburg · 2026 · Betreuer: Prof. Lange">Bachelor's Thesis · University of Hamburg · 2026 · Supervisor: Prof. Lange</p>
-      <p data-en="Staggered difference-in-differences analysis estimating the causal effect of Hamburg's Solardachpflicht on residential solar PV adoption, comparing Hamburg against six surrounding Landkreise using Marktstammdatenregister data at the PLZ × month level." data-de="Gestaffelte Difference-in-Differences-Analyse zur Schätzung des Kausaleffekts der Hamburger Solardachpflicht auf die private Solarenergienutzung, unter Verwendung von Marktstammdatenregisterdaten auf PLZ-×-Monats-Ebene.">Staggered difference-in-differences analysis estimating the causal effect of Hamburg's Solardachpflicht on residential solar PV adoption, comparing Hamburg against six surrounding Landkreise using Marktstammdatenregister data at the PLZ × month level.</p>
-      <div class="tag-row">
-        <span class="tag">Difference-in-Differences</span>
-        <span class="tag">Energy Policy</span>
-        <span class="tag">R</span>
-        <span class="tag">MaStR Data</span>
-        <span class="tag">Causal Inference</span>
-      </div>
-      <div class="pub-actions">
-        <a class="pub-read-more" href="blog/posts/hamburg-solar-mandate.html" data-en="Read thesis update →" data-de="Zur Thesis-Aktualisierung →">Read thesis update →</a>
-        <a class="pub-read-more pub-read-more-alt" href="germany-map.html" data-en="View interactive maps →" data-de="Interaktive Karten →">View interactive maps →</a>
-        <a class="pub-read-more pub-read-more-alt" href="solar-dashboard.html" data-en="MaStR dashboard →" data-de="MaStR Dashboard →">MaStR dashboard →</a>
-      </div>
-    </div>
-
-    <div class="pub-card fade-up">
-      <div class="pub-card-header">
-        <h3 data-en="Effectiveness of SSB Taxes in Reducing Obesity among Children and Adolescents (aged 5–19)" data-de="Wirksamkeit von Zuckersteuergetränken bei der Reduzierung von Adipositas bei Kindern und Jugendlichen (5–19 Jahre)">Effectiveness of SSB Taxes in Reducing Obesity among Children and Adolescents (aged 5–19)</h3>
-        <span class="pub-status status-done" data-en="Completed" data-de="Abgeschlossen">Completed</span>
-      </div>
-      <p class="pub-meta" data-en="Term Paper · Global Health Politics · University of Hamburg · March 2024 · Supervisor: Prof. Dr. Max Schaub" data-de="Seminararbeit · Global Health Politics · Universität Hamburg · März 2024 · Betreuer: Prof. Dr. Max Schaub">Term Paper · Global Health Politics · University of Hamburg · March 2024 · Supervisor: Prof. Dr. Max Schaub</p>
-      <p data-en="Difference-in-differences panel study using WHO Global Health Observatory data from 2000–2022, comparing obesity prevalence in the UK and Ireland against Germany and Switzerland following the introduction of SSB taxes in 2018. ATET estimated at −0.181 pp (p > 0.05)." data-de="Difference-in-Differences-Panelstudie mit WHO-Daten (2000–2022), die Adipositasprävalenz in UK und Irland mit Deutschland und der Schweiz nach Einführung der Zuckersteuer 2018 vergleicht. ATET: −0,181 Pp (p > 0,05).">Difference-in-differences panel study using WHO Global Health Observatory data from 2000–2022, comparing obesity prevalence in the UK and Ireland against Germany and Switzerland following the introduction of SSB taxes in 2018. ATET estimated at −0.181 pp (p > 0.05).</p>
-      <div class="tag-row">
-        <span class="tag">Difference-in-Differences</span>
-        <span class="tag">Health Economics</span>
-        <span class="tag">Stata</span>
-        <span class="tag">Panel Data</span>
-      </div>
-      <div class="pub-actions">
-        <a class="pub-read-more" href="blog/posts/ssb-tax-obesity-findings.html" data-en="Read key findings →" data-de="Zu den Ergebnissen →">Read key findings →</a>
-      </div>
-    </div>
-
-    <div class="pub-card fade-up">
-      <div class="pub-card-header">
-        <h3 data-en="Bürgergeld: Daten- und Faktenüberblick" data-de="Bürgergeld: Daten- und Faktenüberblick">Bürgergeld: Daten- und Faktenüberblick</h3>
-        <span class="pub-status status-done" data-en="Completed" data-de="Abgeschlossen">Completed</span>
-      </div>
-      <p class="pub-meta" data-en="Policy Brief · November 2024" data-de="Policy Brief · November 2024">Policy Brief · November 2024</p>
-      <p data-en="A data-driven fact-check of Germany's Bürgergeld welfare programme, summarising key figures on recipient distribution, labour market availability, costs (5.56% of the federal budget), and common misconceptions — drawing on official sources." data-de="Ein datenbasierter Faktencheck zum Bürgergeld, der Schlüsselkennzahlen zu Empfängerstruktur, Arbeitsmarktverfügbarkeit, Kosten (5,56 % des Bundeshaushalts) und verbreiteten Missverständnissen zusammenfasst.">A data-driven fact-check of Germany's Bürgergeld welfare programme, summarising key figures on recipient distribution, labour market availability, costs (5.56% of the federal budget), and common misconceptions — drawing on official sources.</p>
-      <div class="tag-row">
-        <span class="tag">Social Policy</span>
-        <span class="tag">Labour Economics</span>
-        <span class="tag">Data Visualisation</span>
-      </div>
-      <div class="pub-actions">
-        <a class="pub-read-more" href="blog/posts/buergergeld-faktencheck.html" data-en="Read Faktencheck →" data-de="Zum Faktencheck →">Read Faktencheck →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── CV ── -->
-<section id="cv" class="light">
-  <div class="section-inner">
-    <p class="section-label" data-en="CV" data-de="Lebenslauf">CV</p>
-    <h2 class="section-title" data-en="Background" data-de="Werdegang">Background</h2>
-    <p class="section-subtitle">
-      Full CV available as a <a href="Leonard_Fredershausen_CV.pdf" download style="color:var(--accent);font-weight:600;text-decoration:none;border-bottom:1px solid var(--accent-border);">PDF download</a>.
-    </p>
-
-    <div class="cv-group fade-up">
-      <p class="cv-group-title" data-en="Education" data-de="Ausbildung">Education</p>
-      <div class="cv-item">
-        <span class="cv-date">Oct 2022 – present</span>
-        <div>
-          <h4 data-en="B.Sc. Economics" data-de="B.Sc. Volkswirtschaftslehre">B.Sc. Economics</h4>
-          <p>University of Hamburg · GPA: 1.9 (Good)</p>
-          <ul class="cv-bullets">
-            <li>DiD panel study on sugar taxes in 4 OECD countries — grade 1.0</li>
-            <li>Seminar paper on EU carbon leakage policy — grade 1.3</li>
-            <li>Coursework: Global Health Politics, Economics of Climate Change, Sustainability Economics</li>
-          </ul>
+  <!-- ── HERO ── -->
+  <section id="about" class="hero">
+    <div class="hero__inner">
+      <div class="hero__text">
+        <p class="eyebrow" data-en="Economics Student · Hamburg" data-de="Wirtschaftsstudent · Hamburg">Economics Student · Hamburg</p>
+        <h1 class="hero__name">Leonard<br>Fredershausen</h1>
+        <p class="hero__lead lead" data-en="8th-semester B.Sc. Economics student at the University of Hamburg, focused on sustainability, inequality and public policy. Experienced in causal inference and data analysis — and trained at making findings accessible to non-technical audiences." data-de="Wirtschaftsstudent im 8. Semester (B.Sc.) an der Universität Hamburg mit Schwerpunkt Nachhaltigkeit, Ungleichheit und evidenzbasierter Politik. Erfahrung in kausaler Inferenz und Datenanalyse — und geübt darin, Ergebnisse für nicht-technische Zielgruppen verständlich zu machen.">8th-semester B.Sc. Economics student at the University of Hamburg, focused on sustainability, inequality and public policy. Experienced in causal inference and data analysis — and trained at making findings accessible to non-technical audiences.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#research" data-en="Current Research" data-de="Aktuelle Forschung">Current Research</a>
+          <a class="btn btn--secondary" href="Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf herunterladen">Download CV</a>
         </div>
       </div>
-      <div class="cv-item">
-        <span class="cv-date">Aug 2013 – Jun 2022</span>
-        <div>
-          <h4 data-en="Abitur (A-Level)" data-de="Abitur">Abitur (A-Level)</h4>
-          <p>Dietrich Bonnhöffer Gymnasium, Quickborn · Final grade: 2.5</p>
-          <ul class="cv-bullets">
-            <li>Class representative — elected by 20 peers, organised end-of-year events</li>
-          </ul>
+      <!-- Portrait slot (4:5, ≥ 640×800). Drop a file named portrait.jpg into the site root and it appears; hidden while missing. -->
+      <figure class="hero__portrait">
+        <img src="portrait.jpg" alt="Leonard Fredershausen" width="640" height="800" onerror="this.closest('figure').hidden=true">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ── RESEARCH ── -->
+  <section id="research" class="section section--subtle">
+    <div class="container">
+      <p class="eyebrow" data-en="Research" data-de="Forschung">Research</p>
+      <h2 class="section__title" data-en="Academic Work" data-de="Akademische Arbeiten">Academic Work</h2>
+      <div class="card-list">
+
+        <article class="work-card fade-up">
+          <div class="work-card__head">
+            <h3 class="work-card__title" data-en="How Effective is Hamburg’s Solar Roof Mandate?" data-de="Wie wirksam ist Hamburgs Solardachpflicht?">How Effective is Hamburg’s Solar Roof Mandate?</h3>
+            <span class="pill pill--progress" data-en="In Progress" data-de="In Bearbeitung">In Progress</span>
+          </div>
+          <p class="work-card__meta" data-en="Bachelor’s Thesis · University of Hamburg · 2026 · Supervisor: Prof. Lange" data-de="Bachelorarbeit · Universität Hamburg · 2026 · Betreuer: Prof. Lange">Bachelor’s Thesis · University of Hamburg · 2026 · Supervisor: Prof. Lange</p>
+          <p class="work-card__text" data-en="Staggered difference-in-differences analysis estimating the causal effect of Hamburg’s Solardachpflicht on residential solar PV adoption, comparing Hamburg against six surrounding Landkreise using Marktstammdatenregister data at the PLZ × month level." data-de="Gestaffelte Difference-in-Differences-Analyse zur Schätzung des Kausaleffekts der Hamburger Solardachpflicht auf die private Solarenergienutzung, im Vergleich mit sechs umliegenden Landkreisen auf Basis von Marktstammdatenregister-Daten auf PLZ-×-Monats-Ebene.">Staggered difference-in-differences analysis estimating the causal effect of Hamburg’s Solardachpflicht on residential solar PV adoption, comparing Hamburg against six surrounding Landkreise using Marktstammdatenregister data at the PLZ × month level.</p>
+          <div class="work-card__links">
+            <a class="link-arrow" href="blog/posts/hamburg-solar-mandate.html" data-en="Read thesis update →" data-de="Zur Thesis-Aktualisierung →">Read thesis update →</a>
+            <a class="link-arrow" href="germany-map.html" data-en="Interactive maps →" data-de="Interaktive Karten →">Interactive maps →</a>
+            <a class="link-arrow" href="solar-dashboard.html" data-en="MaStR dashboard →" data-de="MaStR-Dashboard →">MaStR dashboard →</a>
+          </div>
+        </article>
+
+        <article class="work-card fade-up">
+          <div class="work-card__head">
+            <h3 class="work-card__title" data-en="Effectiveness of SSB Taxes in Reducing Obesity among Children and Adolescents (aged 5–19)" data-de="Wirksamkeit von Zuckersteuern bei der Reduzierung von Adipositas bei Kindern und Jugendlichen (5–19 Jahre)">Effectiveness of SSB Taxes in Reducing Obesity among Children and Adolescents (aged 5–19)</h3>
+            <span class="pill pill--done" data-en="Completed" data-de="Abgeschlossen">Completed</span>
+          </div>
+          <p class="work-card__meta" data-en="Term Paper · Global Health Politics · University of Hamburg · March 2024 · Supervisor: Prof. Dr. Max Schaub" data-de="Seminararbeit · Global Health Politics · Universität Hamburg · März 2024 · Betreuer: Prof. Dr. Max Schaub">Term Paper · Global Health Politics · University of Hamburg · March 2024 · Supervisor: Prof. Dr. Max Schaub</p>
+          <p class="work-card__text" data-en="Difference-in-differences panel study using WHO Global Health Observatory data from 2000–2022, comparing obesity prevalence in the UK and Ireland against Germany and Switzerland following the introduction of SSB taxes in 2018. ATET estimated at −0.181 pp (p &gt; 0.05)." data-de="Difference-in-Differences-Panelstudie mit WHO-Daten (2000–2022), die die Adipositasprävalenz in UK und Irland mit Deutschland und der Schweiz nach Einführung der Zuckersteuer 2018 vergleicht. ATET: −0,181 Pp (p &gt; 0,05).">Difference-in-differences panel study using WHO Global Health Observatory data from 2000–2022, comparing obesity prevalence in the UK and Ireland against Germany and Switzerland following the introduction of SSB taxes in 2018. ATET estimated at −0.181 pp (p &gt; 0.05).</p>
+          <div class="work-card__links">
+            <a class="link-arrow" href="blog/posts/ssb-tax-obesity-findings.html" data-en="Read key findings →" data-de="Zu den Ergebnissen →">Read key findings →</a>
+          </div>
+        </article>
+
+        <article class="work-card fade-up">
+          <div class="work-card__head">
+            <h3 class="work-card__title">Bürgergeld: Daten- und Faktenüberblick</h3>
+            <span class="pill pill--done" data-en="Completed" data-de="Abgeschlossen">Completed</span>
+          </div>
+          <p class="work-card__meta">Policy Brief · November 2024</p>
+          <p class="work-card__text" data-en="A data-driven fact-check of Germany’s Bürgergeld welfare programme, summarising key figures on recipient distribution, labour market availability, costs (5.56% of the federal budget) and common misconceptions — drawing on official sources." data-de="Ein datenbasierter Faktencheck zum Bürgergeld, der Schlüsselkennzahlen zu Empfängerstruktur, Arbeitsmarktverfügbarkeit, Kosten (5,56 % des Bundeshaushalts) und verbreiteten Missverständnissen zusammenfasst — auf Basis offizieller Quellen.">A data-driven fact-check of Germany’s Bürgergeld welfare programme, summarising key figures on recipient distribution, labour market availability, costs (5.56% of the federal budget) and common misconceptions — drawing on official sources.</p>
+          <div class="work-card__links">
+            <a class="link-arrow" href="blog/posts/buergergeld-faktencheck.html" data-en="Read Faktencheck →" data-de="Zum Faktencheck →">Read Faktencheck →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CV ── -->
+  <section id="cv" class="section">
+    <div class="container">
+      <p class="eyebrow" data-en="CV" data-de="Lebenslauf">CV</p>
+      <div class="section__head">
+        <h2 class="section__title" data-en="Background" data-de="Werdegang">Background</h2>
+        <a class="link-arrow" href="Leonard_Fredershausen_CV.pdf" download data-en="Full CV as PDF →" data-de="Vollständiger Lebenslauf (PDF) →">Full CV as PDF →</a>
+      </div>
+
+      <div class="cv-group fade-up">
+        <h3 class="cv-group__label" data-en="Education" data-de="Ausbildung">Education</h3>
+        <div class="cv-group__items">
+          <div>
+            <p class="cv-item__date" data-en="Oct 2022 – present" data-de="Okt. 2022 – heute">Oct 2022 – present</p>
+            <h4 class="cv-item__title" data-en="B.Sc. Economics" data-de="B.Sc. Volkswirtschaftslehre">B.Sc. Economics</h4>
+            <p class="cv-item__sub" data-en="University of Hamburg · GPA 1.9 (Good)" data-de="Universität Hamburg · Notendurchschnitt 1,9 (Gut)">University of Hamburg · GPA 1.9 (Good)</p>
+            <ul class="cv-item__bullets">
+              <li data-en="DiD panel study on sugar taxes in 4 OECD countries — grade 1.0" data-de="DiD-Panelstudie zu Zuckersteuern in 4 OECD-Ländern — Note 1,0">DiD panel study on sugar taxes in 4 OECD countries — grade 1.0</li>
+              <li data-en="Seminar paper on EU carbon leakage policy — grade 1.3" data-de="Seminararbeit zur EU-Carbon-Leakage-Politik — Note 1,3">Seminar paper on EU carbon leakage policy — grade 1.3</li>
+              <li data-en="Coursework: Global Health Politics, Economics of Climate Change, Sustainability Economics" data-de="Kurse: Global Health Politics, Economics of Climate Change, Sustainability Economics">Coursework: Global Health Politics, Economics of Climate Change, Sustainability Economics</li>
+            </ul>
+          </div>
+          <div>
+            <p class="cv-item__date" data-en="Aug 2013 – Jun 2022" data-de="Aug. 2013 – Juni 2022">Aug 2013 – Jun 2022</p>
+            <h4 class="cv-item__title" data-en="Abitur (A-Level)" data-de="Abitur">Abitur (A-Level)</h4>
+            <p class="cv-item__sub" data-en="Dietrich-Bonhoeffer-Gymnasium, Quickborn · Final grade 2.5" data-de="Dietrich-Bonhoeffer-Gymnasium, Quickborn · Abschlussnote 2,5">Dietrich-Bonhoeffer-Gymnasium, Quickborn · Final grade 2.5</p>
+            <ul class="cv-item__bullets">
+              <li data-en="Class representative — elected by 20 peers, organised end-of-year events" data-de="Klassensprecher — von 20 Mitschüler:innen gewählt, Organisation der Jahresabschlussveranstaltungen">Class representative — elected by 20 peers, organised end-of-year events</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-group fade-up">
+        <h3 class="cv-group__label" data-en="Honors &amp; Awards" data-de="Auszeichnungen">Honors &amp; Awards</h3>
+        <div class="cv-group__items">
+          <div>
+            <p class="cv-item__date" data-en="Jan 2026 – present" data-de="Jan. 2026 – heute">Jan 2026 – present</p>
+            <h4 class="cv-item__title" data-en="Scholarship · Heinz Wüstenberg Foundation" data-de="Stipendium · Heinz-Wüstenberg-Stiftung">Scholarship · Heinz Wüstenberg Foundation</h4>
+            <p class="cv-item__sub" data-en="Merit-based award for outstanding academic performance and social commitment" data-de="Leistungsbasiertes Stipendium für herausragende akademische Leistungen und soziales Engagement">Merit-based award for outstanding academic performance and social commitment</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-group fade-up">
+        <h3 class="cv-group__label" data-en="Work Experience" data-de="Berufserfahrung">Work Experience</h3>
+        <div class="cv-group__items">
+          <div>
+            <p class="cv-item__date" data-en="Nov 2023 – present" data-de="Nov. 2023 – heute">Nov 2023 – present</p>
+            <h4 class="cv-item__title" data-en="Pedagogical Employee · Jugendbildung Hamburg gGmbH" data-de="Pädagogischer Mitarbeiter · Jugendbildung Hamburg gGmbH">Pedagogical Employee · Jugendbildung Hamburg gGmbH</h4>
+            <ul class="cv-item__bullets">
+              <li data-en="Executed 100+ workshops for 1,400+ pupils" data-de="Über 100 Workshops für mehr als 1.400 Schüler:innen durchgeführt">Executed 100+ workshops for 1,400+ pupils</li>
+              <li data-en="Developed tailored support for underprivileged groups" data-de="Maßgeschneiderte Förderangebote für benachteiligte Gruppen entwickelt">Developed tailored support for underprivileged groups</li>
+              <li data-en="Taught 200+ pupils how to write internship applications and CVs" data-de="Über 200 Schüler:innen im Verfassen von Praktikumsbewerbungen und Lebensläufen geschult">Taught 200+ pupils how to write internship applications and CVs</li>
+            </ul>
+          </div>
+          <div>
+            <p class="cv-item__date" data-en="Sep 2020 – Oct 2023" data-de="Sept. 2020 – Okt. 2023">Sep 2020 – Oct 2023</p>
+            <h4 class="cv-item__title" data-en="Cashier · REWE, Quickborn" data-de="Kassierer · REWE, Quickborn">Cashier · REWE, Quickborn</h4>
+          </div>
+          <div>
+            <p class="cv-item__date" data-en="Sep 2021 – Sep 2022" data-de="Sept. 2021 – Sept. 2022">Sep 2021 – Sep 2022</p>
+            <h4 class="cv-item__title" data-en="Courier · Eulen Pharmacy, Quickborn" data-de="Kurier · Eulen Apotheke, Quickborn">Courier · Eulen Pharmacy, Quickborn</h4>
+          </div>
+          <div>
+            <p class="cv-item__date" data-en="Jul 2019 – Mar 2020" data-de="Juli 2019 – März 2020">Jul 2019 – Mar 2020</p>
+            <h4 class="cv-item__title" data-en="Temporary Employee · Apollo Optik, Hamburg" data-de="Aushilfskraft · Apollo Optik, Hamburg">Temporary Employee · Apollo Optik, Hamburg</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-group fade-up">
+        <h3 class="cv-group__label" data-en="Voluntary Work" data-de="Ehrenamt">Voluntary Work</h3>
+        <div class="cv-group__items">
+          <div>
+            <p class="cv-item__date" data-en="Oct 2023 – present" data-de="Okt. 2023 – heute">Oct 2023 – present</p>
+            <h4 class="cv-item__title" data-en="Volunteer · Jugendbildung Hamburg gGmbH" data-de="Ehrenamtlicher · Jugendbildung Hamburg gGmbH">Volunteer · Jugendbildung Hamburg gGmbH</h4>
+            <ul class="cv-item__bullets">
+              <li data-en="Hosted “Study Orientation Days” at 20+ schools, presenting to 2,000+ pupils" data-de="„Studienorientierungstage“ an über 20 Schulen für mehr als 2.000 Schüler:innen gestaltet">Hosted “Study Orientation Days” at 20+ schools, presenting to 2,000+ pupils</li>
+              <li data-en="Made economic concepts accessible through interactive presentations" data-de="Wirtschaftliche Konzepte durch interaktive Präsentationen zugänglich gemacht">Made economic concepts accessible through interactive presentations</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-group fade-up">
+        <h3 class="cv-group__label" data-en="Skills" data-de="Fähigkeiten">Skills</h3>
+        <div class="cv-group__items skills">
+          <div>
+            <p class="skills__label" data-en="Methods" data-de="Methoden">Methods</p>
+            <div class="chips">
+              <span class="chip">R</span><span class="chip">Stata</span><span class="chip">Python</span>
+              <span class="chip">Difference-in-Differences</span>
+              <span class="chip" data-en="Causal Inference" data-de="Kausale Inferenz">Causal Inference</span>
+              <span class="chip" data-en="Data Visualisation" data-de="Datenvisualisierung">Data Visualisation</span>
+            </div>
+          </div>
+          <div>
+            <p class="skills__label" data-en="Tools" data-de="Werkzeuge">Tools</p>
+            <div class="chips">
+              <span class="chip">Excel</span><span class="chip">PowerPoint</span><span class="chip">Zotero</span>
+              <span class="chip">Claude Code</span><span class="chip">CLI</span>
+            </div>
+          </div>
+          <div>
+            <p class="skills__label" data-en="Languages" data-de="Sprachen">Languages</p>
+            <div class="chips">
+              <span class="chip" data-en="German (native)" data-de="Deutsch (Muttersprache)">German (native)</span>
+              <span class="chip" data-en="English (C1 · TOEFL 110/120)" data-de="Englisch (C1 · TOEFL 110/120)">English (C1 · TOEFL 110/120)</span>
+              <span class="chip" data-en="French (B1)" data-de="Französisch (B1)">French (B1)</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="cv-group fade-up">
-      <p class="cv-group-title" data-en="Honors &amp; Awards" data-de="Auszeichnungen">Honors & Awards</p>
-      <div class="cv-item">
-        <span class="cv-date">Jan 2026 – present</span>
-        <div>
-          <h4 data-en="Scholarship · Heinz Wüstenberg Foundation" data-de="Stipendium · Heinz-Wüstenberg-Stiftung">Scholarship · Heinz Wüstenberg Foundation</h4>
-          <p data-en="Merit-based award for outstanding academic performance and social commitment" data-de="Leistungsbasiertes Stipendium für herausragende akademische Leistungen und soziales Engagement">Merit-based award for outstanding academic performance and social commitment</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="cv-group fade-up">
-      <p class="cv-group-title" data-en="Work Experience" data-de="Berufserfahrung">Work Experience</p>
-      <div class="cv-item">
-        <span class="cv-date">Nov 2023 – present</span>
-        <div>
-          <h4 data-en="Pedagogical Employee · Jugendbildung Hamburg gGmbH" data-de="Pädagogischer Mitarbeiter · Jugendbildung Hamburg gGmbH">Pedagogical Employee · Jugendbildung Hamburg gGmbH</h4>
-          <ul class="cv-bullets">
-            <li>Executed 100+ workshops for 1,400+ pupils</li>
-            <li>Developed tailored support for underprivileged groups</li>
-            <li>Taught 200+ pupils how to write internship applications and CVs</li>
-          </ul>
-        </div>
-      </div>
-      <div class="cv-item">
-        <span class="cv-date">Sep 2020 – Oct 2023</span>
-        <div>
-          <h4 data-en="Cashier · REWE, Quickborn" data-de="Kassierer · REWE, Quickborn">Cashier · REWE, Quickborn</h4>
-        </div>
-      </div>
-      <div class="cv-item">
-        <span class="cv-date">Sep 2021 – Sep 2022</span>
-        <div>
-          <h4 data-en="Courier · Eulen Pharmacy, Quickborn" data-de="Kurier · Eulen Apotheke, Quickborn">Courier · Eulen Pharmacy, Quickborn</h4>
-        </div>
-      </div>
-      <div class="cv-item">
-        <span class="cv-date">Jul 2019 – Mar 2020</span>
-        <div>
-          <h4 data-en="Temporary Employee · Apollo Optik, Hamburg" data-de="Aushilfskraft · Apollo Optik, Hamburg">Temporary Employee · Apollo Optik, Hamburg</h4>
-        </div>
-      </div>
-    </div>
-
-    <div class="cv-group fade-up">
-      <p class="cv-group-title" data-en="Voluntary Work" data-de="Ehrenamtliche Tätigkeiten">Voluntary Work</p>
-      <div class="cv-item">
-        <span class="cv-date">Oct 2023 – present</span>
-        <div>
-          <h4 data-en="Volunteer · Jugendbildung Hamburg gGmbH" data-de="Ehrenamtlicher · Jugendbildung Hamburg gGmbH">Volunteer · Jugendbildung Hamburg gGmbH</h4>
-          <ul class="cv-bullets">
-            <li>Hosted "Study Orientation Days" at 20+ schools, presenting to 2,000+ pupils</li>
-            <li>Made economic concepts accessible through interactive presentations</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="cv-group fade-up">
-      <p class="cv-group-title" data-en="Skills" data-de="Fähigkeiten">Skills</p>
-      <div class="skills-grid">
-        <span class="skill-chip">R</span>
-        <span class="skill-chip">Stata</span>
-        <span class="skill-chip">Python</span>
-        <span class="skill-chip">Difference-in-Differences</span>
-        <span class="skill-chip">Causal Inference</span>
-        <span class="skill-chip">Data Visualisation</span>
-        <span class="skill-chip">Excel</span>
-        <span class="skill-chip">PowerPoint</span>
-        <span class="skill-chip">Zotero</span>
-        <span class="skill-chip">Claude Code</span>
-        <span class="skill-chip">CLI</span>
-        <span class="skill-chip">German (Native)</span>
-        <span class="skill-chip">English (C1 · TOEFL 110/120)</span>
-        <span class="skill-chip">French (B1)</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── CONTACT ── -->
-<section id="contact">
-  <div class="section-inner">
-    <div class="contact-card fade-up">
-      <h2 data-en="Get in Touch" data-de="Kontakt aufnehmen">Get in Touch</h2>
-      <p class="contact-intro" data-en="Feel free to reach out about research, collaborations, or anything else. I try to respond within a few days." data-de="Schreib mir gerne zu Forschungsthemen, Kooperationen oder anderen Anliegen. Ich antworte in der Regel innerhalb weniger Tage.">
-        Feel free to reach out about research, collaborations, or anything else.
-        I try to respond within a few days.
-      </p>
-      <div class="contact-links">
-        <button class="contact-email" id="copyEmailBtn" aria-label="Copy email address">
-          <span class="email-default">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
-            l.fredershausen@outlook.de
-          </span>
-          <span class="email-copied" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Copied!
-          </span>
+  <!-- ── CONTACT ── -->
+  <section id="contact" class="section section--subtle contact">
+    <div class="contact__inner">
+      <h2 class="section__title contact__title" data-en="Get in Touch" data-de="Kontakt aufnehmen">Get in Touch</h2>
+      <p class="contact__lead" data-en="Open to conversations about research, collaborations or roles in policy analysis. I usually reply within a few days." data-de="Ich freue mich über Nachrichten zu Forschung, Kooperationen oder Stellen in der Politikanalyse. In der Regel antworte ich innerhalb weniger Tage.">Open to conversations about research, collaborations or roles in policy analysis. I usually reply within a few days.</p>
+      <div class="contact__actions">
+        <button type="button" class="btn btn--primary copy-btn" data-copy="l.fredershausen@outlook.de" title="Copy email address">
+          <span class="copy-btn__default">l.fredershausen@outlook.de</span>
+          <span class="copy-btn__done" data-en="Copied ✓" data-de="Kopiert ✓">Copied ✓</span>
         </button>
-        <a class="contact-social" href="https://linkedin.com/in/leonardfredershausen/" target="_blank" rel="noopener">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-          LinkedIn
-        </a>
+        <a class="btn btn--card" href="https://linkedin.com/in/leonardfredershausen/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn btn--card" href="https://github.com/lhausen" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 </main>
 
-<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
-
-<footer>
-  <p>© 2026 Leonard Fredershausen · <a href="https://linkedin.com/in/leonardfredershausen/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor;opacity:0.6;">LinkedIn</a></p>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>© 2026 Leonard Fredershausen</span>
+    <span class="site-footer__links"><a href="https://linkedin.com/in/leonardfredershausen/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/lhausen" target="_blank" rel="noopener">GitHub</a></span>
+  </div>
 </footer>
 
-<script>
-  // Nav scroll state
-  const nav = document.querySelector('nav');
-  const hero = document.getElementById('about');
-  function updateNav() {
-    nav.classList.toggle('scrolled', hero.getBoundingClientRect().bottom <= nav.offsetHeight);
-  }
-  window.addEventListener('scroll', updateNav, { passive: true });
-  updateNav();
-
-  // Fade-in on scroll
-  const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fadeObserver.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
-
-  // Active nav highlight via IntersectionObserver
-  const navLinks = {
-    about:        document.querySelector('nav a[href="#about"]'),
-    research:     document.querySelector('nav a[href="#research"]'),
-    publications: document.querySelector('nav a[href="#publications"]'),
-    cv:           document.querySelector('nav a[href="#cv"]'),
-    contact:      document.querySelector('nav a[href="#contact"]'),
-  };
-  const sectionIds = ['about', 'research', 'publications', 'cv', 'contact'];
-  const activeSections = new Set();
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) activeSections.add(e.target.id);
-      else activeSections.delete(e.target.id);
-    });
-    // Highlight the topmost visible section
-    for (const id of sectionIds) {
-      if (activeSections.has(id)) {
-        Object.values(navLinks).forEach(a => { if (a) a.classList.remove('active'); });
-        if (navLinks[id]) navLinks[id].classList.add('active');
-        break;
-      }
-    }
-  }, { threshold: 0.25 });
-  sectionIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) navObserver.observe(el);
-  });
-
-  // Dark mode toggle
-  const themeToggle = document.getElementById('themeToggle');
-  function applyTheme(dark) {
-    document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
-  }
-  const savedTheme = localStorage.getItem('theme');
-  applyTheme(savedTheme === 'dark');
-  themeToggle.addEventListener('click', () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const next = !isDark;
-    applyTheme(next);
-    localStorage.setItem('theme', next ? 'dark' : 'light');
-  });
-
-  // Reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Typewriter for hero eyebrow
-  const roles = ['Economics Student', 'Volunteer', 'Data Analyst'];
-  const typeEl = document.getElementById('typewriter-role');
-  let roleIdx = 0, charIdx = roles[0].length, deleting = false;
-  const TYPE_SPEED = 75, DELETE_SPEED = 40, PAUSE_AFTER_TYPE = 2200, PAUSE_AFTER_DELETE = 400;
-
-  function tick() {
-    const current = roles[roleIdx];
-    if (!deleting) {
-      if (charIdx < current.length) {
-        charIdx++;
-        typeEl.textContent = current.slice(0, charIdx);
-        setTimeout(tick, TYPE_SPEED);
-      } else {
-        setTimeout(() => { deleting = true; tick(); }, PAUSE_AFTER_TYPE);
-      }
-    } else {
-      if (charIdx > 0) {
-        charIdx--;
-        typeEl.textContent = current.slice(0, charIdx);
-        setTimeout(tick, DELETE_SPEED);
-      } else {
-        deleting = false;
-        roleIdx = (roleIdx + 1) % roles.length;
-        charIdx = 0;
-        setTimeout(tick, PAUSE_AFTER_DELETE);
-      }
-    }
-  }
-  // Start after initial pause so first text is readable (skip animation if reduced motion preferred)
-  if (!prefersReducedMotion) setTimeout(tick, PAUSE_AFTER_TYPE);
-
-  // Scroll to top button
-  const scrollTopBtn = document.getElementById('scrollTop');
-  window.addEventListener('scroll', () => {
-    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
-  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  // Particle background (skip if reduced motion preferred)
-  if (!prefersReducedMotion) (function() {
-    const canvas = document.getElementById('hero-canvas');
-    const ctx = canvas.getContext('2d');
-    const particles = [];
-    const COUNT = 55;
-    const MAX_DIST = 120;
-
-    function resize() {
-      const hero = document.getElementById('about');
-      canvas.width = hero.clientWidth || window.innerWidth;
-      canvas.height = hero.clientHeight || 600;
-    }
-
-    function initParticles() {
-      particles.length = 0;
-      for (let i = 0; i < COUNT; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          r: Math.random() * 1.5 + 0.5
-        });
-      }
-    }
-
-    const mouse = { x: -999, y: -999 };
-    const hero = document.getElementById('about');
-    hero.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    }, { passive: true });
-    hero.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
-
-    resize();
-    initParticles();
-    window.addEventListener('resize', () => { resize(); initParticles(); }, { passive: true });
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Cursor spotlight glow
-      if (mouse.x > -900) {
-        const grd = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 180);
-        grd.addColorStop(0, 'rgba(96,165,250,0.12)');
-        grd.addColorStop(1, 'rgba(96,165,250,0)');
-        ctx.fillStyle = grd;
-        ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 180, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      for (let i = 0; i < COUNT; i++) {
-        const p = particles[i];
-
-        // Cursor repulsion
-        if (mouse.x > -900) {
-          const mdx = p.x - mouse.x, mdy = p.y - mouse.y;
-          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-          if (mdist < 120 && mdist > 0) {
-            const force = (120 - mdist) / 120 * 0.6;
-            p.vx += (mdx / mdist) * force;
-            p.vy += (mdy / mdist) * force;
-            const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-            if (spd > 2.5) { p.vx = p.vx / spd * 2.5; p.vy = p.vy / spd * 2.5; }
-          }
-        }
-
-        // Gentle velocity damping back to natural speed
-        p.vx *= 0.99;
-        p.vy *= 0.99;
-
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(96,165,250,0.8)';
-        ctx.fill();
-
-        for (let j = i + 1; j < COUNT; j++) {
-          const q = particles[j];
-          const dx = p.x - q.x, dy = p.y - q.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < MAX_DIST) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(96,165,250,${0.15 * (1 - dist / MAX_DIST)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(draw);
-    }
-    draw();
-  })();
-
-  // Language toggle
-  const langToggle = document.getElementById('langToggle');
-  let currentLang = localStorage.getItem('lang') || 'en';
-  function applyLang(lang) {
-    currentLang = lang;
-    document.documentElement.setAttribute('lang', lang);
-    langToggle.textContent = lang === 'en' ? 'DE' : 'EN';
-    document.querySelectorAll('[data-en]').forEach(el => {
-      el.textContent = lang === 'en' ? el.dataset.en : el.dataset.de;
-    });
-    localStorage.setItem('lang', lang);
-  }
-  applyLang(currentLang);
-  langToggle.addEventListener('click', () => applyLang(currentLang === 'en' ? 'de' : 'en'));
-
-  // Copy email
-  const copyBtn = document.getElementById('copyEmailBtn');
-  let copyTimer;
-  copyBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText('l.fredershausen@outlook.de').then(() => {
-      copyBtn.classList.add('copied');
-      clearTimeout(copyTimer);
-      copyTimer = setTimeout(() => copyBtn.classList.remove('copied'), 2200);
-    });
-  });
-
-  // Hamburger menu
-  const navToggle = document.getElementById('navToggle');
-  const navUl = document.querySelector('nav ul');
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = navToggle.classList.toggle('open');
-      navUl.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', isOpen);
-    });
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('nav')) {
-        navToggle.classList.remove('open');
-        navUl.classList.remove('open');
-      }
-    });
-    navUl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      navToggle.classList.remove('open');
-      navUl.classList.remove('open');
-    }));
-  }
-</script>
+<script src="site.js"></script>
 </body>
 </html>

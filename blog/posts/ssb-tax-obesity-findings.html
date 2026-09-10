@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,370 +9,147 @@
   <meta property="og:title" content="Do Sugar Taxes Reduce Childhood Obesity? What the Data Says" />
   <meta property="og:description" content="Key findings from a difference-in-differences study on SSB taxes and childhood obesity in the UK, Ireland, Germany, and Switzerland." />
   <meta property="og:url" content="https://lhausen.github.io/blog/posts/ssb-tax-obesity-findings.html" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://lhausen.github.io/blog/posts/img/sugar-hero.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Do Sugar Taxes Reduce Childhood Obesity? What the Data Says" />
   <meta name="twitter:description" content="Key findings from a difference-in-differences study on SSB taxes and childhood obesity in the UK, Ireland, Germany, and Switzerland." />
   <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+  <script>(function(){try{var d=document.documentElement,t=d.dataset.themeLock||localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.dataset.theme=t;}catch(e){}})();</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="../../post.css" />
-  <style>
-    .result-box {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 1.75rem;
-      margin: 1.75rem 0;
-      background: var(--bg-subtle);
-      position: relative;
-      overflow: hidden;
-    }
-    .result-box::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; bottom: 0;
-      width: 4px;
-    }
-    .result-box.null::before { background: #f59e0b; }
-    .result-box.valid::before { background: #10b981; }
-    .result-box-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-    .result-box.null .result-box-label { color: #d97706; }
-    .result-box.valid .result-box-label { color: #059669; }
-    .result-box p {
-      font-size: 0.9375rem;
-      color: var(--muted);
-      margin: 0;
-      line-height: 1.6;
-    }
-    .result-box strong { color: var(--text); }
-    .stat-inline {
-      display: inline-block;
-      background: var(--accent-bg);
-      color: var(--accent);
-      border: 1px solid var(--accent-border);
-      border-radius: 6px;
-      padding: 0.1rem 0.45rem;
-      font-size: 0.875rem;
-      font-weight: 700;
-      font-style: normal;
-    }
-  </style>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 
-<div class="reading-progress" id="readingProgress"></div>
-
-<nav>
-  <div class="nav-inner">
-    <a class="logo" href="../../index.html" aria-label="Leonard Fredershausen — Home"><svg width="34" height="34" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><clipPath id="nc"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#nc)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg></a>
-    <ul>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../../index.html#research">Research</a></li>
-      
-      
-      <li><a href="../../index.html#cv">CV</a></li>
-      <li><a href="../../blog/index.html">Blog</a></li>
-      <li><a href="../../index.html#contact">Contact</a></li>
-      <li><a class="nav-cv-btn" href="../../Leonard_Fredershausen_CV.pdf" download>Download CV</a></li>
-      <li><button class="lang-toggle" id="langToggle" aria-label="Switch language">EN</button></li>
-      <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-      <svg class="icon-ham" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="5" x2="18" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="15" x2="18" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <svg class="icon-x" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="3" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="3" x2="3" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a class="site-nav__logo" href="../../index.html" aria-label="Leonard Fredershausen — Home">
+      <svg width="26" height="26" viewBox="0 0 200 200" aria-hidden="true"><defs><clipPath id="lf-clip"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#lf-clip)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg>
+    </a>
+    <nav class="site-nav__links" aria-label="Primary">
+      <a class="site-nav__link" href="../../index.html#about" data-en="About" data-de="Über mich">About</a>
+      <a class="site-nav__link" href="../../index.html#research" data-en="Research" data-de="Forschung">Research</a>
+      <a class="site-nav__link" href="../../index.html#cv" data-en="CV" data-de="Lebenslauf">CV</a>
+      <a class="site-nav__link" href="../index.html" aria-current="page">Blog</a>
+      <a class="site-nav__link" href="../../index.html#contact" data-en="Contact" data-de="Kontakt">Contact</a>
+    </nav>
+    <div class="site-nav__actions">
+      <a class="btn-cv" href="../../Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf (PDF)">Download CV</a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-set="de" aria-pressed="false">DE</button>
+      </div>
+      <button type="button" class="theme-btn" data-theme-toggle aria-label="Toggle dark mode">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <div class="site-nav__mobile">
+      <button type="button" class="theme-btn theme-btn--flat" data-theme-toggle aria-label="Toggle dark mode">
+        <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg>
+      </button>
+      <button type="button" class="menu-btn" data-menu-toggle aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
   </div>
-</nav>
+  <div class="site-nav__menu" data-menu hidden>
+    <nav aria-label="Primary">
+      <a class="site-nav__menu-link" href="../../index.html#about" data-en="About" data-de="Über mich">About</a>
+      <a class="site-nav__menu-link" href="../../index.html#research" data-en="Research" data-de="Forschung">Research</a>
+      <a class="site-nav__menu-link" href="../../index.html#cv" data-en="CV" data-de="Lebenslauf">CV</a>
+      <a class="site-nav__menu-link" href="../index.html" aria-current="page">Blog</a>
+      <a class="site-nav__menu-link" href="../../index.html#contact" data-en="Contact" data-de="Kontakt">Contact</a>
+    </nav>
+    <div class="site-nav__menu-row">
+      <div class="lang-switch lang-switch--lg" role="group" aria-label="Language">
+        <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-set="de" aria-pressed="false">DE</button>
+      </div>
+      <a class="btn-cv btn-cv--lg" href="../../Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf (PDF)">Download CV</a>
+    </div>
+  </div>
+</header>
 
 <main id="main-content">
-<article class="post-layout">
-  <div class="post-inner">
+<article class="post">
+  <a class="post__back" href="../index.html" data-en="← Blog" data-de="← Blog">← Blog</a>
 
-    <a class="post-back" href="../../blog/index.html">← Back to Blog</a>
-
-    <header class="post-header">
-      <div class="post-tag-chip">Research</div>
-      <h1 class="post-title" data-en="Do Sugar Taxes Reduce Childhood Obesity? What the Data Says" data-de="Reduzieren Zuckersteuern Adipositas bei Kindern? Was die Daten sagen">Do Sugar Taxes Reduce Childhood Obesity? What the Data Says</h1>
-      <p class="post-meta">March 2024 · <span id="reading-time">5 min read</span></p>
-    </header>
-
-    <img src="sugar-tax_shutterstock_396132481-scaled.jpg" alt="Sugar tax policy" class="post-hero-img">
-
-
-    <div class="toc-box" id="toc"></div>
-
-    <div class="post-body">
-
-      <p data-en="Taxes on sugar-sweetened beverages (SSBs) are one of the most widely discussed tools in public health policy. Over 85 countries have some form of SSB tax in place, and the WHO actively encourages others to follow. The underlying logic is intuitive: make sugary drinks more expensive, people drink less of them, and obesity rates fall. But does the data actually support this?" data-de="Steuern auf zuckerhaltige Getränke (SSBs) gehören zu den meistdiskutierten Instrumenten der Gesundheitspolitik. Über 85 Länder haben irgendeine Form von SSB-Steuer eingeführt, und die WHO ermutigt andere aktiv zur Nachahmung. Die Logik dahinter ist intuitiv: Zuckergetränke teurer machen, weniger davon trinken, Adipositasraten sinken. Aber bestätigen die Daten das wirklich?">
-        Taxes on sugar-sweetened beverages (SSBs) are one of the most widely discussed
-        tools in public health policy. Over 85 countries have some form of SSB tax in place,
-        and the WHO actively encourages others to follow. The underlying logic is intuitive:
-        make sugary drinks more expensive, people drink less of them, and obesity rates fall.
-        But does the data actually support this?
-      </p>
-      <p data-en="For my Global Health Politics term paper, I ran a difference-in-differences analysis to find out. Here are the key findings." data-de="Für meine Seminararbeit in Global Health Politics habe ich eine Difference-in-Differences-Analyse durchgeführt, um das herauszufinden. Hier sind die wichtigsten Ergebnisse.">
-        For my Global Health Politics term paper, I ran a difference-in-differences analysis
-        to find out. Here are the key findings.
-      </p>
-
-      <h2>The setup</h2>
-      <p data-en="The UK and Ireland introduced SSB taxes in 2018. This gave me a natural experiment: two countries with a new policy intervention, and two comparable countries without one — Germany and Switzerland — that serve as the control group. Using WHO Global Health Observatory data on obesity prevalence among children and adolescents aged 5–19, I tracked all four countries from 2000 to 2022 (<em>n</em> = 92 country-year observations)." data-de="Großbritannien und Irland führten 2018 SSB-Steuern ein. Das gab mir ein natürliches Experiment: zwei Länder mit einer neuen Politikintervention und zwei vergleichbare Länder ohne — Deutschland und die Schweiz — als Kontrollgruppe. Mit WHO-Daten zur Adipositasprävalenz bei Kindern und Jugendlichen zwischen 5 und 19 Jahren beobachtete ich alle vier Länder von 2000 bis 2022 (<em>n</em> = 92 Länder-Jahr-Beobachtungen).">
-        The UK and Ireland introduced SSB taxes in 2018. This gave me a natural experiment:
-        two countries with a new policy intervention, and two comparable countries without
-        one — Germany and Switzerland — that serve as the control group. Using WHO Global
-        Health Observatory data on obesity prevalence among children and adolescents aged
-        5–19, I tracked all four countries from 2000 to 2022 (<em>n</em> = 92 country-year
-        observations).
-      </p>
-      <p data-en="The DiD framework compares the change in obesity rates in the treatment countries (UK, Ireland) before and after 2018, against the change over the same period in the control countries (Germany, Switzerland). If the tax had an effect, we would expect the treatment group to diverge downward from the control group after 2018." data-de="Der DiD-Rahmen vergleicht die Veränderung der Adipositasraten in den Behandlungsländern (UK, Irland) vor und nach 2018 mit der Veränderung im gleichen Zeitraum in den Kontrollländern (Deutschland, Schweiz). Hätte die Steuer eine Wirkung, würde die Behandlungsgruppe nach 2018 nach unten von der Kontrollgruppe abweichen.">
-        The DiD framework compares the change in obesity rates in the treatment countries
-        (UK, Ireland) before and after 2018, against the change over the same period in the
-        control countries (Germany, Switzerland). If the tax had an effect, we would expect
-        the treatment group to diverge downward from the control group after 2018.
-      </p>
-
-      <h2>Validating the design</h2>
-      <p data-en="Before interpreting the results, I needed to check whether the DiD design was valid. The core assumption is <em>parallel trends</em>: that treatment and control countries were on similar obesity trajectories before the tax came in." data-de="Bevor ich die Ergebnisse interpretiere, musste ich prüfen, ob das DiD-Design valide ist. Die Kernannahme sind <em>parallele Trends</em>: dass Behandlungs- und Kontrollländer vor der Steuer ähnliche Adipositasentwicklungen aufwiesen.">
-        Before interpreting the results, I needed to check whether the DiD design was valid.
-        The core assumption is <em>parallel trends</em>: that treatment and control countries
-        were on similar obesity trajectories before the tax came in.
-      </p>
-
-      <div class="result-box valid">
-        <div class="result-box-label">Assumption holds</div>
-        <p>The parallel trends test returned <strong class="stat-inline">p = 0.773</strong>, giving no reason to reject the assumption. The pre-treatment obesity trends across all four countries were statistically indistinguishable.</p>
-      </div>
-
-      <p>
-        This matters: if the trends had already been diverging before 2018, any post-2018
-        difference could not be cleanly attributed to the tax.
-      </p>
-
-      <h2>The main result</h2>
-      <p data-en="The DiD regression estimated the Average Treatment Effect on the Treated (ATET) — that is, the additional change in obesity prevalence in the UK and Ireland that can be attributed to the SSB tax, relative to what would have happened without it." data-de="Die DiD-Regression schätzte den Average Treatment Effect on the Treated (ATET) — also die zusätzliche Veränderung der Adipositasprävalenz in UK und Irland, die der SSB-Steuer zugeschrieben werden kann, relativ zum kontrafaktischen Verlauf ohne Steuer.">
-        The DiD regression estimated the Average Treatment Effect on the Treated (ATET) —
-        that is, the additional change in obesity prevalence in the UK and Ireland that can be
-        attributed to the SSB tax, relative to what would have happened without it.
-      </p>
-
-      <div class="result-box null">
-        <div class="result-box-label">Main finding — null result</div>
-        <p>ATET = <strong class="stat-inline">−0.181 pp</strong> &nbsp;·&nbsp; <strong class="stat-inline">p = 0.38</strong><br><br>
-        The estimated effect points in the right direction — a small reduction in obesity prevalence — but it is not statistically significant. The data cannot rule out that this effect is simply noise.</p>
-      </div>
-
-      <p>
-        A Granger causality test confirmed this: there was no significant evidence
-        (<em class="stat-inline">p = 0.233</em>) that changes in obesity rates followed from
-        the introduction of SSB taxes rather than from other concurrent trends.
-      </p>
-
-      <h2>Why might this be?</h2>
-      <p data-en="A null result doesn't mean the tax did nothing — it means the study couldn't detect an effect. Several factors could explain the gap between theory and findings:" data-de="Ein Null-Ergebnis bedeutet nicht, dass die Steuer nichts bewirkt hat — es bedeutet, dass die Studie keinen Effekt nachweisen konnte. Mehrere Faktoren könnten die Lücke zwischen Theorie und Befund erklären:">
-        A null result doesn't mean the tax did nothing — it means the study couldn't detect
-        an effect. Several factors could explain the gap between theory and findings:
-      </p>
-      <p data-en="<strong>Tax level.</strong> The UK's soft drinks levy charges between 18p and 24p per litre depending on sugar content. Modelling studies suggest that much steeper taxes (around 20% price increases) may be needed to shift behaviour enough to affect obesity rates at the population level." data-de="<strong>Steuerhöhe.</strong> Die britische Softdrink-Abgabe beträgt je nach Zuckergehalt zwischen 18p und 24p pro Liter. Modellierungsstudien legen nahe, dass deutlich höhere Steuern (ca. 20 % Preiserhöhung) nötig wären, um das Verhalten so zu verändern, dass sich Adipositasraten auf Bevölkerungsebene messsbar verschieben.">
-        <strong>Tax level.</strong> The UK's soft drinks levy charges between 18p and 24p per
-        litre depending on sugar content. Modelling studies suggest that much steeper taxes
-        (around 20% price increases) may be needed to shift behaviour enough to affect
-        obesity rates at the population level.
-      </p>
-      <p data-en="<strong>Complementary policies.</strong> SSB taxes rarely operate in isolation. Their effectiveness likely depends on accompanying measures — nutritional education, restrictions on marketing to children, improved access to healthier food. Without these, the isolated effect of a tax may be too small to detect." data-de="<strong>Begleitmaßnahmen.</strong> SSB-Steuern wirken selten isoliert. Ihre Wirksamkeit hängt wahrscheinlich von flankierenden Maßnahmen ab — Ernährungsaufklärung, Einschränkungen bei der Vermarktung für Kinder, besserer Zugang zu gesunden Lebensmitteln. Ohne diese Maßnahmen ist der isolierte Effekt der Steuer möglicherweise zu gering, um ihn nachzuweisen.">
-        <strong>Complementary policies.</strong> SSB taxes rarely operate in isolation.
-        Their effectiveness likely depends on accompanying measures — nutritional education,
-        restrictions on marketing to children, improved access to healthier food. Without
-        these, the isolated effect of a tax may be too small to detect.
-      </p>
-      <p data-en="<strong>Time horizon.</strong> Obesity is a slow-moving outcome. The tax was introduced in 2018 and my data runs to 2022 — just four years of post-treatment observations. Population-level changes in BMI may take a decade or more to materialise in the data." data-de="<strong>Zeithorizont.</strong> Adipositas ist ein langsam veränderlicher Outcome. Die Steuer wurde 2018 eingeführt, meine Daten laufen bis 2022 — nur vier Jahre Post-Treatment-Beobachtungen. Veränderungen auf Bevölkerungsebene beim BMI könnten ein Jahrzehnt oder länger brauchen, um in den Daten sichtbar zu werden.">
-        <strong>Time horizon.</strong> Obesity is a slow-moving outcome. The tax was
-        introduced in 2018 and my data runs to 2022 — just four years of post-treatment
-        observations. Population-level changes in BMI may take a decade or more to
-        materialise in the data.
-      </p>
-      <p data-en="<strong>Substitution effects.</strong> Consumers may compensate by increasing caloric intake elsewhere. If a family switches from Coke to cheaper, equally caloric fruit juices or snacks, the net effect on obesity could be negligible." data-de="<strong>Substitutionseffekte.</strong> Verbraucher könnten durch Erhöhung der Kalorienzufuhr anderswo kompensieren. Wenn eine Familie von Cola auf günstigere, kalorisch gleichwertige Fruchtsäfte oder Snacks umsteigt, könnte der Nettoeffekt auf Adipositas vernachlässigbar sein.">
-        <strong>Substitution effects.</strong> Consumers may compensate by increasing
-        caloric intake elsewhere. If a family switches from Coke to cheaper, equally
-        caloric fruit juices or snacks, the net effect on obesity could be negligible.
-      </p>
-
-      <h2>What this doesn't mean</h2>
-      <p data-en="A null result in one study is not evidence that SSB taxes are ineffective. Other research — including Rogers et al. (2023) on the UK levy specifically — does find associations with reduced obesity prevalence in younger school children. My study covered the 5–19 age group in aggregate, which may mask heterogeneous effects across different sub-groups." data-de="Ein Null-Ergebnis in einer Studie ist kein Beleg dafür, dass SSB-Steuern unwirksam sind. Andere Forschungsarbeiten — darunter Rogers et al. (2023) zur britischen Abgabe — finden durchaus Zusammenhänge mit reduzierter Adipositasprävalenz bei jüngeren Schulkindern. Meine Studie erfasste die Altersgruppe 5–19 Jahre insgesamt, was heterogene Effekte in Untergruppen verdecken kann.">
-        A null result in one study is not evidence that SSB taxes are ineffective. Other
-        research — including Rogers et al. (2023) on the UK levy specifically — does find
-        associations with reduced obesity prevalence in younger school children. My study
-        covered the 5–19 age group in aggregate, which may mask heterogeneous effects
-        across different sub-groups.
-      </p>
-      <p data-en="The findings are also constrained by the small number of countries (four) and the reliance on BMI as the outcome measure — BMI is a useful proxy but imperfectly captures body composition, especially in growing adolescents." data-de="Die Befunde sind zudem durch die geringe Länderzahl (vier) und die Verwendung des BMI als Outcomemaß eingeschränkt — BMI ist ein nützlicher Proxy, bildet Körperzusammensetzung aber insbesondere bei wachsenden Jugendlichen unvollständig ab.">
-        The findings are also constrained by the small number of countries (four) and the
-        reliance on BMI as the outcome measure — BMI is a useful proxy but imperfectly
-        captures body composition, especially in growing adolescents.
-      </p>
-
-      <h2>The bottom line</h2>
-      <p data-en="SSB taxes are a promising and relatively easy-to-implement policy instrument, but the evidence that they reduce childhood obesity on their own, within a short timeframe, is not yet conclusive. The most defensible interpretation is that they are one necessary piece of a broader strategy — not a standalone solution." data-de="SSB-Steuern sind ein vielversprechendes und vergleichsweise einfach umsetzbares politisches Instrument, aber die Evidenz, dass sie Adipositas bei Kindern allein, in kurzer Zeit, wesentlich reduzieren, ist noch nicht eindeutig. Die defensibelste Interpretation ist: Sie sind ein notwendiger Baustein einer umfassenderen Strategie — keine Standalone-Lösung.">
-        SSB taxes are a promising and relatively easy-to-implement policy instrument, but
-        the evidence that they reduce childhood obesity on their own, within a short
-        timeframe, is not yet conclusive. The most defensible interpretation is that they
-        are one necessary piece of a broader strategy — not a standalone solution.
-      </p>
-      <p data-en="Whether they work better in combination with other interventions, over longer timescales, or at higher tax rates are exactly the questions future research should focus on." data-de="Ob sie in Kombination mit anderen Maßnahmen, über längere Zeiträume oder bei höheren Steuersätzen besser wirken, sind genau die Fragen, auf die sich künftige Forschung konzentrieren sollte.">
-        Whether they work better in combination with other interventions, over longer
-        timescales, or at higher tax rates are exactly the questions future research should
-        focus on.
-      </p>
-
+  <header class="post__header">
+    <p class="post__meta"><span class="post__cat" data-en="Research" data-de="Forschung">Research</span> · <span data-en="March 2024" data-de="März 2024">March 2024</span> · <span id="reading-time" data-en="5 min read" data-de="5 Min. Lesezeit">5 min read</span></p>
+    <h1 class="post__title" data-en="Do Sugar Taxes Reduce Childhood Obesity? What the Data Says" data-de="Reduzieren Zuckersteuern Adipositas bei Kindern? Was die Daten sagen">Do Sugar Taxes Reduce Childhood Obesity? What the Data Says</h1>
+    <p class="post__dek" data-en="Key findings from a DiD study comparing the UK and Ireland’s 2018 SSB tax against Germany and Switzerland — the effect was negative but not statistically significant." data-de="Kernergebnisse einer DiD-Studie, die die britisch-irische Zuckersteuer 2018 mit Deutschland und der Schweiz vergleicht — der Effekt war negativ, aber nicht statistisch signifikant.">Key findings from a DiD study comparing the UK and Ireland’s 2018 SSB tax against Germany and Switzerland — the effect was negative but not statistically significant.</p>
+    <div class="post__author">
+      <span class="post__author-mark" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 200 200"><defs><clipPath id="lf-clip-a"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#lf-clip-a)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg></span>
+      <span class="post__author-name">Leonard Fredershausen</span>
+      <span class="post__author-role" data-en="Economics Student · Hamburg" data-de="Wirtschaftsstudent · Hamburg">Economics Student · Hamburg</span>
     </div>
+  </header>
 
-    <footer class="post-footer">
-      <p style="font-size:0.8125rem; color:var(--muted-light); margin-bottom:1rem;">
-        This post summarises findings from a term paper submitted for Global Health Politics at the University of Hamburg (March 2024, supervisor: Prof. Dr. Max Schaub). Data source: WHO Global Health Observatory. Analysis conducted in Stata 18.
-      </p>
-      <a class="post-back" href="../../blog/index.html">← Back to Blog</a>
-    </footer>
+  <div class="post__body">
+    <p data-en="Taxes on sugar-sweetened beverages (SSBs) are one of the most widely discussed tools in public health policy. Over 85 countries have some form of SSB tax in place, and the WHO actively encourages others to follow. The underlying logic is intuitive: make sugary drinks more expensive, people drink less of them, and obesity rates fall. But does the data actually support this?" data-de="Steuern auf zuckerhaltige Getränke (SSBs) gehören zu den meistdiskutierten Instrumenten der Gesundheitspolitik. Über 85 Länder haben irgendeine Form von SSB-Steuer eingeführt, und die WHO ermutigt andere aktiv zur Nachahmung. Die Logik dahinter ist intuitiv: Zuckergetränke teurer machen, weniger davon trinken, Adipositasraten sinken. Aber bestätigen die Daten das wirklich?">Taxes on sugar-sweetened beverages (SSBs) are one of the most widely discussed tools in public health policy. Over 85 countries have some form of SSB tax in place, and the WHO actively encourages others to follow. The underlying logic is intuitive: make sugary drinks more expensive, people drink less of them, and obesity rates fall. But does the data actually support this?</p>
+    <p data-en="For my Global Health Politics term paper, I ran a difference-in-differences analysis to find out. Here are the key findings." data-de="Für meine Seminararbeit in Global Health Politics habe ich eine Difference-in-Differences-Analyse durchgeführt, um das herauszufinden. Hier sind die wichtigsten Ergebnisse.">For my Global Health Politics term paper, I ran a difference-in-differences analysis to find out. Here are the key findings.</p>
 
+    <figure>
+      <img src="img/sugar-hero.jpg" alt="Sugar tax policy" width="1600" height="1067">
+      <figcaption data-en="Over 85 countries tax sugar-sweetened beverages. The UK and Ireland joined in 2018." data-de="Über 85 Länder besteuern zuckerhaltige Getränke. Großbritannien und Irland kamen 2018 dazu.">Over 85 countries tax sugar-sweetened beverages. The UK and Ireland joined in 2018.</figcaption>
+    </figure>
+
+    <h2 data-en="The setup" data-de="Der Aufbau">The setup</h2>
+    <p data-en="The UK and Ireland introduced SSB taxes in 2018. This gave me a natural experiment: two countries with a new policy intervention, and two comparable countries without one — Germany and Switzerland — that serve as the control group. Using WHO Global Health Observatory data on obesity prevalence among children and adolescents aged 5–19, I tracked all four countries from 2000 to 2022 (<em>n</em> = 92 country-year observations)." data-de="Großbritannien und Irland führten 2018 SSB-Steuern ein. Das gab mir ein natürliches Experiment: zwei Länder mit einer neuen Politikintervention und zwei vergleichbare Länder ohne — Deutschland und die Schweiz — als Kontrollgruppe. Mit WHO-Daten zur Adipositasprävalenz bei Kindern und Jugendlichen zwischen 5 und 19 Jahren beobachtete ich alle vier Länder von 2000 bis 2022 (<em>n</em> = 92 Länder-Jahr-Beobachtungen).">The UK and Ireland introduced SSB taxes in 2018. This gave me a natural experiment: two countries with a new policy intervention, and two comparable countries without one — Germany and Switzerland — that serve as the control group. Using WHO Global Health Observatory data on obesity prevalence among children and adolescents aged 5–19, I tracked all four countries from 2000 to 2022 (<em>n</em> = 92 country-year observations).</p>
+    <p data-en="The DiD framework compares the change in obesity rates in the treatment countries (UK, Ireland) before and after 2018, against the change over the same period in the control countries (Germany, Switzerland). If the tax had an effect, we would expect the treatment group to diverge downward from the control group after 2018." data-de="Der DiD-Rahmen vergleicht die Veränderung der Adipositasraten in den Behandlungsländern (UK, Irland) vor und nach 2018 mit der Veränderung im gleichen Zeitraum in den Kontrollländern (Deutschland, Schweiz). Hätte die Steuer eine Wirkung, würde die Behandlungsgruppe nach 2018 nach unten von der Kontrollgruppe abweichen.">The DiD framework compares the change in obesity rates in the treatment countries (UK, Ireland) before and after 2018, against the change over the same period in the control countries (Germany, Switzerland). If the tax had an effect, we would expect the treatment group to diverge downward from the control group after 2018.</p>
+
+    <h2 data-en="Validating the design" data-de="Validierung des Designs">Validating the design</h2>
+    <p data-en="Before interpreting the results, I needed to check whether the DiD design was valid. The core assumption is <em>parallel trends</em>: that treatment and control countries were on similar obesity trajectories before the tax came in." data-de="Bevor ich die Ergebnisse interpretiere, musste ich prüfen, ob das DiD-Design valide ist. Die Kernannahme sind <em>parallele Trends</em>: dass Behandlungs- und Kontrollländer vor der Steuer ähnliche Adipositasentwicklungen aufwiesen.">Before interpreting the results, I needed to check whether the DiD design was valid. The core assumption is <em>parallel trends</em>: that treatment and control countries were on similar obesity trajectories before the tax came in.</p>
+
+    <aside class="callout">
+      <p class="callout__label" data-en="Assumption holds" data-de="Annahme hält">Assumption holds</p>
+      <p data-en="The parallel trends test returned <span class=&quot;stat-chip&quot;>p = 0.773</span>, giving no reason to reject the assumption. The pre-treatment obesity trends across all four countries were statistically indistinguishable." data-de="Der Parallel-Trends-Test ergab <span class=&quot;stat-chip&quot;>p = 0,773</span> — kein Grund, die Annahme zu verwerfen. Die Adipositastrends vor der Steuer waren in allen vier Ländern statistisch nicht unterscheidbar.">The parallel trends test returned <span class="stat-chip">p = 0.773</span>, giving no reason to reject the assumption. The pre-treatment obesity trends across all four countries were statistically indistinguishable.</p>
+    </aside>
+
+    <p data-en="This matters: if the trends had already been diverging before 2018, any post-2018 difference could not be cleanly attributed to the tax." data-de="Das ist wichtig: Wären die Trends schon vor 2018 auseinandergelaufen, ließe sich ein Unterschied nach 2018 nicht sauber der Steuer zuschreiben.">This matters: if the trends had already been diverging before 2018, any post-2018 difference could not be cleanly attributed to the tax.</p>
+
+    <h2 data-en="The main result" data-de="Das Hauptergebnis">The main result</h2>
+    <p data-en="The DiD regression estimated the Average Treatment Effect on the Treated (ATET) — that is, the additional change in obesity prevalence in the UK and Ireland that can be attributed to the SSB tax, relative to what would have happened without it." data-de="Die DiD-Regression schätzte den Average Treatment Effect on the Treated (ATET) — also die zusätzliche Veränderung der Adipositasprävalenz in UK und Irland, die der SSB-Steuer zugeschrieben werden kann, relativ zum kontrafaktischen Verlauf ohne Steuer.">The DiD regression estimated the Average Treatment Effect on the Treated (ATET) — that is, the additional change in obesity prevalence in the UK and Ireland that can be attributed to the SSB tax, relative to what would have happened without it.</p>
+
+    <aside class="callout">
+      <p class="callout__label callout__label--muted" data-en="Main finding — null result" data-de="Hauptergebnis — Null-Ergebnis">Main finding — null result</p>
+      <p>ATET = <span class="stat-chip">−0.181 pp</span> &nbsp;·&nbsp; <span class="stat-chip">p = 0.38</span></p>
+      <p data-en="The estimated effect points in the right direction — a small reduction in obesity prevalence — but it is not statistically significant. The data cannot rule out that this effect is simply noise." data-de="Der geschätzte Effekt zeigt in die richtige Richtung — eine kleine Reduktion der Adipositasprävalenz — ist aber nicht statistisch signifikant. Die Daten können nicht ausschließen, dass es sich um Rauschen handelt.">The estimated effect points in the right direction — a small reduction in obesity prevalence — but it is not statistically significant. The data cannot rule out that this effect is simply noise.</p>
+    </aside>
+
+    <p data-en="A Granger causality test confirmed this: there was no significant evidence (<span class=&quot;stat-chip&quot;>p = 0.233</span>) that changes in obesity rates followed from the introduction of SSB taxes rather than from other concurrent trends." data-de="Ein Granger-Kausalitätstest bestätigte das: Es gab keinen signifikanten Hinweis (<span class=&quot;stat-chip&quot;>p = 0,233</span>), dass Veränderungen der Adipositasraten auf die Einführung der SSB-Steuern statt auf andere gleichzeitige Trends zurückgehen.">A Granger causality test confirmed this: there was no significant evidence (<span class="stat-chip">p = 0.233</span>) that changes in obesity rates followed from the introduction of SSB taxes rather than from other concurrent trends.</p>
+
+    <h2 data-en="Why might this be?" data-de="Woran könnte das liegen?">Why might this be?</h2>
+    <p data-en="A null result doesn’t mean the tax did nothing — it means the study couldn’t detect an effect. Several factors could explain the gap between theory and findings:" data-de="Ein Null-Ergebnis bedeutet nicht, dass die Steuer nichts bewirkt hat — es bedeutet, dass die Studie keinen Effekt nachweisen konnte. Mehrere Faktoren könnten die Lücke zwischen Theorie und Befund erklären:">A null result doesn’t mean the tax did nothing — it means the study couldn’t detect an effect. Several factors could explain the gap between theory and findings:</p>
+    <p data-en="<strong>Tax level.</strong> The UK’s soft drinks levy charges between 18p and 24p per litre depending on sugar content. Modelling studies suggest that much steeper taxes (around 20% price increases) may be needed to shift behaviour enough to affect obesity rates at the population level." data-de="<strong>Steuerhöhe.</strong> Die britische Softdrink-Abgabe beträgt je nach Zuckergehalt zwischen 18p und 24p pro Liter. Modellierungsstudien legen nahe, dass deutlich höhere Steuern (ca. 20 % Preiserhöhung) nötig wären, um das Verhalten so zu verändern, dass sich Adipositasraten auf Bevölkerungsebene messbar verschieben."><strong>Tax level.</strong> The UK’s soft drinks levy charges between 18p and 24p per litre depending on sugar content. Modelling studies suggest that much steeper taxes (around 20% price increases) may be needed to shift behaviour enough to affect obesity rates at the population level.</p>
+    <p data-en="<strong>Complementary policies.</strong> SSB taxes rarely operate in isolation. Their effectiveness likely depends on accompanying measures — nutritional education, restrictions on marketing to children, improved access to healthier food. Without these, the isolated effect of a tax may be too small to detect." data-de="<strong>Begleitmaßnahmen.</strong> SSB-Steuern wirken selten isoliert. Ihre Wirksamkeit hängt wahrscheinlich von flankierenden Maßnahmen ab — Ernährungsaufklärung, Einschränkungen bei der Vermarktung für Kinder, besserer Zugang zu gesunden Lebensmitteln. Ohne diese Maßnahmen ist der isolierte Effekt der Steuer möglicherweise zu gering, um ihn nachzuweisen."><strong>Complementary policies.</strong> SSB taxes rarely operate in isolation. Their effectiveness likely depends on accompanying measures — nutritional education, restrictions on marketing to children, improved access to healthier food. Without these, the isolated effect of a tax may be too small to detect.</p>
+    <p data-en="<strong>Time horizon.</strong> Obesity is a slow-moving outcome. The tax was introduced in 2018 and my data runs to 2022 — just four years of post-treatment observations. Population-level changes in BMI may take a decade or more to materialise in the data." data-de="<strong>Zeithorizont.</strong> Adipositas ist ein langsam veränderlicher Outcome. Die Steuer wurde 2018 eingeführt, meine Daten laufen bis 2022 — nur vier Jahre Post-Treatment-Beobachtungen. Veränderungen auf Bevölkerungsebene beim BMI könnten ein Jahrzehnt oder länger brauchen, um in den Daten sichtbar zu werden."><strong>Time horizon.</strong> Obesity is a slow-moving outcome. The tax was introduced in 2018 and my data runs to 2022 — just four years of post-treatment observations. Population-level changes in BMI may take a decade or more to materialise in the data.</p>
+    <p data-en="<strong>Substitution effects.</strong> Consumers may compensate by increasing caloric intake elsewhere. If a family switches from Coke to cheaper, equally caloric fruit juices or snacks, the net effect on obesity could be negligible." data-de="<strong>Substitutionseffekte.</strong> Verbraucher könnten durch Erhöhung der Kalorienzufuhr anderswo kompensieren. Wenn eine Familie von Cola auf günstigere, kalorisch gleichwertige Fruchtsäfte oder Snacks umsteigt, könnte der Nettoeffekt auf Adipositas vernachlässigbar sein."><strong>Substitution effects.</strong> Consumers may compensate by increasing caloric intake elsewhere. If a family switches from Coke to cheaper, equally caloric fruit juices or snacks, the net effect on obesity could be negligible.</p>
+
+    <h2 data-en="What this doesn’t mean" data-de="Was das nicht bedeutet">What this doesn’t mean</h2>
+    <p data-en="A null result in one study is not evidence that SSB taxes are ineffective. Other research — including Rogers et al. (2023) on the UK levy specifically — does find associations with reduced obesity prevalence in younger school children. My study covered the 5–19 age group in aggregate, which may mask heterogeneous effects across different sub-groups." data-de="Ein Null-Ergebnis in einer Studie ist kein Beleg dafür, dass SSB-Steuern unwirksam sind. Andere Forschungsarbeiten — darunter Rogers et al. (2023) zur britischen Abgabe — finden durchaus Zusammenhänge mit reduzierter Adipositasprävalenz bei jüngeren Schulkindern. Meine Studie erfasste die Altersgruppe 5–19 Jahre insgesamt, was heterogene Effekte in Untergruppen verdecken kann.">A null result in one study is not evidence that SSB taxes are ineffective. Other research — including Rogers et al. (2023) on the UK levy specifically — does find associations with reduced obesity prevalence in younger school children. My study covered the 5–19 age group in aggregate, which may mask heterogeneous effects across different sub-groups.</p>
+    <p data-en="The findings are also constrained by the small number of countries (four) and the reliance on BMI as the outcome measure — BMI is a useful proxy but imperfectly captures body composition, especially in growing adolescents." data-de="Die Befunde sind zudem durch die geringe Länderzahl (vier) und die Verwendung des BMI als Outcomemaß eingeschränkt — BMI ist ein nützlicher Proxy, bildet Körperzusammensetzung aber insbesondere bei wachsenden Jugendlichen unvollständig ab.">The findings are also constrained by the small number of countries (four) and the reliance on BMI as the outcome measure — BMI is a useful proxy but imperfectly captures body composition, especially in growing adolescents.</p>
+
+    <h2 data-en="The bottom line" data-de="Fazit">The bottom line</h2>
+    <p data-en="SSB taxes are a promising and relatively easy-to-implement policy instrument, but the evidence that they reduce childhood obesity on their own, within a short timeframe, is not yet conclusive. The most defensible interpretation is that they are one necessary piece of a broader strategy — not a standalone solution." data-de="SSB-Steuern sind ein vielversprechendes und vergleichsweise einfach umsetzbares politisches Instrument, aber die Evidenz, dass sie Adipositas bei Kindern allein, in kurzer Zeit, wesentlich reduzieren, ist noch nicht eindeutig. Die defensibelste Interpretation ist: Sie sind ein notwendiger Baustein einer umfassenderen Strategie — keine Standalone-Lösung.">SSB taxes are a promising and relatively easy-to-implement policy instrument, but the evidence that they reduce childhood obesity on their own, within a short timeframe, is not yet conclusive. The most defensible interpretation is that they are one necessary piece of a broader strategy — not a standalone solution.</p>
+    <p data-en="Whether they work better in combination with other interventions, over longer timescales, or at higher tax rates are exactly the questions future research should focus on." data-de="Ob sie in Kombination mit anderen Maßnahmen, über längere Zeiträume oder bei höheren Steuersätzen besser wirken, sind genau die Fragen, auf die sich künftige Forschung konzentrieren sollte.">Whether they work better in combination with other interventions, over longer timescales, or at higher tax rates are exactly the questions future research should focus on.</p>
   </div>
-</article>
 
+  <footer class="post__footer">
+    <p class="post__note" data-en="This post summarises findings from a term paper submitted for Global Health Politics at the University of Hamburg (March 2024, supervisor: Prof. Dr. Max Schaub). Data source: WHO Global Health Observatory. Analysis conducted in Stata 18." data-de="Dieser Beitrag fasst die Ergebnisse einer Seminararbeit in Global Health Politics an der Universität Hamburg zusammen (März 2024, Betreuer: Prof. Dr. Max Schaub). Datenquelle: WHO Global Health Observatory. Analyse in Stata 18.">This post summarises findings from a term paper submitted for Global Health Politics at the University of Hamburg (March 2024, supervisor: Prof. Dr. Max Schaub). Data source: WHO Global Health Observatory. Analysis conducted in Stata 18.</p>
+    <a class="link-arrow" href="../index.html" data-en="← Back to blog" data-de="← Zurück zum Blog">← Back to blog</a>
+  </footer>
 </article>
 </main>
 
-<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>© 2026 Leonard Fredershausen</span>
+    <span class="site-footer__links"><a href="https://linkedin.com/in/leonardfredershausen/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/lhausen" target="_blank" rel="noopener">GitHub</a></span>
+  </div>
+</footer>
 
-<script>
-  const nav = document.querySelector('nav');
-  nav.classList.add('scrolled');
-  function updateNav() { }
-  window.addEventListener('scroll', updateNav, { passive: true });
-  updateNav();
-
-  const themeToggle = document.getElementById('themeToggle');
-  function applyTheme(dark) { document.documentElement.setAttribute('data-theme', dark ? 'dark' : ''); }
-  applyTheme(localStorage.getItem('theme') === 'dark');
-  themeToggle.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') !== 'dark';
-    applyTheme(next);
-    localStorage.setItem('theme', next ? 'dark' : 'light');
-  });
-
-  const scrollTopBtn = document.getElementById('scrollTop');
-  window.addEventListener('scroll', () => {
-    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
-  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  const progressBar = document.getElementById('readingProgress');
-  const article = document.querySelector('article');
-  function updateProgress() {
-    const articleTop = article.getBoundingClientRect().top + window.scrollY;
-    const viewable = article.scrollHeight - window.innerHeight;
-    const pct = viewable > 0 ? Math.min(100, Math.max(0, ((window.scrollY - articleTop) / viewable) * 100)) : 100;
-    progressBar.style.width = pct + '%';
-  }
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
-
-  (function() {
-    const body = document.querySelector('.post-body');
-    if (!body) return;
-    const words = body.innerText.trim().split(/\s+/).length;
-    const mins = Math.max(1, Math.round(words / 200));
-    const el = document.getElementById('reading-time');
-    if (el) el.textContent = mins + ' min read';
-  })();
-
-  // Hamburger menu
-  const navToggle = document.getElementById('navToggle');
-  const navUl = document.querySelector('nav ul');
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = navToggle.classList.toggle('open');
-      navUl.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', isOpen);
-    });
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('nav')) {
-        navToggle.classList.remove('open');
-        navUl.classList.remove('open');
-      }
-    });
-    navUl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      navToggle.classList.remove('open');
-      navUl.classList.remove('open');
-    }));
-  }
-
-  // Language toggle
-  const langToggle = document.getElementById('langToggle');
-  if (langToggle) {
-    let currentLang = localStorage.getItem('lang') || 'en';
-    function applyLangBlog(lang) {
-      currentLang = lang;
-      langToggle.textContent = lang === 'en' ? 'DE' : 'EN';
-      document.querySelectorAll('[data-en]').forEach(el => {
-        el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.de;
-      });
-      localStorage.setItem('lang', lang);
-    }
-    applyLangBlog(currentLang);
-    langToggle.addEventListener('click', () => applyLangBlog(currentLang === 'en' ? 'de' : 'en'));
-  }
-
-  // Table of contents
-  (function() {
-    const toc = document.getElementById('toc');
-    if (!toc) return;
-    const headings = document.querySelectorAll('.post-body h2');
-    if (headings.length < 2) { toc.remove(); return; }
-    headings.forEach((h, i) => { if (!h.id) h.id = 'section-' + i; });
-    const label = document.createElement('span');
-    label.className = 'toc-label';
-    label.setAttribute('data-en', 'In this article');
-    label.setAttribute('data-de', 'In diesem Artikel');
-    label.textContent = 'In this article';
-    toc.appendChild(label);
-    const ol = document.createElement('ol');
-    headings.forEach(h => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = '#' + h.id;
-      a.textContent = h.textContent;
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-      li.appendChild(a);
-      ol.appendChild(li);
-    });
-    toc.appendChild(ol);
-    // Highlight active section
-    const links = ol.querySelectorAll('a');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          links.forEach(l => l.classList.remove('toc-active'));
-          const active = ol.querySelector('a[href="#' + entry.target.id + '"]');
-          if (active) active.classList.add('toc-active');
-        }
-      });
-    }, { rootMargin: '-20% 0px -70% 0px' });
-    headings.forEach(h => obs.observe(h));
-  })();
-
-</script>
+<script src="../../site.js"></script>
 </body>
 </html>

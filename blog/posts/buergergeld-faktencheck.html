@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,397 +9,155 @@
   <meta property="og:title" content="Bürgergeld: Daten- und Faktenüberblick" />
   <meta property="og:description" content="Was stimmt beim Bürgergeld wirklich? Ein Überblick über die wichtigsten Kennzahlen auf Basis offizieller Quellen." />
   <meta property="og:url" content="https://lhausen.github.io/blog/posts/buergergeld-faktencheck.html" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://lhausen.github.io/blog/posts/img/buergergeld-hero.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Bürgergeld: Daten- und Faktenüberblick" />
   <meta name="twitter:description" content="Was stimmt beim Bürgergeld wirklich? Ein Überblick über die wichtigsten Kennzahlen auf Basis offizieller Quellen." />
   <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+  <script>(function(){try{var d=document.documentElement,t=d.dataset.themeLock||localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.dataset.theme=t;}catch(e){}})();</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="../../post.css" />
-  <style>
-    /* ── STAT CARDS ── */
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-
-    .stat-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem 1rem;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-
-    .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-
-    .stat-card .stat-number {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--accent);
-      line-height: 1.1;
-      margin-bottom: 0.35rem;
-    }
-
-    .stat-card .stat-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
-    /* ── FACT SECTIONS ── */
-    .fact-section {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.25rem;
-      background: var(--bg);
-      box-shadow: var(--shadow-sm);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .fact-section::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), #818cf8);
-    }
-
-    .fact-section h2 {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 0.9rem;
-    }
-
-    .fact-section p {
-      font-size: 0.9375rem;
-      color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 0.6rem;
-    }
-
-    .fact-section p:last-child { margin-bottom: 0; }
-
-    .highlight { color: var(--accent); font-weight: 700; }
-
-    .source {
-      display: inline-block;
-      margin-top: 0.75rem;
-      font-size: 0.75rem;
-      color: var(--muted-light);
-      font-style: italic;
-    }
-
-    .source a {
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid var(--accent-border);
-      transition: border-color 0.15s;
-      font-style: normal;
-    }
-
-    .source a:hover { border-color: var(--accent); }
-
-    /* ── DISTRIBUTION BAR ── */
-    .dist-bar {
-      display: flex;
-      height: 28px;
-      border-radius: 6px;
-      overflow: hidden;
-      margin: 1.25rem 0 1rem;
-      gap: 2px;
-    }
-
-    .dist-segment {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #fff;
-      transition: opacity 0.15s;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    .dist-segment:hover { opacity: 0.85; }
-    .seg-kinder    { background: #64748b; flex: 1.5; }
-    .seg-erwerb    { background: #3b82f6; flex: 0.8; }
-    .seg-bedingt   { background: #6366f1; flex: 1.6; }
-    .seg-verfuegbar{ background: #2563eb; flex: 1.6; }
-
-    .dist-legend {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem 1.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      font-size: 0.8125rem;
-      color: var(--muted);
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 2px;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-
-    .legend-item strong { color: var(--text); }
-
-    /* ── SUMMARY BOX ── */
-    .summary-box {
-      background: var(--hero-bg);
-      background-image: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(37,99,235,0.18) 0%, transparent 70%);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-top: 2rem;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .summary-box h2 {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #60a5fa;
-      margin-bottom: 1rem;
-    }
-
-    .summary-box ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .summary-box li {
-      font-size: 0.9375rem;
-      color: #cbd5e1;
-      padding-left: 1.25rem;
-      position: relative;
-      line-height: 1.55;
-    }
-
-    .summary-box li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: #3b82f6;
-      font-weight: 700;
-    }
-
-    .summary-box li strong { color: #f1f5f9; }
-
-    @media (max-width: 500px) {
-      .dist-legend { grid-template-columns: 1fr; }
-      .stat-grid { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
 </head>
 <body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
+<a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 
-<div class="reading-progress" id="readingProgress"></div>
-
-<nav>
-  <div class="nav-inner">
-    <a class="logo" href="../../index.html" aria-label="Leonard Fredershausen — Home"><svg width="34" height="34" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><clipPath id="nc"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#nc)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg></a>
-    <ul>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../../index.html#research">Research</a></li>
-      
-      <li><a href="../../index.html#cv">CV</a></li>
-      <li><a href="../../blog/index.html">Blog</a></li>
-      <li><a href="../../index.html#contact">Contact</a></li>
-      <li><a class="nav-cv-btn" href="../../Leonard_Fredershausen_CV.pdf" download>Download CV</a></li>
-      <li><button class="lang-toggle" id="langToggle" aria-label="Switch language">EN</button></li>
-      <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-      <svg class="icon-ham" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="5" x2="18" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="15" x2="18" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <svg class="icon-x" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="3" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="3" x2="3" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a class="site-nav__logo" href="../../index.html" aria-label="Leonard Fredershausen — Home">
+      <svg width="26" height="26" viewBox="0 0 200 200" aria-hidden="true"><defs><clipPath id="lf-clip"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#lf-clip)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg>
+    </a>
+    <nav class="site-nav__links" aria-label="Primary">
+      <a class="site-nav__link" href="../../index.html#about" data-en="About" data-de="Über mich">About</a>
+      <a class="site-nav__link" href="../../index.html#research" data-en="Research" data-de="Forschung">Research</a>
+      <a class="site-nav__link" href="../../index.html#cv" data-en="CV" data-de="Lebenslauf">CV</a>
+      <a class="site-nav__link" href="../index.html" aria-current="page">Blog</a>
+      <a class="site-nav__link" href="../../index.html#contact" data-en="Contact" data-de="Kontakt">Contact</a>
+    </nav>
+    <div class="site-nav__actions">
+      <a class="btn-cv" href="../../Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf (PDF)">Download CV</a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-set="de" aria-pressed="false">DE</button>
+      </div>
+      <button type="button" class="theme-btn" data-theme-toggle aria-label="Toggle dark mode">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <div class="site-nav__mobile">
+      <button type="button" class="theme-btn theme-btn--flat" data-theme-toggle aria-label="Toggle dark mode">
+        <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg>
+      </button>
+      <button type="button" class="menu-btn" data-menu-toggle aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
   </div>
-</nav>
+  <div class="site-nav__menu" data-menu hidden>
+    <nav aria-label="Primary">
+      <a class="site-nav__menu-link" href="../../index.html#about" data-en="About" data-de="Über mich">About</a>
+      <a class="site-nav__menu-link" href="../../index.html#research" data-en="Research" data-de="Forschung">Research</a>
+      <a class="site-nav__menu-link" href="../../index.html#cv" data-en="CV" data-de="Lebenslauf">CV</a>
+      <a class="site-nav__menu-link" href="../index.html" aria-current="page">Blog</a>
+      <a class="site-nav__menu-link" href="../../index.html#contact" data-en="Contact" data-de="Kontakt">Contact</a>
+    </nav>
+    <div class="site-nav__menu-row">
+      <div class="lang-switch lang-switch--lg" role="group" aria-label="Language">
+        <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-set="de" aria-pressed="false">DE</button>
+      </div>
+      <a class="btn-cv btn-cv--lg" href="../../Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf (PDF)">Download CV</a>
+    </div>
+  </div>
+</header>
 
 <main id="main-content">
-<article class="post-layout">
-  <div class="post-inner">
+<article class="post">
+  <a class="post__back" href="../index.html">← Blog</a>
 
-    <a class="post-back" href="../../blog/index.html">← Zurück zum Blog</a>
-
-    <header class="post-header">
-      <div class="post-tag-chip">Faktencheck</div>
-      <h1 class="post-title">Bürgergeld: Daten- und Faktenüberblick</h1>
-      <p class="post-meta">29. November 2024 · <span id="reading-time">4 Min. Lesezeit</span></p>
-    </header>
-
-    <img src="13715472_online-rechner-so-hoch-faellt-das-neue-buergergeld-aus_shift-644x362-1288w_1CIQkF_Nf7C0t.webp" alt="Bürgergeld" class="post-hero-img">
-
-
-    <div class="toc-box" id="toc"></div>
-
-    <div class="post-body">
-      <p data-en="In the public debate about Bürgergeld, many claims circulate. This fact-check summarises the most important figures based on official sources." data-de="In der öffentlichen Debatte über das Bürgergeld kursieren viele Behauptungen. Dieser Faktencheck fasst die wichtigsten Kennzahlen auf Basis offizieller Quellen zusammen.">
-        In der öffentlichen Debatte über das Bürgergeld kursieren viele Behauptungen.
-        Dieser Faktencheck fasst die wichtigsten Kennzahlen auf Basis offizieller
-        Quellen zusammen.
-      </p>
+  <header class="post__header">
+    <p class="post__meta"><span class="post__cat">Faktencheck</span> · 29. November 2024 · <span id="reading-time" data-en="4 min read" data-de="4 Min. Lesezeit">4 Min. Lesezeit</span></p>
+    <h1 class="post__title">Bürgergeld: Daten- und Faktenüberblick</h1>
+    <p class="post__dek">Was stimmt beim Bürgergeld wirklich? Ein Überblick über die wichtigsten Kennzahlen — von Empfängerzahlen über offene Stellen bis zu den Kosten.</p>
+    <div class="post__author">
+      <span class="post__author-mark" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 200 200"><defs><clipPath id="lf-clip-a"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#lf-clip-a)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg></span>
+      <span class="post__author-name">Leonard Fredershausen</span>
+      <span class="post__author-role" data-en="Economics Student · Hamburg" data-de="Wirtschaftsstudent · Hamburg">Wirtschaftsstudent · Hamburg</span>
     </div>
+  </header>
 
-    <!-- KEY STATS -->
+  <div class="post__body">
+    <p data-en="In the public debate about Bürgergeld, many claims circulate. This fact-check summarises the most important figures based on official sources." data-de="In der öffentlichen Debatte über das Bürgergeld kursieren viele Behauptungen. Dieser Faktencheck fasst die wichtigsten Kennzahlen auf Basis offizieller Quellen zusammen.">In der öffentlichen Debatte über das Bürgergeld kursieren viele Behauptungen. Dieser Faktencheck fasst die wichtigsten Kennzahlen auf Basis offizieller Quellen zusammen.</p>
+
+    <figure>
+      <img src="img/buergergeld-hero.jpg" alt="Bürgergeld" width="1288" height="724">
+      <figcaption>Regelsatz, Empfängerstruktur und Kosten — die Zahlen hinter der Debatte.</figcaption>
+    </figure>
+
     <div class="stat-grid">
-      <div class="stat-card">
-        <div class="stat-number">5,5 Mio.</div>
-        <div class="stat-label">Bürgergeld-Empfänger gesamt</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">1,6 Mio.</div>
-        <div class="stat-label">Dem Arbeitsmarkt verfügbar</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">563 €</div>
-        <div class="stat-label">Regelsatz pro Monat</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">5,56 %</div>
-        <div class="stat-label">des Bundeshaushalts</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">1,34 Mio.</div>
-        <div class="stat-label">Offene Stellen in Deutschland</div>
-      </div>
+      <div class="stat"><p class="stat__num">5,5 Mio.</p><p class="stat__label">Bürgergeld-Empfänger gesamt</p></div>
+      <div class="stat"><p class="stat__num">1,6 Mio.</p><p class="stat__label">Dem Arbeitsmarkt verfügbar</p></div>
+      <div class="stat"><p class="stat__num">563 €</p><p class="stat__label">Regelsatz pro Monat</p></div>
+      <div class="stat"><p class="stat__num">5,56 %</p><p class="stat__label">des Bundeshaushalts</p></div>
+      <div class="stat"><p class="stat__num">1,34 Mio.</p><p class="stat__label">Offene Stellen in Deutschland</p></div>
     </div>
 
-    <!-- VERTEILUNG -->
-    <div class="fact-section">
+    <section class="fact">
       <h2>Verteilung der Bürgergeld-Empfänger</h2>
       <p>Gesamtzahl: <strong>5,5 Millionen</strong>, davon sind nur <span class="highlight">1,6 Millionen</span> tatsächlich dem Arbeitsmarkt verfügbar.</p>
-
-      <div class="dist-bar">
-        <div class="dist-segment seg-kinder">Kinder</div>
-        <div class="dist-segment seg-erwerb">Erwerbst.</div>
-        <div class="dist-segment seg-bedingt">Bedingt</div>
-        <div class="dist-segment seg-verfuegbar">Verfügbar</div>
+      <div class="dist-bar" aria-hidden="true">
+        <div class="dist-seg dist-seg--1">Kinder</div>
+        <div class="dist-seg dist-seg--2">Erwerbst.</div>
+        <div class="dist-seg dist-seg--3">Bedingt</div>
+        <div class="dist-seg dist-seg--4">Verfügbar</div>
       </div>
-
       <div class="dist-legend">
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#64748b"></div>
-          <span><strong>1,5 Mio.</strong> Kinder unter 15 Jahren</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#3b82f6"></div>
-          <span><strong>0,8 Mio.</strong> bereits erwerbstätig</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#6366f1"></div>
-          <span><strong>1,6 Mio.</strong> nicht oder nur bedingt verfügbar (Ausbildung, Pflege, Krankheit …)</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#2563eb"></div>
-          <span><strong>1,6 Mio.</strong> dem Arbeitsmarkt verfügbar</span>
-        </div>
+        <div><span class="dot dot--1"></span><span><strong>1,5 Mio.</strong> Kinder unter 15 Jahren</span></div>
+        <div><span class="dot dot--2"></span><span><strong>0,8 Mio.</strong> bereits erwerbstätig</span></div>
+        <div><span class="dot dot--3"></span><span><strong>1,6 Mio.</strong> nicht oder nur bedingt verfügbar (Ausbildung, Pflege, Krankheit …)</span></div>
+        <div><span class="dot dot--4"></span><span><strong>1,6 Mio.</strong> dem Arbeitsmarkt verfügbar</span></div>
       </div>
       <span class="source">Quelle: <a href="https://www.bmas.de/DE/Arbeit/Grundsicherung-Buergergeld/grundsicherung-buergergeld.html" target="_blank" rel="noopener">Bundesagentur für Arbeit und Soziales</a>, Stand: 06. Dezember 2023</span>
-    </div>
+    </section>
 
-    <!-- OFFENE STELLEN -->
-    <div class="fact-section">
+    <section class="fact">
       <h2>Offene Stellen</h2>
-      <p>
-        Den <span class="highlight">1,6 Millionen</span> verfügbaren Bürgergeld-Empfängern stehen in Deutschland
-        <span class="highlight">1,337 Millionen offene Stellen</span> gegenüber, davon 1,1 Millionen sofort zu besetzen.
-        Die rechnerische Lücke zwischen Verfügbaren und offenen Stellen beträgt damit rund 300.000 Personen.
-      </p>
+      <p>Den <span class="highlight">1,6 Millionen</span> verfügbaren Bürgergeld-Empfängern stehen in Deutschland <span class="highlight">1,337 Millionen offene Stellen</span> gegenüber, davon 1,1 Millionen sofort zu besetzen. Die rechnerische Lücke zwischen Verfügbaren und offenen Stellen beträgt damit rund 300.000 Personen.</p>
       <span class="source">Quelle: <a href="https://iab.de/das-iab/befragungen/iab-stellenerhebung/aktuelle-ergebnisse/" target="_blank" rel="noopener">Institut für Arbeitsmarkt- und Berufsforschung (IAB)</a>, Stand: 13. November 2024</span>
-    </div>
+    </section>
 
-    <!-- TOTALVERWEIGERER -->
-    <div class="fact-section">
-      <h2>Zahl der „Totalverweigerer"</h2>
-      <p>
-        Die Bundesagentur für Arbeit gibt die Zahl der sogenannten Totalverweigerer — Personen,
-        die im vergangenen Jahr <em>alle</em> Jobangebote oder Weiterbildungen abgelehnt haben —
-        mit <span class="highlight">rund 16.000</span> an. Das entspricht ca. <strong>1 % der dem Arbeitsmarkt
-        verfügbaren Empfänger</strong>.
-      </p>
+    <section class="fact">
+      <h2>Zahl der „Totalverweigerer“</h2>
+      <p>Die Bundesagentur für Arbeit gibt die Zahl der sogenannten Totalverweigerer — Personen, die im vergangenen Jahr <em>alle</em> Jobangebote oder Weiterbildungen abgelehnt haben — mit <span class="highlight">rund 16.000</span> an. Das entspricht ca. <strong>1 % der dem Arbeitsmarkt verfügbaren Empfänger</strong>.</p>
       <span class="source">Quelle: <a href="https://www.swr.de/swraktuell/baden-wuerttemberg/streit-buergergeld-streichen-totalverweigerer-bw-100.html" target="_blank" rel="noopener">SWR Aktuell</a>, Stand: 13. November 2024</span>
-    </div>
+    </section>
 
-    <!-- ARBEIT LOHNT SICH -->
-    <div class="fact-section">
+    <section class="fact">
       <h2>Arbeit lohnt sich</h2>
-      <p>
-        Berechnungen des ifo Instituts zufolge hat, wer arbeitet und alle Sozialleistungen
-        in Anspruch nimmt, <span class="highlight">immer mehr verfügbares Einkommen</span> als jemand,
-        der nicht arbeitet und nur Sozialleistungen erhält. Der oft behauptete „Fehlanreiz"
-        lässt sich damit nicht belegen.
-      </p>
+      <p>Berechnungen des ifo Instituts zufolge hat, wer arbeitet und alle Sozialleistungen in Anspruch nimmt, <span class="highlight">immer mehr verfügbares Einkommen</span> als jemand, der nicht arbeitet und nur Sozialleistungen erhält. Der oft behauptete „Fehlanreiz“ lässt sich damit nicht belegen.</p>
       <span class="source">Quelle: <a href="https://www.ifo.de/pressemitteilung/2024-01-17/arbeit-fuehrt-deutschland-immer-zu-hoeheren-einkommen-als-nichtstun" target="_blank" rel="noopener">ifo Institut</a>, Stand: 17. Januar 2024</span>
-    </div>
+    </section>
 
-    <!-- KEINE KÜNDIGUNGSWELLE -->
-    <div class="fact-section">
+    <section class="fact">
       <h2>Keine Kündigungswelle wegen Bürgergeld</h2>
-      <p>
-        Seit der Einführung des Bürgergeldes 2022 gehen <span class="highlight">deutlich weniger Menschen</span> aus
-        ihren Jobs ins Bürgergeld als zuvor. Eine Kündigungswelle, wie sie teils befürchtet
-        wurde, ist in den Daten nicht erkennbar.
-      </p>
+      <p>Seit der Einführung des Bürgergeldes 2022 gehen <span class="highlight">deutlich weniger Menschen</span> aus ihren Jobs ins Bürgergeld als zuvor. Eine Kündigungswelle, wie sie teils befürchtet wurde, ist in den Daten nicht erkennbar.</p>
       <span class="source">Quelle: <a href="https://www.bmas.de/DE/Arbeit/Grundsicherung-Buergergeld/grundsicherung-buergergeld.html" target="_blank" rel="noopener">Bundesministerium für Arbeit und Soziales (BMAS)</a>, Stand: 24. Juli 2024</span>
-    </div>
+    </section>
 
-    <!-- KOSTEN -->
-    <div class="fact-section">
+    <section class="fact">
       <h2>Was kostet das Bürgergeld?</h2>
-      <p>
-        Die Bundesagentur für Arbeit gibt im Jahr 2024 voraussichtlich
-        <span class="highlight">26,5 Milliarden Euro</span> für das Bürgergeld aus —
-        das entspricht <span class="highlight">5,56 % des Bundeshaushalts</span>.
-        Inklusive Wohn- und Heizkosten sowie Verwaltungskosten steigt die Zahl auf
-        ca. 47,2 Milliarden Euro (9,9 % des Bundeshaushalts).
-      </p>
+      <p>Die Bundesagentur für Arbeit gibt im Jahr 2024 voraussichtlich <span class="highlight">26,5 Milliarden Euro</span> für das Bürgergeld aus — das entspricht <span class="highlight">5,56 % des Bundeshaushalts</span>. Inklusive Wohn- und Heizkosten sowie Verwaltungskosten steigt die Zahl auf ca. 47,2 Milliarden Euro (9,9 % des Bundeshaushalts).</p>
       <span class="source">Quelle: <a href="https://www.bundeshaushalt.de/DE/Bundeshaushalt-digital/bundeshaushalt-digital.html" target="_blank" rel="noopener">Bundeshaushalt digital</a>, Stand: 13. November 2024</span>
-    </div>
+    </section>
 
-    <!-- WIE HOCH -->
-    <div class="fact-section">
+    <section class="fact">
       <h2>Wie hoch ist der Regelsatz?</h2>
-      <p>
-        Ein alleinstehender Erwachsener erhält aktuell <span class="highlight">563 Euro im Monat</span> —
-        61 Euro mehr als unter Hartz IV. Für 2025 ist eine Nullrunde vorgesehen,
-        der Satz bleibt damit konstant.
-      </p>
+      <p>Ein alleinstehender Erwachsener erhält aktuell <span class="highlight">563 Euro im Monat</span> — 61 Euro mehr als unter Hartz IV. Für 2025 ist eine Nullrunde vorgesehen, der Satz bleibt damit konstant.</p>
       <span class="source">Quelle: <a href="https://www.bundesregierung.de/breg-de/aktuelles/faq-zum-buergergeld-2149774" target="_blank" rel="noopener">Die Bundesregierung</a>, Stand: 10. Oktober 2024</span>
-    </div>
+    </section>
 
-    <!-- ZUSAMMENFASSUNG -->
-    <div class="summary-box">
-      <h2>Zusammenfassung</h2>
+    <aside class="callout">
+      <p class="callout__label">Zusammenfassung</p>
       <ul>
         <li>Von <strong>5,5 Mio. Empfängern</strong> stehen nur <strong>1,6 Mio.</strong> dem Arbeitsmarkt zur Verfügung</li>
         <li>Es gibt ca. <strong>1,3 Mio. offene Stellen</strong> — rechnerisch weniger als Verfügbare</li>
@@ -409,144 +167,22 @@
         <li>Kosten: <strong>5,56 % des Bundeshaushalts</strong> (bzw. 9,9 % inkl. Nebenleistungen)</li>
         <li>Regelsatz: <strong>563 € / Monat</strong>, 2025 keine Erhöhung</li>
       </ul>
-    </div>
-
-    <footer class="post-footer">
-      <a class="post-back" href="../../blog/index.html">← Zurück zum Blog</a>
-    </footer>
-
+    </aside>
   </div>
+
+  <footer class="post__footer">
+    <a class="link-arrow" href="../index.html">← Zurück zum Blog</a>
+  </footer>
 </article>
 </main>
 
-<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>© 2026 Leonard Fredershausen</span>
+    <span class="site-footer__links"><a href="https://linkedin.com/in/leonardfredershausen/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/lhausen" target="_blank" rel="noopener">GitHub</a></span>
+  </div>
+</footer>
 
-<script>
-  const nav = document.querySelector('nav');
-  nav.classList.add('scrolled');
-  function updateNav() { }
-  window.addEventListener('scroll', updateNav, { passive: true });
-  updateNav();
-
-  const themeToggle = document.getElementById('themeToggle');
-  function applyTheme(dark) {
-    document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
-  }
-  applyTheme(localStorage.getItem('theme') === 'dark');
-  themeToggle.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') !== 'dark';
-    applyTheme(next);
-    localStorage.setItem('theme', next ? 'dark' : 'light');
-  });
-
-  // Auto reading time
-  (function() {
-    const body = document.querySelector('.post-body');
-    if (!body) return;
-    const words = body.innerText.trim().split(/\s+/).length;
-    const mins = Math.max(1, Math.round(words / 200));
-    const el = document.getElementById('reading-time');
-    if (el) el.textContent = mins + ' Min. Lesezeit';
-  })();
-
-  // Scroll to top button
-  const scrollTopBtn = document.getElementById('scrollTop');
-  window.addEventListener('scroll', () => {
-    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
-  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  const progressBar = document.getElementById('readingProgress');
-  const article = document.querySelector('article');
-  function updateProgress() {
-    const articleTop = article.getBoundingClientRect().top + window.scrollY;
-    const viewable = article.scrollHeight - window.innerHeight;
-    const pct = viewable > 0 ? Math.min(100, Math.max(0, ((window.scrollY - articleTop) / viewable) * 100)) : 100;
-    progressBar.style.width = pct + '%';
-  }
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
-
-  // Hamburger menu
-  const navToggle = document.getElementById('navToggle');
-  const navUl = document.querySelector('nav ul');
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = navToggle.classList.toggle('open');
-      navUl.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', isOpen);
-    });
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('nav')) {
-        navToggle.classList.remove('open');
-        navUl.classList.remove('open');
-      }
-    });
-    navUl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      navToggle.classList.remove('open');
-      navUl.classList.remove('open');
-    }));
-  }
-
-  // Language toggle
-  const langToggle = document.getElementById('langToggle');
-  if (langToggle) {
-    let currentLang = localStorage.getItem('lang') || 'en';
-    function applyLangBlog(lang) {
-      currentLang = lang;
-      langToggle.textContent = lang === 'en' ? 'DE' : 'EN';
-      document.querySelectorAll('[data-en]').forEach(el => {
-        el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.de;
-      });
-      localStorage.setItem('lang', lang);
-    }
-    applyLangBlog(currentLang);
-    langToggle.addEventListener('click', () => applyLangBlog(currentLang === 'en' ? 'de' : 'en'));
-  }
-
-  // Table of contents
-  (function() {
-    const toc = document.getElementById('toc');
-    if (!toc) return;
-    const headings = document.querySelectorAll('.post-body h2');
-    if (headings.length < 2) { toc.remove(); return; }
-    headings.forEach((h, i) => { if (!h.id) h.id = 'section-' + i; });
-    const label = document.createElement('span');
-    label.className = 'toc-label';
-    label.setAttribute('data-en', 'In this article');
-    label.setAttribute('data-de', 'In diesem Artikel');
-    label.textContent = 'In this article';
-    toc.appendChild(label);
-    const ol = document.createElement('ol');
-    headings.forEach(h => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = '#' + h.id;
-      a.textContent = h.textContent;
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-      li.appendChild(a);
-      ol.appendChild(li);
-    });
-    toc.appendChild(ol);
-    // Highlight active section
-    const links = ol.querySelectorAll('a');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          links.forEach(l => l.classList.remove('toc-active'));
-          const active = ol.querySelector('a[href="#' + entry.target.id + '"]');
-          if (active) active.classList.add('toc-active');
-        }
-      });
-    }, { rootMargin: '-20% 0px -70% 0px' });
-    headings.forEach(h => obs.observe(h));
-  })();
-
-</script>
+<script src="../../site.js"></script>
 </body>
 </html>

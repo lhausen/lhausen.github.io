@@ -1,331 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting Started: Measuring Hamburg's Solar Mandate — Leonard Fredershausen</title>
-  <meta name="description" content="What does it take to identify a causal effect from an energy policy mandate? Some early thoughts on the design challenges for my bachelor's thesis." />
+  <meta name="description" content="What does it take to identify a causal effect from an energy policy mandate? Early thoughts on the design challenges of my bachelor's thesis." />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Getting Started: Measuring Hamburg's Solar Mandate" />
-  <meta property="og:description" content="What does it take to identify a causal effect from an energy policy mandate? Some early thoughts on the design challenges for my bachelor's thesis." />
+  <meta property="og:description" content="What does it take to identify a causal effect from an energy policy mandate? Early thoughts on the design challenges of my bachelor's thesis." />
   <meta property="og:url" content="https://lhausen.github.io/blog/posts/hamburg-solar-mandate.html" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://lhausen.github.io/blog/posts/img/solar-hero.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Getting Started: Measuring Hamburg's Solar Mandate" />
-  <meta name="twitter:description" content="What does it take to identify a causal effect from an energy policy mandate? Some early thoughts on the design challenges for my bachelor's thesis." />
+  <meta name="twitter:description" content="What does it take to identify a causal effect from an energy policy mandate? Early thoughts on the design challenges of my bachelor's thesis." />
   <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+  <script>(function(){try{var d=document.documentElement,t=d.dataset.themeLock||localStorage.getItem('theme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.dataset.theme=t;}catch(e){}})();</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="../../post.css" />
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 
-<div class="reading-progress" id="readingProgress"></div>
-
-<nav>
-  <div class="nav-inner">
-    <a class="logo" href="../../index.html" aria-label="Leonard Fredershausen — Home"><svg width="34" height="34" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><clipPath id="nc"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#nc)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg></a>
-    <ul>
-      <li><a href="../../index.html#about">About</a></li>
-      <li><a href="../../index.html#research">Research</a></li>
-      
-      <li><a href="../../index.html#cv">CV</a></li>
-      <li><a href="../../blog/index.html">Blog</a></li>
-      <li><a href="../../index.html#contact">Contact</a></li>
-      <li><a class="nav-cv-btn" href="../../Leonard_Fredershausen_CV.pdf" download>Download CV</a></li>
-      <li><button class="lang-toggle" id="langToggle" aria-label="Switch language">EN</button></li>
-      <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-      <svg class="icon-ham" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="5" x2="18" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="15" x2="18" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <svg class="icon-x" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="3" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="3" x2="3" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a class="site-nav__logo" href="../../index.html" aria-label="Leonard Fredershausen — Home">
+      <svg width="26" height="26" viewBox="0 0 200 200" aria-hidden="true"><defs><clipPath id="lf-clip"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#lf-clip)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg>
+    </a>
+    <nav class="site-nav__links" aria-label="Primary">
+      <a class="site-nav__link" href="../../index.html#about" data-en="About" data-de="Über mich">About</a>
+      <a class="site-nav__link" href="../../index.html#research" data-en="Research" data-de="Forschung">Research</a>
+      <a class="site-nav__link" href="../../index.html#cv" data-en="CV" data-de="Lebenslauf">CV</a>
+      <a class="site-nav__link" href="../index.html" aria-current="page">Blog</a>
+      <a class="site-nav__link" href="../../index.html#contact" data-en="Contact" data-de="Kontakt">Contact</a>
+    </nav>
+    <div class="site-nav__actions">
+      <a class="btn-cv" href="../../Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf (PDF)">Download CV</a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-set="de" aria-pressed="false">DE</button>
+      </div>
+      <button type="button" class="theme-btn" data-theme-toggle aria-label="Toggle dark mode">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <div class="site-nav__mobile">
+      <button type="button" class="theme-btn theme-btn--flat" data-theme-toggle aria-label="Toggle dark mode">
+        <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg>
+      </button>
+      <button type="button" class="menu-btn" data-menu-toggle aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
   </div>
-</nav>
+  <div class="site-nav__menu" data-menu hidden>
+    <nav aria-label="Primary">
+      <a class="site-nav__menu-link" href="../../index.html#about" data-en="About" data-de="Über mich">About</a>
+      <a class="site-nav__menu-link" href="../../index.html#research" data-en="Research" data-de="Forschung">Research</a>
+      <a class="site-nav__menu-link" href="../../index.html#cv" data-en="CV" data-de="Lebenslauf">CV</a>
+      <a class="site-nav__menu-link" href="../index.html" aria-current="page">Blog</a>
+      <a class="site-nav__menu-link" href="../../index.html#contact" data-en="Contact" data-de="Kontakt">Contact</a>
+    </nav>
+    <div class="site-nav__menu-row">
+      <div class="lang-switch lang-switch--lg" role="group" aria-label="Language">
+        <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-set="de" aria-pressed="false">DE</button>
+      </div>
+      <a class="btn-cv btn-cv--lg" href="../../Leonard_Fredershausen_CV.pdf" download data-en="Download CV" data-de="Lebenslauf (PDF)">Download CV</a>
+    </div>
+  </div>
+</header>
 
 <main id="main-content">
-<article class="post-layout">
-  <div class="post-inner">
+<article class="post">
+  <a class="post__back" href="../index.html" data-en="← Blog" data-de="← Blog">← Blog</a>
 
-    <a class="post-back" href="../../blog/index.html">← Back to Blog</a>
-
-    <header class="post-header">
-      <div class="post-tag-chip">Thesis Update</div>
-      <h1 class="post-title" data-en="Getting Started: Measuring Hamburg's Solar Mandate" data-de="Einstieg: Messung der Hamburger Solardachpflicht">Getting Started: Measuring Hamburg's Solar Mandate</h1>
-      <p class="post-meta">May 2026 · <span id="reading-time">5 min read</span></p>
-    </header>
-
-    <img src="Solarmodul_AdobeStock_434096515.jpeg" alt="Solar panels on a rooftop" class="post-hero-img">
-
-
-    <div class="toc-box" id="toc"></div>
-
-    <div class="post-body">
-
-      <p data-en="My bachelor's thesis asks a deceptively simple question: did Hamburg's solar roof mandate actually cause more solar panels to be installed? It sounds straightforward — compare before and after, check if installations went up. But doing this rigorously turns out to be genuinely hard." data-de="Meine Bachelorarbeit stellt eine vermeintlich einfache Frage: Hat Hamburgs Solardachpflicht tatsächlich dazu geführt, dass mehr Solaranlagen installiert wurden? Klingt simpel — vorher und nachher vergleichen, prüfen ob die Zahlen gestiegen sind. Doch das rigoros zu untersuchen ist schwieriger als gedacht.">
-        My bachelor's thesis asks a deceptively simple question: did Hamburg's solar
-        roof mandate actually cause more solar panels to be installed? It sounds
-        straightforward — compare before and after, check if installations went up.
-        But doing this rigorously turns out to be genuinely hard.
-      </p>
-
-      <h2>The policy</h2>
-      <p data-en="In January 2023, Hamburg became the first German state to mandate solar panels on <em>private</em> residential buildings — not just commercial ones. Most other states either don't mandate private buildings at all, or only introduced that requirement years later. A second wave of the mandate hit in January 2024, extending the obligation to substantial roof renovations (<em>Dachsanierungen</em>)." data-de="Im Januar 2023 wurde Hamburg zum ersten Bundesland, das Solaranlagen auf <em>privaten</em> Wohngebäuden verpflichtend vorschreibt — nicht nur auf Gewerbeobjekten. Die meisten anderen Bundesländer verpflichten private Gebäude gar nicht, oder haben diese Anforderung erst Jahre später eingeführt. Eine zweite Welle folgte im Januar 2024: Die Pflicht wurde auf wesentliche Dachsanierungen (<em>Dachsanierungen</em>) ausgeweitet.">
-        In January 2023, Hamburg became the first German state to mandate solar
-        panels on <em>private</em> residential buildings — not just commercial
-        ones. Most other states either don't mandate private buildings at all, or
-        only introduced that requirement years later. A second wave of the mandate
-        hit in January 2024, extending the obligation to substantial roof
-        renovations (<em>Dachsanierungen</em>).
-      </p>
-      <p data-en="On paper, this should be an empiricist's dream: a clear treatment, a clear date, and a comparison group of nearby regions without the same mandate. In practice, it's messier." data-de="Auf dem Papier sollte das der Traum jedes Empirikers sein: eine klare Behandlung, ein klares Datum und eine Vergleichsgruppe benachbarter Regionen ohne dasselbe Mandat. In der Praxis ist es komplizierter.">
-        On paper, this should be an empiricist's dream: a clear treatment, a clear
-        date, and a comparison group of nearby regions without the same mandate.
-        In practice, it's messier.
-      </p>
-
-      <h2>The identification problem</h2>
-      <p data-en="The core challenge is the EEG reform of 2023. Around the same time Hamburg's mandate came into force, the German federal government removed VAT on residential solar systems and simplified the grid connection rules. The result was a nationwide solar boom — installations roughly tripled across the country. Hamburg went up by 2.9×; the surrounding control regions went up by 3.2×." data-de="Die zentrale Herausforderung ist die EEG-Reform 2023. Zeitgleich mit Hamburgs Mandat entfernte die Bundesregierung die Mehrwertsteuer auf private Solaranlagen und vereinfachte die Netzanschlussregeln. Das Ergebnis: ein bundesweiter Solarboom — die Installationen verdreifachten sich. Hamburg stieg um das 2,9-Fache; die umliegenden Kontrollregionen um das 3,2-Fache.">
-        The core challenge is the EEG reform of 2023. Around the same time Hamburg's
-        mandate came into force, the German federal government removed VAT on
-        residential solar systems and simplified the grid connection rules. The
-        result was a nationwide solar boom — installations roughly tripled across
-        the country. Hamburg went up by 2.9×; the surrounding control regions went
-        up by 3.2×.
-      </p>
-      <p data-en="That already hints at something interesting (Hamburg grew <em>less</em> than its neighbours in percentage terms, despite the mandate), but the raw comparison is complicated by the fact that Hamburg had already been accelerating before 2023. Separating the mandate's effect from the national tailwind is the central econometric problem of the thesis." data-de="Das deutet bereits auf etwas Interessantes hin (Hamburg wuchs <em>weniger</em> als seine Nachbarn in Prozent, trotz des Mandats), doch der rohe Vergleich wird dadurch erschwert, dass Hamburg bereits vor 2023 auf Wachstumskurs war. Den Effekt des Mandats vom nationalen Rückenwind zu trennen ist das zentrale ökonometrische Problem der Arbeit.">
-        That already hints at something interesting (Hamburg grew <em>less</em> than
-        its neighbours in percentage terms, despite the mandate), but the raw
-        comparison is complicated by the fact that Hamburg had already been
-        accelerating before 2023. Separating the mandate's effect from the
-        national tailwind is the central econometric problem of the thesis.
-      </p>
-
-      <h2>The design</h2>
-      <p data-en="I'm using a staggered difference-in-differences approach. The treatment unit is Hamburg; the control group is six surrounding Landkreise — four in Schleswig-Holstein (Pinneberg, Segeberg, Stormarn, Herzogtum Lauenburg) and two in Niedersachsen (Harburg, Stade). I observe them at the PLZ × month level from 2019 onwards, which gives me enough pre-treatment data to test parallel trends." data-de="Ich verwende einen gestaffelten Difference-in-Differences-Ansatz. Die Behandlungseinheit ist Hamburg; die Kontrollgruppe sind sechs umliegende Landkreise — vier in Schleswig-Holstein (Pinneberg, Segeberg, Stormarn, Herzogtum Lauenburg) und zwei in Niedersachsen (Harburg, Stade). Ich beobachte sie auf PLZ-×-Monats-Ebene ab 2019, was ausreichend Pre-Treatment-Daten für Parallel-Trends-Tests liefert.">
-        I'm using a staggered difference-in-differences approach. The treatment
-        unit is Hamburg; the control group is six surrounding Landkreise — four in
-        Schleswig-Holstein (Pinneberg, Segeberg, Stormarn, Herzogtum Lauenburg)
-        and two in Niedersachsen (Harburg, Stade). I observe them at the PLZ ×
-        month level from 2019 onwards, which gives me enough pre-treatment data to
-        test parallel trends.
-      </p>
-      <p data-en="One useful feature of the control group: Schleswig-Holstein introduced a <em>commercial-only</em> mandate in January 2023. That means commercial installations in SH serve as a built-in placebo — if my estimator picks up a treatment effect for private buildings in Hamburg but not for commercial buildings in SH, that's reassuring. If it fires on both, something is off." data-de="Ein nützliches Merkmal der Kontrollgruppe: Schleswig-Holstein führte im Januar 2023 ein <em>rein gewerbliches</em> Mandat ein. Das bedeutet, gewerbliche Installationen in SH dienen als eingebauter Placebo-Test — wenn mein Schätzer einen Behandlungseffekt bei privaten Gebäuden in Hamburg, aber nicht bei gewerblichen in SH findet, ist das ein gutes Zeichen. Wenn er bei beiden anschlägt, stimmt etwas nicht.">
-        One useful feature of the control group: Schleswig-Holstein introduced a
-        <em>commercial-only</em> mandate in January 2023. That means commercial
-        installations in SH serve as a built-in placebo — if my estimator picks up
-        a treatment effect for private buildings in Hamburg but not for commercial
-        buildings in SH, that's reassuring. If it fires on both, something is off.
-      </p>
-
-      <h2>The data</h2>
-      <p data-en="The main data source is the Marktstammdatenregister (MaStR), Germany's national plant register. Every solar installation has to be registered there within a few months of going live. I'm using the commissioning date (<em>Inbetriebnahmedatum</em>), not the registration date, since registration lags average about 17% above one year — using the wrong date would systematically misallocate installations to the wrong month." data-de="Die wichtigste Datenquelle ist das Marktstammdatenregister (MaStR), Deutschlands nationales Anlagenregister. Jede Solaranlage muss dort innerhalb weniger Monate nach Inbetriebnahme registriert werden. Ich verwende das Inbetriebnahmedatum, nicht das Registrierungsdatum, da die Registrierungsverzögerungen im Schnitt über ein Jahr betragen — der falsche Datumsbegriff würde Installationen systematisch falschen Monaten zuordnen.">
-        The main data source is the Marktstammdatenregister (MaStR), Germany's
-        national plant register. Every solar installation has to be registered
-        there within a few months of going live. I'm using the commissioning date
-        (<em>Inbetriebnahmedatum</em>), not the registration date, since
-        registration lags average about 17% above one year — using the wrong date
-        would systematically misallocate installations to the wrong month.
-      </p>
-      <p data-en="One thing I didn't expect: the explosion of balcony solar panels (<em>Balkonkraftwerke</em>) after 2023. These tiny plug-in units are registered in MaStR like any other installation, which inflates private installation counts dramatically. I filter them out using a 0.8 kW threshold in the regional data and an explicit category flag in the national data." data-de="Was mich überraschte: Die Explosion der Balkon-Solarmodule (<em>Balkonkraftwerke</em>) nach 2023. Diese kleinen Plug-in-Geräte werden im MaStR wie jede andere Anlage registriert und blähen die privaten Installationszahlen dramatisch auf. Ich filtere sie mit einer 0,8-kW-Schwelle in den Regionaldaten und einem expliziten Kategorie-Flag in den Bundesdaten heraus.">
-        One thing I didn't expect: the explosion of balcony solar panels
-        (<em>Balkonkraftwerke</em>) after 2023. These tiny plug-in units are
-        registered in MaStR like any other installation, which inflates private
-        installation counts dramatically. I filter them out using a 0.8 kW
-        threshold in the regional data and an explicit category flag in the
-        national data.
-      </p>
-
-      <h2>What's next</h2>
-      <p data-en="The descriptive analysis is mostly done. The next step is specifying the regression model — I'm deciding between a standard two-way fixed effects estimator and a more robust staggered estimator like Callaway-Sant'Anna, which handles heterogeneous treatment effects across time better. Given that I have two treatment dates (2023 and 2024), the staggered approach is probably the right call." data-de="Die deskriptive Analyse ist weitgehend abgeschlossen. Der nächste Schritt ist die Spezifikation des Regressionsmodells — ich entscheide mich zwischen einem Standard-Two-Way-Fixed-Effects-Schätzer und einem robusteren gestaffelten Schätzer wie Callaway-Sant'Anna, der heterogene Behandlungseffekte über die Zeit besser handhabt. Angesichts zweier Behandlungsdaten (2023 und 2024) ist der gestaffelte Ansatz wahrscheinlich die richtige Wahl.">
-        The descriptive analysis is mostly done. The next step is specifying the
-        regression model — I'm deciding between a standard two-way fixed effects
-        estimator and a more robust staggered estimator like Callaway-Sant'Anna,
-        which handles heterogeneous treatment effects across time better. Given
-        that I have two treatment dates (2023 and 2024), the staggered approach is
-        probably the right call.
-      </p>
-      <p data-en="More updates to follow as the results come in." data-de="Weitere Updates folgen, sobald die Ergebnisse vorliegen.">
-        More updates to follow as the results come in.
-      </p>
-
+  <header class="post__header">
+    <p class="post__meta"><span class="post__cat" data-en="Thesis Update" data-de="Thesis-Update">Thesis Update</span> · <span data-en="May 2026" data-de="Mai 2026">May 2026</span> · <span id="reading-time" data-en="5 min read" data-de="5 Min. Lesezeit">5 min read</span></p>
+    <h1 class="post__title" data-en="Getting Started: Measuring Hamburg’s Solar Mandate" data-de="Einstieg: Messung der Hamburger Solardachpflicht">Getting Started: Measuring Hamburg’s Solar Mandate</h1>
+    <p class="post__dek" data-en="What does it take to identify a causal effect from an energy policy mandate? Early thoughts on the design challenges of my bachelor’s thesis." data-de="Was braucht es, um einen Kausaleffekt aus einem energiepolitischen Mandat zu identifizieren? Erste Überlegungen zu den methodischen Herausforderungen meiner Bachelorarbeit.">What does it take to identify a causal effect from an energy policy mandate? Early thoughts on the design challenges of my bachelor’s thesis.</p>
+    <div class="post__author">
+      <span class="post__author-mark" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 200 200"><defs><clipPath id="lf-clip-a"><circle cx="100" cy="100" r="95"/></clipPath></defs><circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" stroke-width="10"/><g clip-path="url(#lf-clip-a)" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><polyline points="74,13 44,118 104,118"/><line x1="118" y1="65" x2="85" y2="190"/><line x1="118" y1="65" x2="184" y2="65"/><line x1="104" y1="118" x2="148" y2="118"/></g></svg></span>
+      <span class="post__author-name">Leonard Fredershausen</span>
+      <span class="post__author-role" data-en="Economics Student · Hamburg" data-de="Wirtschaftsstudent · Hamburg">Economics Student · Hamburg</span>
     </div>
+  </header>
 
-    <!-- Interactive map embed -->
-    <div style="margin-top: 2.5rem;">
-      <p style="font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">Interactive Data</p>
-      <h2 style="font-size:1.25rem;font-weight:700;letter-spacing:-0.02em;color:var(--text);margin-bottom:0.5rem;">Hamburg Solar Adoption by Postal Code</h2>
-      <p style="font-size:0.9rem;color:var(--muted);margin-bottom:1rem;">Private residential solar PV installations from the MaStR. Toggle between the pre-mandate (2019–2022) and post-mandate (2023+) periods to see the change.</p>
-      <iframe
-        src="../../solar-map.html"
-        style="width:100%;height:560px;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-md);"
-        title="Hamburg Solar Adoption Map"
-        loading="lazy">
-      </iframe>
-      <p style="margin-top:0.75rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
-        <a href="../../germany-map.html" target="_blank" style="font-size:0.8125rem;font-weight:600;color:var(--accent);text-decoration:none;">Open full interactive map →</a>
-      </p>
-    </div>
+  <div class="post__body">
+    <p data-en="My bachelor’s thesis asks a deceptively simple question: did Hamburg’s solar roof mandate actually cause more solar panels to be installed? It sounds straightforward — compare before and after, check if installations went up. But doing this rigorously turns out to be genuinely hard." data-de="Meine Bachelorarbeit stellt eine vermeintlich einfache Frage: Hat Hamburgs Solardachpflicht tatsächlich dazu geführt, dass mehr Solaranlagen installiert wurden? Klingt simpel — vorher und nachher vergleichen, prüfen, ob die Zahlen gestiegen sind. Doch das rigoros zu untersuchen ist schwieriger als gedacht.">My bachelor’s thesis asks a deceptively simple question: did Hamburg’s solar roof mandate actually cause more solar panels to be installed? It sounds straightforward — compare before and after, check if installations went up. But doing this rigorously turns out to be genuinely hard.</p>
 
-    <div style="margin-top:2.5rem;">
-      <p style="font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">Interactive Maps</p>
-      <h2 style="font-size:1.25rem;font-weight:700;letter-spacing:-0.02em;color:var(--text);margin-bottom:0.5rem;">Solar Installations &amp; Mandate Rollout</h2>
-      <p style="font-size:0.9rem;color:var(--muted);margin-bottom:1rem;">Three views in one: Germany-wide solar adoption before and after 2023, the month-by-month mandate rollout across all Bundesländer (animated), and Hamburg by postal code. Use the tabs to switch views.</p>
-      <iframe
-        src="../../germany-map.html"
-        style="width:100%;height:660px;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-md);"
-        title="Solar Map — Germany &amp; Hamburg"
-        loading="lazy">
-      </iframe>
-      <p style="margin-top:0.75rem;">
-        <a href="../../germany-map.html" target="_blank" style="font-size:0.8125rem;font-weight:600;color:var(--accent);text-decoration:none;">Open full map →</a>
-      </p>
-    </div>
+    <figure>
+      <img src="img/solar-hero.jpg" alt="Solar panels on a rooftop" width="1600" height="779">
+      <figcaption data-en="Rooftop PV in Hamburg. Since January 2023 every new residential building in the city has to carry a solar system." data-de="Dach-PV in Hamburg. Seit Januar 2023 muss jeder Wohnungsneubau in der Stadt eine Solaranlage tragen.">Rooftop PV in Hamburg. Since January 2023 every new residential building in the city has to carry a solar system.</figcaption>
+    </figure>
 
-    <footer class="post-footer">
-      <a class="post-back" href="../../blog/index.html">← Back to Blog</a>
-    </footer>
+    <h2 data-en="The policy" data-de="Die Maßnahme">The policy</h2>
+    <p data-en="In January 2023, Hamburg became the first German state to mandate solar panels on <em>private</em> residential buildings — not just commercial ones. Most other states either don’t mandate private buildings at all, or only introduced that requirement years later. A second wave of the mandate hit in January 2024, extending the obligation to substantial roof renovations (<em>Dachsanierungen</em>)." data-de="Im Januar 2023 wurde Hamburg zum ersten Bundesland, das Solaranlagen auf <em>privaten</em> Wohngebäuden verpflichtend vorschreibt — nicht nur auf Gewerbeobjekten. Die meisten anderen Bundesländer verpflichten private Gebäude gar nicht oder haben diese Anforderung erst Jahre später eingeführt. Eine zweite Welle folgte im Januar 2024: Die Pflicht wurde auf wesentliche Dachsanierungen ausgeweitet.">In January 2023, Hamburg became the first German state to mandate solar panels on <em>private</em> residential buildings — not just commercial ones. Most other states either don’t mandate private buildings at all, or only introduced that requirement years later. A second wave of the mandate hit in January 2024, extending the obligation to substantial roof renovations (<em>Dachsanierungen</em>).</p>
+    <p data-en="On paper, this should be an empiricist’s dream: a clear treatment, a clear date, and a comparison group of nearby regions without the same mandate. In practice, it’s messier." data-de="Auf dem Papier sollte das der Traum jedes Empirikers sein: eine klare Behandlung, ein klares Datum und eine Vergleichsgruppe benachbarter Regionen ohne dasselbe Mandat. In der Praxis ist es komplizierter.">On paper, this should be an empiricist’s dream: a clear treatment, a clear date, and a comparison group of nearby regions without the same mandate. In practice, it’s messier.</p>
 
+    <h2 data-en="The identification problem" data-de="Das Identifikationsproblem">The identification problem</h2>
+    <p data-en="The core challenge is the EEG reform of 2023. Around the same time Hamburg’s mandate came into force, the German federal government removed VAT on residential solar systems and simplified the grid connection rules. The result was a nationwide solar boom — installations roughly tripled across the country. Hamburg went up by 2.9×; the surrounding control regions went up by 3.2×." data-de="Die zentrale Herausforderung ist die EEG-Reform 2023. Zeitgleich mit Hamburgs Mandat strich die Bundesregierung die Mehrwertsteuer auf private Solaranlagen und vereinfachte die Netzanschlussregeln. Das Ergebnis: ein bundesweiter Solarboom — die Installationen verdreifachten sich. Hamburg stieg um das 2,9-Fache, die umliegenden Kontrollregionen um das 3,2-Fache.">The core challenge is the EEG reform of 2023. Around the same time Hamburg’s mandate came into force, the German federal government removed VAT on residential solar systems and simplified the grid connection rules. The result was a nationwide solar boom — installations roughly tripled across the country. Hamburg went up by 2.9×; the surrounding control regions went up by 3.2×.</p>
+
+    <blockquote>
+      <p data-en="Hamburg grew less than its neighbours in percentage terms — despite the mandate." data-de="Hamburg wuchs prozentual weniger als seine Nachbarn — trotz der Pflicht.">Hamburg grew less than its neighbours in percentage terms — despite the mandate.</p>
+    </blockquote>
+
+    <p data-en="That already hints at something interesting, but the raw comparison is complicated by the fact that Hamburg had already been accelerating before 2023. Separating the mandate’s effect from the national tailwind is the central econometric problem of the thesis." data-de="Das deutet bereits auf etwas Interessantes hin, doch der rohe Vergleich wird dadurch erschwert, dass Hamburg bereits vor 2023 auf Wachstumskurs war. Den Effekt des Mandats vom nationalen Rückenwind zu trennen ist das zentrale ökonometrische Problem der Arbeit.">That already hints at something interesting, but the raw comparison is complicated by the fact that Hamburg had already been accelerating before 2023. Separating the mandate’s effect from the national tailwind is the central econometric problem of the thesis.</p>
+
+    <h2 data-en="The design" data-de="Das Design">The design</h2>
+    <p data-en="I’m using a staggered difference-in-differences approach. The treatment unit is Hamburg; the control group is six surrounding Landkreise — four in Schleswig-Holstein (Pinneberg, Segeberg, Stormarn, Herzogtum Lauenburg) and two in Niedersachsen (Harburg, Stade). I observe them at the PLZ × month level from 2019 onwards, which gives me enough pre-treatment data to test parallel trends." data-de="Ich verwende einen gestaffelten Difference-in-Differences-Ansatz. Die Behandlungseinheit ist Hamburg; die Kontrollgruppe sind sechs umliegende Landkreise — vier in Schleswig-Holstein (Pinneberg, Segeberg, Stormarn, Herzogtum Lauenburg) und zwei in Niedersachsen (Harburg, Stade). Ich beobachte sie auf PLZ-×-Monats-Ebene ab 2019, was ausreichend Pre-Treatment-Daten für Parallel-Trends-Tests liefert.">I’m using a staggered difference-in-differences approach. The treatment unit is Hamburg; the control group is six surrounding Landkreise — four in Schleswig-Holstein (Pinneberg, Segeberg, Stormarn, Herzogtum Lauenburg) and two in Niedersachsen (Harburg, Stade). I observe them at the PLZ × month level from 2019 onwards, which gives me enough pre-treatment data to test parallel trends.</p>
+
+    <aside class="callout">
+      <p class="callout__label" data-en="Built-in placebo" data-de="Eingebauter Placebo-Test">Built-in placebo</p>
+      <p data-en="Schleswig-Holstein introduced a commercial-only mandate in January 2023. Commercial installations there act as a natural placebo: if the estimator picks up an effect for private buildings in Hamburg but not for commercial buildings in SH, that is reassuring. If it fires on both, something is off." data-de="Schleswig-Holstein führte im Januar 2023 eine Pflicht nur für Gewerbegebäude ein. Gewerbliche Anlagen dort dienen als natürlicher Placebo-Test: Findet der Schätzer einen Effekt für private Gebäude in Hamburg, aber nicht für gewerbliche in SH, ist das beruhigend. Schlägt er bei beiden an, stimmt etwas nicht.">Schleswig-Holstein introduced a commercial-only mandate in January 2023. Commercial installations there act as a natural placebo: if the estimator picks up an effect for private buildings in Hamburg but not for commercial buildings in SH, that is reassuring. If it fires on both, something is off.</p>
+    </aside>
+
+    <h2 data-en="The data" data-de="Die Daten">The data</h2>
+    <p data-en="The main data source is the Marktstammdatenregister (MaStR), Germany’s national plant register. Every solar installation has to be registered there within a few months of going live. I’m using the commissioning date (<em>Inbetriebnahmedatum</em>), not the registration date, since registration lags average about 17% above one year — using the wrong date would systematically misallocate installations to the wrong month." data-de="Die wichtigste Datenquelle ist das Marktstammdatenregister (MaStR), Deutschlands nationales Anlagenregister. Jede Solaranlage muss dort innerhalb weniger Monate nach Inbetriebnahme registriert werden. Ich verwende das Inbetriebnahmedatum, nicht das Registrierungsdatum, da die Registrierungsverzögerungen im Schnitt über ein Jahr betragen — der falsche Datumsbegriff würde Installationen systematisch falschen Monaten zuordnen.">The main data source is the Marktstammdatenregister (MaStR), Germany’s national plant register. Every solar installation has to be registered there within a few months of going live. I’m using the commissioning date (<em>Inbetriebnahmedatum</em>), not the registration date, since registration lags average about 17% above one year — using the wrong date would systematically misallocate installations to the wrong month.</p>
+    <p data-en="One thing I didn’t expect: the explosion of balcony solar panels (<em>Balkonkraftwerke</em>) after 2023. These tiny plug-in units are registered in MaStR like any other installation, which inflates private installation counts dramatically. I filter them out using a 0.8 kW threshold in the regional data and an explicit category flag in the national data." data-de="Was mich überraschte: die Explosion der Balkon-Solarmodule (<em>Balkonkraftwerke</em>) nach 2023. Diese kleinen Plug-in-Geräte werden im MaStR wie jede andere Anlage registriert und blähen die privaten Installationszahlen dramatisch auf. Ich filtere sie mit einer 0,8-kW-Schwelle in den Regionaldaten und einem expliziten Kategorie-Flag in den Bundesdaten heraus.">One thing I didn’t expect: the explosion of balcony solar panels (<em>Balkonkraftwerke</em>) after 2023. These tiny plug-in units are registered in MaStR like any other installation, which inflates private installation counts dramatically. I filter them out using a 0.8 kW threshold in the regional data and an explicit category flag in the national data.</p>
+
+    <h2 data-en="What’s next" data-de="Wie es weitergeht">What’s next</h2>
+    <p data-en="The descriptive analysis is mostly done. The next step is specifying the regression model — I’m deciding between a standard two-way fixed effects estimator and a more robust staggered estimator like Callaway-Sant’Anna, which handles heterogeneous treatment effects across time better. Given that I have two treatment dates (2023 and 2024), the staggered approach is probably the right call." data-de="Die deskriptive Analyse ist weitgehend abgeschlossen. Der nächste Schritt ist die Spezifikation des Regressionsmodells — ich entscheide mich zwischen einem Standard-Two-Way-Fixed-Effects-Schätzer und einem robusteren gestaffelten Schätzer wie Callaway-Sant’Anna, der heterogene Behandlungseffekte über die Zeit besser handhabt. Angesichts zweier Behandlungsdaten (2023 und 2024) ist der gestaffelte Ansatz wahrscheinlich die richtige Wahl.">The descriptive analysis is mostly done. The next step is specifying the regression model — I’m deciding between a standard two-way fixed effects estimator and a more robust staggered estimator like Callaway-Sant’Anna, which handles heterogeneous treatment effects across time better. Given that I have two treatment dates (2023 and 2024), the staggered approach is probably the right call.</p>
+    <p data-en="More updates to follow as the results come in." data-de="Weitere Updates folgen, sobald die Ergebnisse vorliegen.">More updates to follow as the results come in.</p>
   </div>
+
+  <section class="post__embed">
+    <p class="eyebrow" data-en="Interactive data" data-de="Interaktive Daten">Interactive data</p>
+    <h2 class="work-card__title" data-en="Hamburg solar adoption by postal code" data-de="Solarausbau in Hamburg nach Postleitzahl">Hamburg solar adoption by postal code</h2>
+    <p data-en="Private residential solar PV installations from the MaStR. Toggle between the pre-mandate (2019–2022) and post-mandate (2023+) periods to see the change." data-de="Private Solaranlagen aus dem MaStR. Wechseln Sie zwischen Vor-Mandat (2019–2022) und Nach-Mandat (2023+), um die Veränderung zu sehen.">Private residential solar PV installations from the MaStR. Toggle between the pre-mandate (2019–2022) and post-mandate (2023+) periods to see the change.</p>
+    <iframe src="../../solar-map.html?embed" height="560" title="Hamburg Solar Adoption Map" loading="lazy"></iframe>
+    <a class="link-arrow" href="../../solar-map.html" target="_blank" data-en="Open full map →" data-de="Karte öffnen →">Open full map →</a>
+  </section>
+
+  <section class="post__embed">
+    <p class="eyebrow" data-en="Interactive maps" data-de="Interaktive Karten">Interactive maps</p>
+    <h2 class="work-card__title" data-en="Solar installations &amp; mandate rollout" data-de="Solaranlagen &amp; Einführung der Pflicht">Solar installations &amp; mandate rollout</h2>
+    <p data-en="Three views in one: Germany-wide solar adoption before and after 2023, the month-by-month mandate rollout across all Bundesländer (animated), and Hamburg by postal code. Use the tabs to switch views." data-de="Drei Ansichten in einer: Solarausbau in Deutschland vor und nach 2023, die monatliche Einführung der Pflicht in allen Bundesländern (animiert) und Hamburg nach Postleitzahl. Über die Tabs wechseln.">Three views in one: Germany-wide solar adoption before and after 2023, the month-by-month mandate rollout across all Bundesländer (animated), and Hamburg by postal code. Use the tabs to switch views.</p>
+    <iframe src="../../germany-map.html?embed" height="660" title="Solar Map — Germany &amp; Hamburg" loading="lazy"></iframe>
+    <a class="link-arrow" href="../../germany-map.html" target="_blank" data-en="Open full map →" data-de="Karte öffnen →">Open full map →</a>
+  </section>
+
+  <footer class="post__footer">
+    <a class="link-arrow" href="../index.html" data-en="← Back to blog" data-de="← Zurück zum Blog">← Back to blog</a>
+    <a class="link-arrow link-arrow--muted" href="../../solar-dashboard.html" data-en="MaStR dashboard →" data-de="MaStR-Dashboard →">MaStR dashboard →</a>
+  </footer>
 </article>
 </main>
 
-<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
-  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>© 2026 Leonard Fredershausen</span>
+    <span class="site-footer__links"><a href="https://linkedin.com/in/leonardfredershausen/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/lhausen" target="_blank" rel="noopener">GitHub</a></span>
+  </div>
+</footer>
 
-<script>
-  const nav = document.querySelector('nav');
-  nav.classList.add('scrolled');
-  function updateNav() { }
-  window.addEventListener('scroll', updateNav, { passive: true });
-  updateNav();
-
-  const themeToggle = document.getElementById('themeToggle');
-  function applyTheme(dark) {
-    document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
-  }
-  applyTheme(localStorage.getItem('theme') === 'dark');
-  themeToggle.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') !== 'dark';
-    applyTheme(next);
-    localStorage.setItem('theme', next ? 'dark' : 'light');
-  });
-
-  // Auto reading time
-  (function() {
-    const body = document.querySelector('.post-body');
-    if (!body) return;
-    const words = body.innerText.trim().split(/\s+/).length;
-    const mins = Math.max(1, Math.round(words / 200));
-    const el = document.getElementById('reading-time');
-    if (el) el.textContent = mins + ' min read';
-  })();
-
-  // Scroll to top button
-  const scrollTopBtn = document.getElementById('scrollTop');
-  window.addEventListener('scroll', () => {
-    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
-  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  // Reading progress bar
-  const progressBar = document.getElementById('readingProgress');
-  const article = document.querySelector('article');
-  function updateProgress() {
-    const articleTop = article.getBoundingClientRect().top + window.scrollY;
-    const articleHeight = article.scrollHeight;
-    const scrolled = window.scrollY - articleTop;
-    const viewable = articleHeight - window.innerHeight;
-    const pct = viewable > 0 ? Math.min(100, Math.max(0, (scrolled / viewable) * 100)) : 100;
-    progressBar.style.width = pct + '%';
-  }
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
-
-  // Hamburger menu
-  const navToggle = document.getElementById('navToggle');
-  const navUl = document.querySelector('nav ul');
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = navToggle.classList.toggle('open');
-      navUl.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', isOpen);
-    });
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('nav')) {
-        navToggle.classList.remove('open');
-        navUl.classList.remove('open');
-      }
-    });
-    navUl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      navToggle.classList.remove('open');
-      navUl.classList.remove('open');
-    }));
-  }
-
-  // Language toggle
-  const langToggle = document.getElementById('langToggle');
-  if (langToggle) {
-    let currentLang = localStorage.getItem('lang') || 'en';
-    function applyLangBlog(lang) {
-      currentLang = lang;
-      langToggle.textContent = lang === 'en' ? 'DE' : 'EN';
-      document.querySelectorAll('[data-en]').forEach(el => {
-        el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.de;
-      });
-      localStorage.setItem('lang', lang);
-    }
-    applyLangBlog(currentLang);
-    langToggle.addEventListener('click', () => applyLangBlog(currentLang === 'en' ? 'de' : 'en'));
-  }
-
-  // Table of contents
-  (function() {
-    const toc = document.getElementById('toc');
-    if (!toc) return;
-    const headings = document.querySelectorAll('.post-body h2');
-    if (headings.length < 2) { toc.remove(); return; }
-    headings.forEach((h, i) => { if (!h.id) h.id = 'section-' + i; });
-    const label = document.createElement('span');
-    label.className = 'toc-label';
-    label.setAttribute('data-en', 'In this article');
-    label.setAttribute('data-de', 'In diesem Artikel');
-    label.textContent = 'In this article';
-    toc.appendChild(label);
-    const ol = document.createElement('ol');
-    headings.forEach(h => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = '#' + h.id;
-      a.textContent = h.textContent;
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-      li.appendChild(a);
-      ol.appendChild(li);
-    });
-    toc.appendChild(ol);
-    // Highlight active section
-    const links = ol.querySelectorAll('a');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          links.forEach(l => l.classList.remove('toc-active'));
-          const active = ol.querySelector('a[href="#' + entry.target.id + '"]');
-          if (active) active.classList.add('toc-active');
-        }
-      });
-    }, { rootMargin: '-20% 0px -70% 0px' });
-    headings.forEach(h => obs.observe(h));
-  })();
-
-</script>
+<script src="../../site.js"></script>
 </body>
 </html>
